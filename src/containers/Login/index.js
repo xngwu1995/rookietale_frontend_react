@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import './index.css';
 import { Button, Input, Form } from 'antd';
-import { Dialog } from 'antd-mobile'
 
 const initialValues = {
   username: 'hahah',
-  password: '12345'
-}
+  password: '12345',
+};
 const Login = () => {
   const onFinish = (values) => {
-    console.log({content: JSON.stringify(values)});
+    console.log({ content: JSON.stringify(values) });
   };
 
   return (
@@ -46,6 +44,6 @@ const Login = () => {
       </Form>
     </div>
   );
-}
+};
 
 export default Login;
