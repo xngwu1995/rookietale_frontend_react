@@ -1,13 +1,26 @@
 import './index.css';
-import { Button, Input, Form } from 'antd';
+import {
+  Button, Input, Form, message,
+} from 'antd';
+import { loginService } from '../../services/login';
 
 const initialValues = {
-  username: 'hahah',
-  password: '12345',
+  username: 'daniel',
+  password: 'wert66',
 };
 const Login = () => {
-  const onFinish = (values) => {
-    console.log({ content: JSON.stringify(values) });
+  const [messageApi, contextHolder] = message.useMessage();
+  const onFinish = async () => {
+    const res = await loginService();
+    if (res) {
+      messageApi.info({
+        content: 'Successfully login',
+      });
+      return;
+    }
+    messageApi.info({
+      content: 'Can not login',
+    });
   };
 
   return (
@@ -37,6 +50,7 @@ const Login = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          {contextHolder}
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
