@@ -1,12 +1,32 @@
-import style from './index.module.css';
-import datelogo from '../../assets/date.svg';
+// /* eslint-disable import/no-extraneous-dependencies */
+// import { DatePicker } from 'antd';
+// import moment from 'moment';
+// import PropTypes from 'prop-types';
+// import style from './index.module.css';
 
-export default () => (
-  <div className={style.birthdayInput}>
-    <div className={style.birthTitleItem}>Date of birth</div>
-    <div>
-      <span className={style.birthDatePlaceholder}>Year/Month/Day</span>
-      <img className={style.dateIcon} src={datelogo} alt="date" />
-    </div>
-  </div>
-);
+// const DatePickerInput = ({
+//   value,
+//   onChange,
+// }) => {
+//   const dateFormat = 'YYYY/MM/DD';
+//   return (
+//     <DatePicker
+//       onConfirm={(val) => {
+//         onChange(moment(val).format('YYYYMMDD'));
+//       }}
+//       className={style.birthdayInput}
+//       style={{ width: '100%' }}
+//       format={dateFormat}
+//       placeholder="Year/Month/Day"
+//       defaultValue={value}
+//       value={value}
+//     />
+//   );
+// };
+
+// DatePickerInput.propTypes = {
+//   value: PropTypes.string.isRequired,
+//   onChange: PropTypes.func.isRequired,
+// };
+
+// export default DatePickerInput;

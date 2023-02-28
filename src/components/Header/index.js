@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { CloseOutlined } from '@ant-design/icons';
 import logo from '../../assets/twitter-log.svg';
 import style from './index.module.css';

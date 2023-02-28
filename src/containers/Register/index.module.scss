@@ -1,8 +1,10 @@
-@value tBlue #1d9bf0;
-@value tGray #868a8c;
+@import '../../common.module.scss';
 
 .input {
-  composes: input from '../../common.module.css';
+  composes: input from '../../common.module.scss';
+}
+.datePicker {
+  composes: input from '../../common.module.scss';
 }
 .formTitle {
   font-size: 25px;
@@ -13,7 +15,9 @@
 .form {
   margin: 0, 30px;
 }
-
+.changeTypeButton {
+  color: $tBlue;
+}
 .birthTitle {
   font-size: 20px;
   color: #000;
