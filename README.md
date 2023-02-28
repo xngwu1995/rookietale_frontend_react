@@ -12,3 +12,13 @@ request: get post put patch delete
 service: const getUser = (params) => get('/user', params).then((res) => {
   return res;
 });
+
+## React five steps
+1. Break The UI Into A Component Hierarchy
+2. Build A Static Version in React
+
+
+## Style Choices
+- css hard to nest
+- sass better than css
+- css module No duplicate name styles
