@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import {
-  Button, Input, Form, DatePicker,
+  Input, Form, DatePicker,
 } from 'antd';
 import Header from '@components/Header';
+import Footer from './components/Footer';
 import style from './index.module.scss';
 
 const ACCOUNT_TYPE = {
@@ -20,6 +21,7 @@ const Register = () => {
     birthday: '',
   });
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.EMAIL);
+  const [footerButtonDisabled, setFooterButtonDisabled] = useState(true);
   const onAccountTypeChange = () => {
     if (accountType === ACCOUNT_TYPE.TEL) {
       setAccountType(ACCOUNT_TYPE.EMAIL);
@@ -35,22 +37,44 @@ const Register = () => {
       console.log(validate);
     }
   };
+
+  const onValuesChange = async () => {
+    try {
+      const validate = await form.validateFields();
+      if (validate) {
+        setFooterButtonDisabled(false);
+        return;
+      }
+    } catch (e) {
+      if (e.errorFields.length === 0) {
+        setFooterButtonDisabled(false);
+        return;
+      }
+      setFooterButtonDisabled(true);
+    }
+  };
+
   return (
     <div>
       <Header />
       <div className={style.form}>
         <div className={style.formTitle}>Create Your Account</div>
-        <Form initialValues={formData} className={style.formContainer} form={form}>
+        <Form
+          initialValues={formData}
+          className={style.formContainer}
+          form={form}
+          onValuesChange={onValuesChange}
+        >
           <Form.Item name="name" rules={[{ required: true, message: 'Name can not be empty' }]}>
             <Input placeholder="name" className={style.input} />
           </Form.Item>
           {accountType === ACCOUNT_TYPE.TEL && (
-            <Form.Item name="tel" rules={[{ required: true, message: 'Phone number can not be empty' }]}>
+            <Form.Item name="tel" rules={[{ required: true, message: 'Need a valid phone number', pattern: /^1(3\d|4[5-9]|5[0-35-9]|6[2567]|7[0-8]|8\d|9[0-35-9])\d{8}$/g }]}>
               <Input placeholder="phone" className={style.input} />
             </Form.Item>
           )}
           {accountType === ACCOUNT_TYPE.EMAIL && (
-            <Form.Item name="email" rules={[{ required: true, message: 'Email can not be empty' }]}>
+            <Form.Item name="email" rules={[{ required: true, message: 'Need a valid email', pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/g }]}>
               <Input placeholder="email" className={style.input} />
             </Form.Item>
           )}
@@ -65,11 +89,7 @@ const Register = () => {
           </Form.Item>
         </Form>
       </div>
-      <div className={style.footer}>
-        <Button type="primary" onClick={onClickNextStep}>
-          Next Step
-        </Button>
-      </div>
+      <Footer onClickNextStep={onClickNextStep} disabled={footerButtonDisabled} label="Next Step" />
     </div>
   );
 };

@@ -13,8 +13,15 @@
     "react/jsx-filename-extension": [1, { "extensions": [".js"]}],
     "react/react-in-jsx-scope": 0,
     "react/function-component-definition": 0,
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
-  },
+    "import/no-extraneous-dependencies": [
+      "error", {
+         "devDependencies": false, 
+         "optionalDependencies": false, 
+         "peerDependencies": false, 
+         "packageDir": "./"
+      }
+  ]  
+},
   "env": {
     "browser": true
   },
