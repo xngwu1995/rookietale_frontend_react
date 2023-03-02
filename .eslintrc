@@ -20,7 +20,7 @@
          "peerDependencies": false, 
          "packageDir": "./"
       }
-  ]  
+  ]
 },
   "env": {
     "browser": true
@@ -31,7 +31,9 @@
         "map": [
           ["@components", "./src/components"],
           ["@assets", "./src/assets"],
-          ["@containers", "./src/containers"]
+          ["@containers", "./src/containers"],
+          ["@utils", "./src/utils"],
+          ["@services", "./src/services"]
         ]
       }
     }

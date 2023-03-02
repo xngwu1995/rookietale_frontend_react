@@ -42,3 +42,25 @@
   composes: footerButtonDisabled;
   background-color: #000;
 }
+.showLabelContainer {
+  border: solid 1px $tGrayWhite;
+  padding: 10px;
+  border-radius: 5px;
+}
+.showLabel {
+  font-size: 18px;
+  height: 40px;
+  line-height: 40px;
+  :global(span) {
+    color: $tGray;
+  }
+}
+.label {
+  font-size: 18px;
+  margin: 30px 0 10px 0;
+}
+.showTip {
+  color: red;
+  font-szie: 14px;
+  margin-top: 5px;
+}
