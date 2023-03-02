@@ -1,22 +1,43 @@
+import { Toast } from 'antd-mobile';
 import axios from 'axios';
 
+const domain = 'http://10.0.0.26:8000';
+
+export const axiosInstance = axios.create({
+  baseURL: '',
+  timeout: 5000,
+  headers: {
+    'Content-Type': 'application/json',
+    accept: 'application/json',
+  },
+});
+
 // added the domain url
-axios.interceptors.request.use((config) => ({
-  ...config,
-  url: config.url,
-}));
+axiosInstance.interceptors.request.use((config) => {
+  const token = `JWT ${localStorage.getItem('access')}`;
+  if (token) {
+    // eslint-disable-next-line no-param-reassign
+    config.headers.authorization = token;
+  }
+  return ({
+    ...config,
+    url: domain + config.url,
+  });
+});
 
 // Intercept the response data, 1. handle data, 2. handle error
-axios.interceptors.response.use((response) => response.data, (err) => Promise.reject(err));
+axiosInstance.interceptors.response.use((response) => response.data, () => {
+  Toast.show('Server can not work');
+});
 
 // get resource
-export const get = (url) => axios.get(url);
+export const get = (url) => axiosInstance.get(url);
 
 // add a new resource
-export const post = (url, params) => axios.post(url, params);
+export const post = (url, params) => axiosInstance.post(url, params);
 
 // update a resource
-export const put = (url, params) => axios.put(url, params);
+export const put = (url, params) => axiosInstance.put(url, params);
 
 // delete a resource
-export const del = (url, params) => axios.del(url, params);
+export const del = (url, params) => axiosInstance.del(url, params);
