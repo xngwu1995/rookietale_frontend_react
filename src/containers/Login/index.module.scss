@@ -1,0 +1,22 @@
+@import '../../common.module.scss';
+
+.input {
+  composes: input from '../../common.module.scss';
+}
+.formTitle {
+  composes: formTitle from '../Register/index.module.scss';
+}
+.form {
+  composes: form from '../Register/index.module.scss';
+}
+.footerButton {
+  composes: footerButton from '../Register/index.module.scss';
+  background-color: #000;
+}
+.goToRegister {
+  margin-right: 890px;
+  font-size: 14px;
+  a {
+    margin-left: 5px;
+  }
+}

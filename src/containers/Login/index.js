@@ -1,61 +1,56 @@
-import './index.css';
+/* eslint-disable no-alert */
 import {
-  Button, Input, Form, message,
+  Button, Input, Form,
 } from 'antd';
-import { loginService } from '../../services/login';
+import Header from '@components/Header';
+import { login } from '../../services/login';
+import style from './index.module.scss';
 
-const initialValues = {
-  username: 'daniel',
-  password: 'wert66',
-};
 const Login = () => {
-  const [messageApi, contextHolder] = message.useMessage();
-  const onFinish = async () => {
-    const res = await loginService();
-    if (res) {
-      messageApi.info({
-        content: 'Successfully login',
-      });
-      return;
+  const [form] = Form.useForm();
+  const onSubmit = async () => {
+    const values = await form.validateFields();
+    if (values) {
+      const res = await login(values);
+      if (res.success) {
+        window.alert('登录成功');
+        return;
+      }
+      window.alert('登录失败');
     }
-    messageApi.info({
-      content: 'Can not login',
-    });
   };
-
   return (
-    <div className="login">
+    <div className={style.form}>
+      <Header />
+      <div className={style.formTitle}>Sign In Your Account</div>
       <Form
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        name="basic"
-        initialValues={initialValues}
-        onFinish={onFinish}
+        className={style.formContainer}
+        form={form}
       >
         <Form.Item
-          label="Username"
           name="username"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
-          <Input />
+          <Input label="username" placeholder="username" className={style.input} />
         </Form.Item>
 
         <Form.Item
-          label="Password"
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="password" className={style.input} />
         </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          {contextHolder}
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <Button className={style.footerButton} onClick={onSubmit}>
+          Next Step
+        </Button>
+        <div className={style.goToRegister}>
+          No Account?
+          <a href="/" target="_blank">
+            Register
+          </a>
+        </div>
       </Form>
+
     </div>
   );
 };
