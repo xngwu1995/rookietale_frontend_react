@@ -2,7 +2,7 @@
 import {
   Button, Input, Form,
 } from 'antd';
-import Header from '@components/Header';
+import { Link } from 'react-router-dom';
 import { login } from '../../services/login';
 import style from './index.module.scss';
 
@@ -21,7 +21,6 @@ const Login = () => {
   };
   return (
     <div className={style.form}>
-      <Header />
       <div className={style.formTitle}>Sign In Your Account</div>
       <Form
         className={style.formContainer}
@@ -45,9 +44,9 @@ const Login = () => {
         </Button>
         <div className={style.goToRegister}>
           No Account?
-          <a href="/" target="_blank">
+          <Link to="/register">
             Register
-          </a>
+          </Link>
         </div>
       </Form>
 

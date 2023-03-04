@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { registerUser } from '@services/register';
-import Header from '@components/Header';
 import Show from '@components/Show';
 import OneStep from './components/OneStep';
 // eslint-disable-next-line import/no-named-as-default
@@ -35,13 +34,12 @@ const Register = () => {
     window.alert('Ops, you can not singup');
   };
 
-  const onClickClose = () => {
-    setStep(STEP.ONE);
-  };
+  // const onClickClose = () => {
+  //   setStep(STEP.ONE);
+  // };
 
   return (
     <div>
-      <Header onClickClose={onClickClose} />
       <Show visible={step === STEP.ONE}>
         <OneStep gotoNextStepHandler={gotoNextStepHandler} />
       </Show>
