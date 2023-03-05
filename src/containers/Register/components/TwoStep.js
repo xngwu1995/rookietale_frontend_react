@@ -11,6 +11,8 @@ const TwoStep = ({
 }) => {
   const [password, setPassword] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [showwarning, setShowwarning] = useState(false);
+
   const onConfirmRegister = () => {
     confirmRegisterHandler(password);
   };
@@ -21,8 +23,10 @@ const TwoStep = ({
   const onChangeConfirmPwd = (e) => {
     if (e.target.value === password) {
       setDisabled(false);
+      setShowwarning(false);
       return;
     }
+    setShowwarning(true);
     setDisabled(true);
   };
   return (
@@ -55,7 +59,7 @@ const TwoStep = ({
         <Input className={style.input} type="password" onChange={onChangePwd} />
         <div className={style.label}>Please Confirm</div>
         <Input className={style.input} type="password" onChange={onChangeConfirmPwd} />
-        {disabled && <div className={style.showTip}>The password should be same</div>}
+        {showwarning && <div className={style.showTip}>The password should be same</div>}
       </div>
       <Footer disabled={disabled} label="Confirm Register" onClickNextStep={onConfirmRegister} />
     </div>

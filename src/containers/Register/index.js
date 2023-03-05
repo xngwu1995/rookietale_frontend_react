@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '@utils/context';
 import { registerUser } from '@services/register';
-import Header from '@components/Header';
 import Show from '@components/Show';
 import OneStep from './components/OneStep';
 // eslint-disable-next-line import/no-named-as-default
@@ -16,6 +17,23 @@ const STEP = {
 const Register = () => {
   const [step, setStep] = useState(STEP.ONE);
   const [userInfo, setUserInfo] = useState({});
+
+  const [, setStore] = useAppContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (step === STEP.ONE) {
+      setStore({
+        closeHeaderHandler: () => navigate('/login'),
+      });
+    }
+    if (step === STEP.TWO) {
+      setStore({
+        closeHeaderHandler: () => setStep(STEP.ONE),
+      });
+    }
+  }, [step]);
+
   const gotoNextStepHandler = (data) => {
     setUserInfo(data);
     setStep(STEP.TWO);
@@ -35,19 +53,15 @@ const Register = () => {
     window.alert('Ops, you can not singup');
   };
 
-  const onClickClose = () => {
-    setStep(STEP.ONE);
-  };
-
   return (
     <div>
-      <Header onClickClose={onClickClose} />
       <Show visible={step === STEP.ONE}>
         <OneStep gotoNextStepHandler={gotoNextStepHandler} />
       </Show>
-      <Show visible={step === STEP.TWO}>
+      <Show visible={step === STEP.TWO} isMount>
         <TwoStep
           userInfo={userInfo}
+          goToOneStepHandler={() => setStep(STEP.ONE)}
           confirmRegisterHandler={confirmRegisterHandler}
         />
       </Show>
