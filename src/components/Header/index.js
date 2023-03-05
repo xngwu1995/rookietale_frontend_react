@@ -1,23 +1,21 @@
 import { CloseOutlined } from '@ant-design/icons';
-import { PropTypes } from 'prop-types';
+import { useAppContext } from '@utils/context';
 import logo from '../../assets/twitter-log.svg';
 import style from './index.module.css';
 
-const Header = ({
-  onClickClose,
-}) => (
-  <div className={style.header}>
-    {onClickClose && <CloseOutlined className={style.closeIcon} onClick={onClickClose} />}
-    <img src={logo} alt="twitter-log" className={style.twitterLog} />
-  </div>
-);
-
-Header.propTypes = {
-  onClickClose: PropTypes.func,
-};
-
-Header.defaultProps = {
-  onClickClose: null,
+const Header = () => {
+  const [store] = useAppContext();
+  return (
+    <div className={style.header}>
+      {store.closeHeaderHandler && (
+        <CloseOutlined
+          className={style.closeIcon}
+          onClick={store.closeHeaderHandler}
+        />
+      )}
+      <img src={logo} alt="twitter-log" className={style.twitterLog} />
+    </div>
+  );
 };
 
 export default Header;

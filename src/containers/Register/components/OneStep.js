@@ -21,9 +21,11 @@ const OneStep = ({
     username: '',
     email: '',
     birthday: '',
+    tel: '',
   });
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.EMAIL);
   const [footerButtonDisabled, setFooterButtonDisabled] = useState(true);
+
   const onAccountTypeChange = () => {
     if (accountType === ACCOUNT_TYPE.TEL) {
       setAccountType(ACCOUNT_TYPE.EMAIL);

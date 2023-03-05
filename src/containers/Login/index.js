@@ -2,12 +2,21 @@
 import {
   Button, Input, Form,
 } from 'antd';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { login } from '../../services/login';
+import { useAppContext } from '@utils/context';
+import { login } from '@services/login';
 import style from './index.module.scss';
 
 const Login = () => {
   const [form] = Form.useForm();
+  const [, setStore] = useAppContext();
+  useEffect(() => {
+    setStore({
+      closeHeaderHandler: null,
+    });
+  }, []);
+
   const onSubmit = async () => {
     const values = await form.validateFields();
     if (values) {

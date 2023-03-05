@@ -12,6 +12,7 @@ const TwoStep = ({
   const [password, setPassword] = useState();
   const [disabled, setDisabled] = useState(true);
   const [showwarning, setShowwarning] = useState(false);
+
   const onConfirmRegister = () => {
     confirmRegisterHandler(password);
   };
