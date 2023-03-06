@@ -6,6 +6,7 @@ import Login from '@containers/Login';
 import Register from '@containers/Register';
 import App from '@containers/App';
 import { CxtProvider } from '@utils/context';
+import Tweets from '@containers/Tweets';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -16,6 +17,7 @@ root.render(
           <Route path="/" element={<App />}>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/tweets" element={<Tweets />} />
           </Route>
 
         </Routes>

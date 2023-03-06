@@ -1,0 +1,33 @@
+@import '../../common.module.scss';
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 900px;
+}
+.icon{
+  margin-left: 45px;
+  height: 40px;
+}
+.container {
+  margin: 0, 30px;
+  height: 100%;
+  width: 20%;
+}
+.label {
+  border-radius: 5px;
+  height: 70px;
+  padding: 20px 10px;
+  width: 100%;
+}
+.navTitle {
+  font-size: 26px;
+}
+.postTweet {
+  font-size: 26px;
+}
+.userProfile {
+  position: 'relative';
+  bottom: 0px;
+}
