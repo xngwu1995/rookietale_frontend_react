@@ -1,7 +1,9 @@
-// import TweetCard from '@components/TweetCard';
 import { useState, useEffect } from 'react';
-import style from './index.module.scss';
+import Nav from '@components/Nav';
+import TweetCard from '@components/TweetCard';
+import { Layout } from 'antd';
 
+const { Content, Sider } = Layout;
 /**
 *
 */
@@ -12,10 +14,34 @@ const Tweets = () => {
     setDate([]);
   }, []);
   return (
-    <div className={style.container}>
-      {/* <TweetCard /> */}
-
-    </div>
+    <Layout>
+      <Sider
+        theme="light"
+        width={300}
+        style={{
+          padding: '40px 0',
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+        }}
+      >
+        <Nav />
+      </Sider>
+      <Layout className="site-layout" style={{ marginLeft: 300 }}>
+        <Content style={{
+          padding: '40px 24px',
+          overflow: 'initial',
+          width: '60%',
+        }}
+        >
+          <TweetCard />
+          <TweetCard />
+          <TweetCard />
+          <TweetCard />
+          <TweetCard />
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 

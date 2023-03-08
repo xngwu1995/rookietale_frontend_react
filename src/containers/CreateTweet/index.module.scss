@@ -1,0 +1,30 @@
+@import '../../common.module.scss';
+
+.container {
+  // position: 'relative';
+  // margin-left: 400px;
+  margin-top: 10px;
+  background-color: #fff;
+  padding: 20px 10px 0 10px;
+  width: 100%;
+  height: 200px;
+}
+.avatarContainer {
+  width: 50px;
+  display: inline-block;
+  vertical-align: top;
+}
+.content {
+  width: calc(100% - 50px);
+  display: inline-block;
+  height: 150px;
+}
+.avatar {
+  height: 40px;
+  border-radius: 50%;
+  width: 40px;
+}
+.button {
+  border-top:  1px #eff3f4;
+  padding-top: 10px;
+}

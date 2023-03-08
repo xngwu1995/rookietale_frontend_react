@@ -1,4 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { CloseOutlined } from '@ant-design/icons';
 import { Image } from 'antd';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -7,9 +8,11 @@ import style from './index.module.scss';
 /**
 *
 */
-const ImageCard = ({
+const ImagePreview = ({
   imgs,
+  handleDelImg,
 }) => {
+  if (!imgs || imgs.length === 0) return null;
   const getWarpper = () => {
     switch (imgs.length) {
       case 1:
@@ -28,25 +31,28 @@ const ImageCard = ({
     <div className={style.container}>
       <div className={classNames(style.wrapper, getWarpper())}>
         {imgs.map((img, index) => (
-          <Image
-            rootClassName={classNames(style.img, `img${index}`)}
-            style={{ height: '100%' }}
-            key={classNames(img, index)}
-            src={img}
-            alt=""
-          />
+          <div className={classNames(style.img, `img${index}`)}>
+            <CloseOutlined className={style.closeIcon} onClick={() => handleDelImg(index)} />
+            <Image
+              rootClassName={style.itemImg}
+              key={classNames(img, index)}
+              src={img}
+              alt=""
+            />
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-ImageCard.propTypes = {
+ImagePreview.propTypes = {
   imgs: PropTypes.arrayOf(PropTypes.string),
+  handleDelImg: PropTypes.func.isRequired,
 };
 
-ImageCard.defaultProps = {
+ImagePreview.defaultProps = {
   imgs: [],
 };
 
-export default ImageCard;
+export default ImagePreview;

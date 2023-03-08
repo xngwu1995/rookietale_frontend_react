@@ -1,6 +1,11 @@
 .header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
   height: 50px;
   text-align: center;
+  background-color: #fff;
 }
 .closeIcon {
 position: absolute;

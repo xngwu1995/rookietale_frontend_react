@@ -2,12 +2,12 @@
 
 .container {
   height: 300px;
-  width: 50%;
   padding: 10px 5px 0 0;
 }
 .img {
   position: absolute;
   width: 50%;
+  object-fit: cover;
   background-color: aqua;
 }
 
@@ -31,14 +31,12 @@
 .wrapper2 {
   :global(.img0) {
     left: 0;
-    width: 50%;
     height: 300px;
     border-right: solid 2px #fff;
   }
   :global(.img1) {
     border-left: solid 2px #fff;
     left: 50%;
-    width: 50%;
     height: 300px;
   }
 }
@@ -68,6 +66,7 @@
   :global(.img0) {
     left: 0;
     top: 0;
+    width: 50%;
     height: 150px;
     border-right: solid 2px #fff;
     border-bottom: solid 2px #fff;

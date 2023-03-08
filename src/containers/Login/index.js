@@ -3,7 +3,8 @@ import {
   Button, Input, Form,
 } from 'antd';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import cookies from 'js-cookie';
 import { useAppContext } from '@utils/context';
 import { login } from '@services/login';
 import style from './index.module.scss';
@@ -16,13 +17,15 @@ const Login = () => {
       closeHeaderHandler: null,
     });
   }, []);
+  const nav = useNavigate();
 
   const onSubmit = async () => {
     const values = await form.validateFields();
     if (values) {
       const res = await login(values);
       if (res.success) {
-        window.alert('登录成功');
+        cookies.set('userId', res.user.id);
+        nav('/tweets');
         return;
       }
       window.alert('登录失败');
