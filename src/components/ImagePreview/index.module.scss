@@ -8,6 +8,7 @@
 .img {
   position: absolute;
   width: 50%;
+  object-fit: fill;
   background-color: aqua;
   border-radius: 20px;
   box-sizing: border-box;
@@ -101,15 +102,14 @@
     border-top: solid 5px #fff;
   }
 }
-
-.closeIcon {
+.close {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index:1;
+  z-index: 1;
   color: #fff;
   background-color: rgba(0,0,0,0.5);
-  border-radius:50%;
+  border-radius: 50%;
   height: 20px;
   width: 20px;
   font-size: 12px;
