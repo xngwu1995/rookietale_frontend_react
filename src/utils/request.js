@@ -1,5 +1,8 @@
 import { Toast } from 'antd-mobile';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const domain = 'http://10.0.0.26:8000';
 
@@ -8,6 +11,7 @@ export const axiosInstance = axios.create({
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
+    'X-CSRFToken': cookies.get('csrftoken'),
     accept: 'application/json',
   },
 });
