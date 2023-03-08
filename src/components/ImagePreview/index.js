@@ -34,7 +34,11 @@ const ImagePreview = ({
           <div className={classNames(style.img, `img${index}`)}>
             <CloseOutlined className={style.closeIcon} onClick={() => handleDelImg(index)} />
             <Image
-              rootClassName={style.itemImg}
+              rootClassName={classNames(style.wrapper, getWarpper())}
+              style={{
+                height: '100%',
+                width: '100%',
+              }}
               key={classNames(img, index)}
               src={img}
               alt=""

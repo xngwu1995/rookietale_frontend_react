@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Image } from 'antd';
+// import { Image } from 'antd';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import style from './index.module.scss';
@@ -28,10 +28,8 @@ const ImageCard = ({
     <div className={style.container}>
       <div className={classNames(style.wrapper, getWarpper())}>
         {imgs.map((img, index) => (
-          <Image
-            rootClassName={classNames(style.img, `img${index}`)}
-            style={{ height: '100%' }}
-            key={classNames(img, index)}
+          <img
+            className={classNames(style.img, `img${index}`)}
             src={img}
             alt=""
           />

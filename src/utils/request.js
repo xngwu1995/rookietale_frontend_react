@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const domain = 'http://10.0.0.26:8000';
+const domain = '';
 
 export const axiosInstance = axios.create({
   baseURL: '',
