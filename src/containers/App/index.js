@@ -24,9 +24,9 @@ const App = () => {
         if (location.pathname === '/login') {
           nav('/tweets');
         }
-        return;
+        // return;
       }
-      nav('/login');
+      // nav('/login');
     };
     init();
   }, []);

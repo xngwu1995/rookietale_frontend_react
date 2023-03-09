@@ -2,12 +2,13 @@
 
 .container {
   height: 300px;
+  width: 600px;
   padding: 10px 5px 0 0;
 }
 .img {
   position: absolute;
+  object-fit: fill;
   width: 50%;
-  object-fit: cover;
   background-color: aqua;
 }
 
@@ -16,35 +17,35 @@
   border-radius: 20px;
   border: solid 1px $tGrayWhite;
   overflow: hidden;
-  height: 300px;
-  width: 50%;
+  height: 100%;
+  width: 100%;
 }
 
 .wrapper1 {
   :global(.img0) {
     left: 0;
     width: 100%;
-    height: 300px;
+    height: 100%;
   }
 }
 
 .wrapper2 {
   :global(.img0) {
     left: 0;
-    height: 300px;
+    height: 100%;
     border-right: solid 2px #fff;
   }
   :global(.img1) {
     border-left: solid 2px #fff;
     left: 50%;
-    height: 300px;
+    height: 100%;
   }
 }
 
 .wrapper3 {
   :global(.img0) {
     left: 0;
-    height: 300px;
+    height: 100%;
     border-right: solid 2px #fff;
   }
   :global(.img1) {
@@ -66,7 +67,6 @@
   :global(.img0) {
     left: 0;
     top: 0;
-    width: 50%;
     height: 150px;
     border-right: solid 2px #fff;
     border-bottom: solid 2px #fff;
@@ -92,4 +92,38 @@
     border-right: solid 2px #fff;
     border-top: solid 2px #fff;
   }
+}
+.image-gallery.fullscreen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.modalContent {
+  width: 90%;
+  height: 90%;
+  max-width: 900px;
+  max-height: 800px;
+  background-color: white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }

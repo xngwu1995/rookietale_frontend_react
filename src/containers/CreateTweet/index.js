@@ -47,7 +47,7 @@ const CreateTweet = () => {
   };
 
   const onChangeFile = (v) => {
-    if (v && Object.keys(v).length < 5) {
+    if (v && (Object.keys(imgs).length + Object.keys(v).length < 5)) {
       setImgs((oldV) => ({
         ...oldV,
         ...v,

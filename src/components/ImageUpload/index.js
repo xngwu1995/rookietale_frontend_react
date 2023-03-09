@@ -1,11 +1,11 @@
 import IconButton from '@components/IconButton';
-import { fileByBase64 } from '@utils/index';
 import createTweetSvg from '@assets/createTweet.svg';
 import PropTypes from 'prop-types';
+import { fileByBase64 } from '@utils/';
 import style from './index.module.scss';
 
 /**
-*
+* Upload picture
 */
 const ImageUpload = ({
   onChange,
@@ -33,7 +33,7 @@ const ImageUpload = ({
   return (
     <div className={style.container}>
       <input type="file" encType="multipart/form-data" accept="image/gif.image/jpg" className={style.upFile} multiple="multiple" onChange={onChangeUpFile} />
-      <IconButton src={createTweetSvg} className={style.imageButton} svgClass={style.imageUpload} />
+      <IconButton src={createTweetSvg} svgClass={style.imageUpload} className={style.imageButton} />
     </div>
   );
 };

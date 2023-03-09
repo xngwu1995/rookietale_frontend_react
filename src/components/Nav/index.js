@@ -18,7 +18,7 @@ const Nav = () => {
       <Menu onClick={onClick} defaultSelectedKeys={[current]} inlineIndent={36} mode="inline" items={menuItems} />
       <Menu
         style={{
-          'margin-top': '30px', 'font-size': 26, 'font-weight': 'bold', 'background-color': '#1d9bf0', 'border-radius': '50%', 'text-align': 'center', width: '80%',
+          marginTop: '30px', fontSize: 26, fontWeight: 'bold', backgroundColor: '#1d9bf0', borderRadius: '50%', textAlign: 'center', width: '80%',
         }}
         inlineIndent={36}
         mode="inline"
