@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ImageGallery from 'react-image-gallery';
@@ -30,7 +30,16 @@ const ImageCard = ({ imgs }) => {
     original: img,
     thumbnail: img,
   }));
-
+  useEffect(() => {
+    if (isGalleryOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  });
   const openGallery = (index) => {
     setUseBrowserFullscreen(true);
     setSelectedImageIndex(index);
@@ -58,6 +67,7 @@ const ImageCard = ({ imgs }) => {
         <div className={style.modal} onClick={closeGallery}>
           <div className={style.modalContent} onClick={(e) => e.stopPropagation()}>
             <ImageGallery
+              fullScreen
               items={images}
               showIndex
               showBullets

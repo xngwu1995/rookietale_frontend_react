@@ -3,7 +3,8 @@ import {
   Button, Input, Form,
 } from 'antd';
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useGoTo } from '@utils/hooks';
 import cookies from 'js-cookie';
 import { useAppContext } from '@utils/context';
 import { login } from '@services/login';
@@ -17,7 +18,7 @@ const Login = () => {
       closeHeaderHandler: null,
     });
   }, []);
-  const nav = useNavigate();
+  const go = useGoTo();
 
   const onSubmit = async () => {
     const values = await form.validateFields();
@@ -25,7 +26,7 @@ const Login = () => {
       const res = await login(values);
       if (res.success) {
         cookies.set('userId', res.user.id);
-        nav('/tweets');
+        go('/');
         return;
       }
       window.alert('登录失败');
@@ -56,7 +57,7 @@ const Login = () => {
         </Button>
         <div className={style.goToRegister}>
           No Account?
-          <Link to="/register">
+          <Link to="/register" className={style.Link}>
             Register
           </Link>
         </div>

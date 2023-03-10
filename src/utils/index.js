@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const fileByBase64 = (file) => new Promise((r) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
@@ -5,3 +7,18 @@ export const fileByBase64 = (file) => new Promise((r) => {
     r(e.target.result);
   };
 });
+
+/**
+ * Return the time difference
+ */
+export const timeDiff = (time) => {
+  const hours = moment().diff(time, 'hours');
+  if (hours > 23) {
+    return moment(time).format('MM月DD日');
+  }
+  if (hours > 0) {
+    return `${hours}小时`;
+  }
+  const minutes = moment().diff(time, 'minutes');
+  return `${minutes || 1}分钟`;
+};

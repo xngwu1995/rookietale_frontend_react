@@ -1,0 +1,54 @@
+@import '../../common.module.scss';
+
+.container {
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 15px;
+}
+.nickname {
+  font-size: 19px;
+  font-weight: 700;
+}
+.username {
+  font-size: 19px;
+  font-weight: 400;
+  color: $tFontColor;
+}
+.header {
+  background-color: #cfd9de;
+  height: 138px;
+  margin: -15px;
+}
+.avatar {
+  height: 92px;
+  width: 92px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  margin-top: -35px;
+}
+.edit {
+  height: 35px;
+  width: 116px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 9999px;
+  float: right;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.follower {
+  margin: 20px 0;
+  color: $tFontColor;
+}
+.number1 {
+  font-weight: 700;
+  margin-right: 5px;
+  color: rgb(15, 20, 25);
+}
+.number2 {
+  composes: number1;
+  margin-left: 10px;
+}
+.tabs {
+  font-size: 20px;
+}
