@@ -8,8 +8,8 @@ import style from '../common.module.scss';
 
 export const menuItems = [
   {
-    key: 'home',
-    link: '/tweets',
+    key: 'tweets',
+    link: '/',
     icon: <img className={style.icon} src={homeSvg} alt="" />,
     label: 'HOME',
   },
@@ -17,25 +17,31 @@ export const menuItems = [
     key: 'search',
     link: '/search',
     icon: <img className={style.icon} src={searchSvg} alt="" />,
-    label: 'Search',
+    label: 'SEARCH',
   },
   {
     key: 'tips',
     link: '/tips',
     icon: <img className={style.icon} src={tipSvg} alt="" />,
-    label: 'Notification',
+    label: 'NOTIFICATION',
   },
+  // {
+  //   key: 'message',
+  //   link: '/message',
+  //   icon: <img className={style.icon} src={messageSvg} alt="" />,
+  //   label: 'Message',
+  // },
   {
-    key: 'message',
-    link: '/message',
+    key: 'profile',
+    link: '/profile',
     icon: <img className={style.icon} src={messageSvg} alt="" />,
-    label: 'Message',
+    label: 'PROFILE',
   },
   {
     key: 'health',
     link: '/health',
     icon: <img className={style.icon} src={twitterLogSvg} alt="" />,
-    label: 'Health',
+    label: 'HEALTH',
   },
 ];
 export const createTweetItem = [
@@ -45,19 +51,21 @@ export const createTweetItem = [
     label: 'Post Tweet',
   },
 ];
-export const userProfileItem = [
+export const logOut = [
   {
-    key: 'profile',
-    link: '/tweets',
-    icon: <img className={style.icon} src={homeSvg} alt="" />,
-    label: 'User Profile',
+    key: 'logout',
+    label: 'Log Out',
   },
 ];
 
 export const allLinks = [
   {
-    key: 'home',
-    link: '/tweets',
+    key: 'login',
+    link: '/login',
+  },
+  {
+    key: 'tweets',
+    link: '/',
   },
   {
     key: 'search',
@@ -66,10 +74,6 @@ export const allLinks = [
   {
     key: 'tips',
     link: '/tips',
-  },
-  {
-    key: 'message',
-    link: '/message',
   },
   {
     key: 'health',
@@ -81,10 +85,31 @@ export const allLinks = [
   },
   {
     key: 'profile',
-    link: '/tweets',
+    link: '/profile',
+  },
+  {
+    key: 'tweet',
+    link: '/tweet/:id',
   },
 ];
 
+export const items = [
+  {
+    key: 'tweet',
+    label: 'Tweets',
+    children: '',
+  },
+  {
+    key: 'replies',
+    label: 'Replies',
+    children: 'Replies',
+  },
+  {
+    key: 'likes',
+    label: 'Likes',
+    children: 'Likes',
+  },
+];
 export const getMenuByKey = (key) => allLinks.find((item) => item.key === key);
 export const getMenuByLink = (link) => allLinks.find((item) => matchPath(item.link, link));
 

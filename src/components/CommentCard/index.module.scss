@@ -1,0 +1,33 @@
+@import '../../common.module.scss';
+
+.container {
+  margin-top: 40px;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 10px 0 0 20px;
+  border-bottom: 1px solid $tBorderColor;
+  .avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    vertical-align: top;
+  }
+  .right {
+    width: calc(100% - 50px);
+    display: inline-block;
+    padding: 0 10px 5px 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: rgb(15, 20, 25);
+  }
+  .nickname {
+    font-weight: bold;
+  }
+  .username {
+    margin-left: 5px;
+    color: $tFontColor;
+  }
+  .content {
+    text-align: justify;
+  }
+}

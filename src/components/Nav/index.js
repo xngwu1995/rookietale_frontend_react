@@ -1,17 +1,23 @@
 import { useGoTo } from '@utils/hooks';
 import { Menu } from 'antd';
 import { useState } from 'react';
-import { menuItems, userProfileItem, createTweetItem } from '@utils/constants';
-// import style from './index.module.scss';
+import { menuItems, logOut, createTweetItem } from '@utils/constants';
+import Cookies from 'js-cookie';
+import style from './index.module.scss';
 
 const Nav = () => {
-  const [current, setCurrent] = useState('home');
+  const [current, setCurrent] = useState('tweets');
   const go = useGoTo();
 
   const onClick = (e) => {
     setCurrent(e.key);
     // const mu = getMenuByKey(e.key);
     go(e.key);
+  };
+  const handleLogout = () => {
+    Cookies.set('userId', '');
+    window.alert('登出成功');
+    window.location.reload();
   };
   return (
     <>
@@ -26,17 +32,11 @@ const Nav = () => {
         onClick={onClick}
       />
       <Menu
-        style={{
-          position: 'absolute',
-          size: 26,
-          bottom: 50,
-          zIndex: 1,
-          transition: 'all 0.2s',
-        }}
-        onClick={onClick}
+        className={style.footer}
+        onClick={handleLogout}
         inlineIndent={36}
         mode="inline"
-        items={userProfileItem}
+        items={logOut}
       />
     </>
   );

@@ -1,5 +1,5 @@
-import { get, post } from '@utils/request';
-
-export const login = () => get('/api/accounts/login_status/');
+import { post, put } from '@utils/request';
 
 export const registerUser = (params) => post('/api/accounts/signup/', params);
+
+export const editUser = (userId, params) => put(`api/profiles/${userId}`, params);

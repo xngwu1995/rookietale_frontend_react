@@ -1,0 +1,57 @@
+@import '../../common.module.scss';
+
+.container {
+  background-color: #fff;
+}
+.contentContainer {
+  margin-top: 40px;
+  margin-left: 30%;
+  margin-right: 30%;
+  padding: 20px;
+  display: inline-block;
+  .header {
+    height: 60px;
+    font-size: 14px;
+    .nickname {
+      font-weight: bold;
+      margin-top: 5px;
+    }
+    .username {
+      color: $tFontColor;
+      margin-top: 5px;
+    }
+    .right {
+      float: right;
+      width: calc(100% - 60px);
+    }
+  }
+  .content {
+    font-size: 22px;
+  }
+}
+.avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+.text {
+  width: calc(100% - 140px);
+  float: right;
+  margin-top: 10px;
+  :global(.adm-text-area-element) {
+    font-size: 19px;
+    font-weight: 400;
+  }
+}
+.photo {
+  padding: 10px 0 0 0;
+}
+.time {
+  font-size: 14px;
+  color: $tFontColor;
+  margin: 25px auto;
+}
+.bar {
+  border-top: 1px solid $tBorderColor;
+  border-bottom: 1px solid $tBorderColor;
+}

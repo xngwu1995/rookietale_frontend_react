@@ -1,0 +1,44 @@
+.header {
+  margin-top: 15px;
+  height: 125px;
+  background-color: #b2b2b2;
+}
+.avatarWrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin: -51px 20px 0 20px;
+  overflow: hidden;
+}
+.avatar {
+  height: 100%;
+  width: 100%;
+}
+.photoIcon {
+  position: absolute;
+  top: 23px;
+  left: 23px;
+  font-size: 30px;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: #fff;
+  background-color: rgba(0,0,0,0.5);
+  padding: 7px 10px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+.upFile {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+.content {
+  padding: 15px;
+}
