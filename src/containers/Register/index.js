@@ -47,6 +47,7 @@ const Register = () => {
     if (res.success) {
       // eslint-disable-next-line no-alert
       window.alert('Successfully Sign Up. Congratulations!');
+      navigate('/login');
       return;
     }
     // eslint-disable-next-line no-alert

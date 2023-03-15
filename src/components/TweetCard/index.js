@@ -16,7 +16,7 @@ const TweetCard = ({
   return (
     <div className={style.container}>
       <div className={style.avatarContainer}>
-        <img src={dataSource.user.avatar_url} alt="personalImg" className={style.avatar} />
+        <img src={dataSource.user.avatar_url} alt="" className={style.avatar} />
       </div>
       <div className={style.contentContainer}>
         <div className={style.header}>
@@ -34,7 +34,8 @@ const TweetCard = ({
           {dataSource.content}
         </div>
         <div className={style.photo}>
-          {dataSource.photo_urls.length > 0 && <ImageCard imgs={dataSource.photo_urls} />}
+          {dataSource.photo_urls.length > 0
+            && <ImageCard imgs={dataSource.photo_urls} />}
         </div>
         <div className={style.bar}>
           <Bar
@@ -42,6 +43,7 @@ const TweetCard = ({
             likesCount={dataSource.likes_count}
             id={dataSource.id}
             type={OBJECT_KEYS.TWEET}
+            hasLiked={dataSource.has_liked}
           />
         </div>
       </div>

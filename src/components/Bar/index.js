@@ -15,20 +15,20 @@ const Bar = ({
   id,
   onlyStar,
   type,
+  hasLiked,
 }) => {
   const [activeKey, setactiveKey] = useState();
   const nav = useNavigate();
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(hasLiked);
   const onChangeTabItem = (key) => {
     setactiveKey(key);
     if (key === BAR_KEYS.STAR) {
-      console.log('liked', liked);
       if (liked) {
         cancelLike({
           content_type: type,
           object_id: id,
         }).then((res) => {
-          if (res?.success) {
+          if (res) {
             window.alert('Success cancel');
             setLiked(false);
             return;
@@ -41,7 +41,7 @@ const Bar = ({
         content_type: type,
         object_id: id,
       }).then((res) => {
-        if (res?.success) {
+        if (res) {
           window.alert('Success');
           setLiked(true);
           return;
@@ -74,6 +74,7 @@ Bar.propTypes = {
   id: PropTypes.number,
   onlyStar: PropTypes.bool,
   type: PropTypes.oneOf([OBJECT_KEYS.COMMENT, OBJECT_KEYS.TWEET]),
+  hasLiked: PropTypes.bool.isRequired,
 };
 Bar.defaultProps = {
   id: -1,

@@ -10,8 +10,13 @@ const App = () => {
   const [store, setStore] = useAppContext();
   const go = useGoTo();
   const location = useLocation();
+
   useEffect(() => {
     const init = async () => {
+      if (location.pathname === '/register') {
+        go('register');
+        return;
+      }
       const userId = Cookies.get('userId');
       if (!userId) {
         go('login');
@@ -21,16 +26,17 @@ const App = () => {
         return;
       }
       const res = await getUser(userId);
-      if (res.data) {
+      console.log('res', res);
+      if (res) {
         setStore({
-          user: res.data,
+          user: res,
         });
         if (location.pathname === '/login') {
           go('tweets');
         }
-        // return;
+        return;
       }
-      // nav('/login');
+      go('login');
     };
     init();
   }, [location.pathname]);

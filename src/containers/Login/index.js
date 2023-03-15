@@ -27,6 +27,7 @@ const Login = () => {
       if (res.success) {
         cookies.set('userId', res.user.id);
         go('/');
+        window.location.reload();
         return;
       }
       window.alert('登录失败');

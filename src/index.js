@@ -1,9 +1,8 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { CxtProvider } from '@utils/context';
-
 import Login from '@containers/Login';
 import Register from '@containers/Register';
 import App from '@containers/App';
@@ -14,8 +13,7 @@ import Tweet from '@containers/Tweet';
 import My from '@components/My';
 import EditUser from '@containers/EditUser';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <CxtProvider>
     <BrowserRouter>
       <Routes>
@@ -36,4 +34,5 @@ root.render(
       </Routes>
     </BrowserRouter>
   </CxtProvider>,
+  document.getElementById('root'),
 );
