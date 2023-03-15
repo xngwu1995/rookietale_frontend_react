@@ -10,9 +10,8 @@ export const axiosInstance = axios.create({
   baseURL: '',
   timeout: 5000,
   headers: {
-    'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
     'X-CSRFToken': cookies.get('csrftoken'),
-    accept: 'application/json',
   },
 });
 

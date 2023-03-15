@@ -64,6 +64,10 @@ export const allLinks = [
     link: '/login',
   },
   {
+    key: 'register',
+    link: '/register',
+  },
+  {
     key: 'tweets',
     link: '/',
   },

@@ -18,13 +18,14 @@ const ImageUpload = ({
         r({
           key: f.name,
           content: res,
+          file: f,
         });
       });
     }));
     Promise.all(flss).then((res) => {
       const result = {};
       res.forEach((item) => {
-        result[item.key] = item.content;
+        result[item.key] = item;
       });
       onChange(result);
     });

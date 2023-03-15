@@ -23,7 +23,11 @@ export const CxtProvider = ({
     store, update,
   }), [store]);
 
-  return (<AppContext.Provider value={value}>{children}</AppContext.Provider>);
+  return (
+    <AppContext.Provider value={value}>
+      {children}
+    </AppContext.Provider>
+  );
 };
 
 CxtProvider.propTypes = {

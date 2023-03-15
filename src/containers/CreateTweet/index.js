@@ -6,18 +6,9 @@ import { useState } from 'react';
 import { createTweet } from '@services/tweet';
 import ImageUpload from '@components/ImageUpload';
 import ImagePreview from '@components/ImagePreview';
+import { useAppContext } from '@utils/context';
 import style from './index.module.scss';
 
-const defaultTweet = {
-  id: 6,
-  user: {
-    id: 1,
-    username: 'admin',
-    nickname: 'IU',
-    avatar_url: 'https://img.shoufaw.com/wp-content/uploads/2020/10/aEjURn.jpg',
-    acvatar_url_0: 'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2021/08/12/realtime/13315182.jpg',
-  },
-};
 /**
 *
 */
@@ -25,21 +16,26 @@ const CreateTweet = () => {
   const [value, setValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [imgs, setImgs] = useState([]);
+  const [files, setFiles] = useState([]);
+  const [store] = useAppContext();
   const go = useGoTo();
+
   const onClickSubmit = () => {
-    createTweet({
-      value,
-      files: Object.values(imgs),
-    }).then((res) => {
-      if (res?.success) {
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
+    formData.append('content', value);
+    createTweet(formData).then((res) => {
+      if (res) {
         window.alert('Successfully Post!');
+        setIsModalOpen(false);
+        go();
         return;
       }
       // eslint-disable-next-line no-alert
       window.alert('Ops, you can not post');
     });
-    setIsModalOpen(false);
-    go();
   };
   const handleCancel = () => {
     setIsModalOpen(false);
@@ -47,10 +43,15 @@ const CreateTweet = () => {
   };
 
   const onChangeFile = (v) => {
-    if (v && (Object.keys(imgs).length + Object.keys(v).length < 5)) {
+    if (v && Object.keys(v).length < 5) {
+      const newV = {};
+      Object.keys(v).forEach((key) => {
+        newV[key] = v[key].content;
+      });
+      setFiles(Object.values(v).map((item) => item.file));
       setImgs((oldV) => ({
         ...oldV,
-        ...v,
+        ...newV,
       }));
       return;
     }
@@ -79,7 +80,7 @@ const CreateTweet = () => {
     >
       <div className={style.container}>
         <div className={style.avatarContainer}>
-          <img src={defaultTweet.user.acvatar_url_0} alt="personalImg" className={style.avatar} />
+          <img src={store.user?.avatar_url} alt="" className={style.avatar} />
         </div>
         <div className={style.content}>
           <TextArea

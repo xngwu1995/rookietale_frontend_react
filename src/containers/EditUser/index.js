@@ -10,16 +10,6 @@ import { editUser } from '@services/register';
 import { useGoTo } from '@utils/hooks';
 import style from './index.module.scss';
 
-const defaultTweet = {
-  id: 6,
-  user: {
-    id: 1,
-    username: 'admin',
-    nickname: 'IU',
-    avatar_url: 'https://img.shoufaw.com/wp-content/uploads/2020/10/aEjURn.jpg',
-    acvatar_url_0: 'https://pgw.udn.com.tw/gw/photo.php?u=https://uc.udn.com.tw/photo/2021/08/12/realtime/13315182.jpg',
-  },
-};
 /**
 *
 */
@@ -43,9 +33,7 @@ const EditUser = () => {
     go();
   };
   const handleSave = async () => {
-    // 这里有个bug 大家记得改一下
     const values = await form.validateFields();
-    console.log('values', values);
     setNickname(values);
     if (nickname || avatar) {
       const res = await editUser(store.user?.id, {
@@ -83,24 +71,16 @@ const EditUser = () => {
             <CameraOutline />
           </div>
           <input type="file" className={style.upFile} onChange={onFileChange} accept="image/png, image/jpeg" />
-          <img className={style.avatar} src={avatar || defaultTweet.user?.avatar_url} alt="" />
+          <img className={style.avatar} src={avatar || store.user?.avatar_url} alt="" />
         </div>
         <div className={style.content}>
           <Form
             form={form}
           >
             <Form.Item
-              name="username"
-              rules={[{ required: true, message: 'Please input your username!' }]}
+              name="nickname"
             >
-              <Input label="Nickname" placeholder="Nickname" value={defaultTweet.nickname} />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-              <Input label="username" placeholder="username" />
+              <Input label="Nickname" placeholder="Nickname" value={store.nickname} />
             </Form.Item>
           </Form>
         </div>

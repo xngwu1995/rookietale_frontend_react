@@ -19,12 +19,13 @@ export const getBars = ({
   id,
   onlyStar,
   liked,
+  onChangeTabItem,
 }) => {
   if (onlyStar) {
     return [{
       key: BAR_KEYS.STAR,
       icon: (
-        <div>
+        <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
           {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
             : <img className={style.icon} src={starSvg} alt="" />}
           {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
@@ -48,7 +49,7 @@ export const getBars = ({
     {
       key: BAR_KEYS.STAR,
       icon: (
-        <div>
+        <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
           {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
             : <img className={style.icon} src={starSvg} alt="" />}
           {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
@@ -56,7 +57,10 @@ export const getBars = ({
     },
     {
       key: BAR_KEYS.UP,
-      icon: <img className={style.icon} src={upSvg} alt="" />,
+      icon: (
+        <div onClick={() => onChangeTabItem(BAR_KEYS.UP)}>
+          <img className={style.icon} src={upSvg} alt="" />
+        </div>),
     },
   ];
 };
