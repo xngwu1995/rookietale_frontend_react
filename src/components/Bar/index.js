@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { message } from 'antd';
 import { TabBar } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
@@ -29,11 +30,9 @@ const Bar = ({
           object_id: id,
         }).then((res) => {
           if (res) {
-            window.alert('Success cancel');
+            message.success('Successfully Cancelled');
             setLiked(false);
-            return;
           }
-          window.alert('Failed');
         });
         return;
       }
@@ -42,11 +41,9 @@ const Bar = ({
         object_id: id,
       }).then((res) => {
         if (res) {
-          window.alert('Success');
+          message.success('Success');
           setLiked(true);
-          return;
         }
-        window.alert('Failed');
       });
     }
   };

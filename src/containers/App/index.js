@@ -26,7 +26,6 @@ const App = () => {
         return;
       }
       const res = await getUser(userId);
-      console.log('res', res);
       if (res) {
         setStore({
           user: res,
