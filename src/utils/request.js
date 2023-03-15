@@ -1,4 +1,4 @@
-import { Toast } from 'antd-mobile';
+import { message } from 'antd';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
@@ -29,9 +29,24 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 // Intercept the response data, 1. handle data, 2. handle error
-axiosInstance.interceptors.response.use((response) => response.data, () => {
-  Toast.show('Server can not work');
-});
+axiosInstance.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    if (error.response) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx
+      const { data } = error.response;
+      message.error(`Error: ${data.message}`);
+    } else if (error.request) {
+      // The request was made but no response was received
+      message.error('Error: No response received from server');
+    } else {
+      // Something happened in setting up the request that triggered an Error
+      message.error(`Error: ${error.message}`);
+    }
+    return Promise.reject(error);
+  },
+);
 
 // get resource
 export const get = (url) => axiosInstance.get(url);

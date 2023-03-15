@@ -30,7 +30,6 @@ const Tweets = () => {
     };
     init();
   }, []);
-  console.log('data', data);
   const rowRenderer = useCallback(({
     index, key, style: sy, parent,
   }) => (

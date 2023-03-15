@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { message } from 'antd';
 import { useAppContext } from '@utils/context';
 import { registerUser } from '@services/register';
 import Show from '@components/Show';
@@ -45,13 +46,9 @@ const Register = () => {
       ...userInfo,
     });
     if (res.success) {
-      // eslint-disable-next-line no-alert
-      window.alert('Successfully Sign Up. Congratulations!');
+      message.success('Successfully Sign Up. Congratulations!');
       navigate('/login');
-      return;
     }
-    // eslint-disable-next-line no-alert
-    window.alert('Ops, you can not singup');
   };
 
   return (

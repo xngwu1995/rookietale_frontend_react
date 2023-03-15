@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import {
-  Button, Input, Form,
+  Button, Input, Form, message,
 } from 'antd';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -25,12 +25,12 @@ const Login = () => {
     if (values) {
       const res = await login(values);
       if (res.success) {
+        console.log('res', res);
         cookies.set('userId', res.user.id);
+        message.success('Successfully log in');
         go('/');
         window.location.reload();
-        return;
       }
-      window.alert('登录失败');
     }
   };
   return (

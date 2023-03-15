@@ -1,5 +1,5 @@
 import { useGoTo } from '@utils/hooks';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import { useState } from 'react';
 import { menuItems, logOut, createTweetItem } from '@utils/constants';
 import Cookies from 'js-cookie';
@@ -16,7 +16,7 @@ const Nav = () => {
   };
   const handleLogout = () => {
     Cookies.set('userId', '');
-    window.alert('登出成功');
+    message.success('Successfully Log Out');
     window.location.reload();
   };
   return (

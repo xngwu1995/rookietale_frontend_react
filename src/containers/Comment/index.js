@@ -1,7 +1,7 @@
 /* eslint-disable no-alert */
 import { createComment } from '@services/comments';
 import { useGoTo } from '@utils/hooks';
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import moment from 'moment';
 import { useState } from 'react';
@@ -61,11 +61,8 @@ const Comment = () => {
       tweet_id: params.id,
     }).then((res) => {
       if (res?.success) {
-        window.alert('Successfully Reply!');
-        return;
+        message.success('Successfully Reply!');
       }
-      // eslint-disable-next-line no-alert
-      window.alert('Ops, you can not reply');
     });
     setIsModalOpen(false);
     go();

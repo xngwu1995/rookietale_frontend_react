@@ -1,6 +1,6 @@
 // import IconButton from '@components/IconButton';
 import { useGoTo } from '@utils/hooks';
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useState } from 'react';
 import { createTweet } from '@services/tweet';
@@ -28,13 +28,10 @@ const CreateTweet = () => {
     formData.append('content', value);
     createTweet(formData).then((res) => {
       if (res) {
-        window.alert('Successfully Post!');
+        message.success('Successfully Post!');
         setIsModalOpen(false);
         go();
-        return;
       }
-      // eslint-disable-next-line no-alert
-      window.alert('Ops, you can not post');
     });
   };
   const handleCancel = () => {
@@ -55,7 +52,7 @@ const CreateTweet = () => {
       }));
       return;
     }
-    window.alert('Four pictures only.');
+    message.error('Four Pictures Only.');
   };
   const handleDelImg = (index) => {
     const key = Object.keys(imgs).find((item, idx) => idx === index);
