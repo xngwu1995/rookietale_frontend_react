@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   CellMeasurer, CellMeasurerCache, List, WindowScroller,
 } from 'react-virtualized';
@@ -12,7 +12,7 @@ const { Content, Sider } = Layout;
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
-  minHeight: 100,
+  minHeight: 110,
 });
 /**
 *
@@ -20,6 +20,7 @@ const cache = new CellMeasurerCache({
 const Tweets = () => {
   const [, setStore] = useAppContext();
   const [data, setData] = useState([]);
+
   useEffect(() => {
     setStore({
       closeHeaderHandler: null,
@@ -30,8 +31,12 @@ const Tweets = () => {
     };
     init();
   }, []);
-  const rowRenderer = useCallback(({
-    index, key, style: sy, parent,
+
+  const rowRenderer = ({
+    index,
+    key,
+    style: sy,
+    parent,
   }) => (
     <CellMeasurer
       cache={cache}
@@ -46,63 +51,82 @@ const Tweets = () => {
         </div>
       )}
     </CellMeasurer>
-  ), [data]);
+  );
+
   return (
-    <Layout>
-      <Sider
-        theme="light"
-        width={300}
-        style={{
-          padding: '50px 0',
-          overflow: 'auto',
-          height: '100%',
-          position: 'fixed',
-        }}
-      >
-        <Nav />
-      </Sider>
-      <Layout className="site-layout" style={{ marginLeft: 300, width: '1100px' }}>
-        <Content
+    <div style={{ minHeight: '100vh' }}>
+      <Layout>
+        <Sider
+          theme="light"
+          width={300}
           style={{
-            padding: '50px 24px',
-            overflow: 'initial',
+            marginLeft: 300,
+            padding: '50px 0',
+            overflow: 'auto',
+            height: '100%',
+            position: 'fixed',
           }}
         >
-          <WindowScroller>
-            {({
-              height, isScrolling, registerChild, onChildScroll, scrollTop,
-            }) => (
-              <div ref={registerChild}>
-                <List
-                  isScrolling={isScrolling}
-                  onScroll={onChildScroll}
-                  scrollTop={scrollTop}
-                  isScrollingOptOut
-                  autoHeight
-                  height={height}
-                  deferredMeasurementCache={cache}
-                  rowHeight={cache.rowHeight}
-                  overscanRowCount={2}
-                  rowCount={data.length}
-                  rowRenderer={rowRenderer}
-                  width={800}
-                />
-              </div>
-            )}
-          </WindowScroller>
-        </Content>
-      </Layout>
-      <Layout className="site-layout" style={{ marginRight: 300, width: '100%' }}>
-        <Content style={{
-          margin: '24px 16px 0', overflow: 'initial', backgroundColor: '#fff',
-        }}
+          <Nav />
+        </Sider>
+        <Layout
+          className="site-layout"
+          style={{
+            marginLeft: 300,
+            paddingLeft: 300,
+            paddingRight: 300,
+            width: '100%',
+          }}
         >
-          <div style={{ padding: 24, textAlign: 'left' }}>
-            <p>Who to follow</p>
-          </div>
-        </Content>
+          <Content
+            style={{
+              padding: '50px 24px',
+              overflow: 'auto',
+              maxWidth: 800,
+            }}
+          >
+            <WindowScroller>
+              {({
+                height, isScrolling, registerChild, onChildScroll, scrollTop,
+              }) => (
+                <div ref={registerChild}>
+                  <List
+                    isScrolling={isScrolling}
+                    onScroll={onChildScroll}
+                    scrollTop={scrollTop}
+                    isScrollingOptOut
+                    autoHeight
+                    height={height}
+                    deferredMeasurementCache={cache}
+                    rowHeight={cache.rowHeight}
+                    overscanRowCount={2}
+                    rowCount={data.length}
+                    rowRenderer={rowRenderer}
+                    width={800}
+                  />
+                </div>
+              )}
+            </WindowScroller>
+          </Content>
+          <Sider
+            theme="light"
+            width={300}
+            style={{
+              marginRight: 200,
+              padding: '20px 0',
+              overflow: 'auto',
+              height: '100%',
+              position: 'fixed',
+              right: 0,
+            }}
+          >
+            <div style={{ padding: 24, textAlign: 'left' }}>
+              <p>Who to follow</p>
+            </div>
+          </Sider>
+        </Layout>
       </Layout>
-    </Layout>
+    </div>
   );
 };
 
