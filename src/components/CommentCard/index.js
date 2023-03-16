@@ -29,7 +29,13 @@ const CommentCard = ({
       <div className={style.content}>
         {data.content}
       </div>
-      <Bar onlyStar likesCount={data.likes_count} type={OBJECT_KEYS.COMMENT} />
+      <Bar
+        onlyStar
+        likesCount={data.likes_count}
+        hasLiked={data.has_liked}
+        type={OBJECT_KEYS.COMMENT}
+        id={data.id}
+      />
     </div>
   </div>
 );
@@ -41,6 +47,7 @@ CommentCard.propTypes = {
       nickname: PropTypes.string,
       avatar_url: PropTypes.string,
     }),
+    id: PropTypes.number,
     content: PropTypes.string, // 该评论的文本内容
     created_at: PropTypes.string, // 该评论的发布时间
     likes_count: PropTypes.number, // 该评论的点赞数

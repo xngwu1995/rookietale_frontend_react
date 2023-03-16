@@ -17,6 +17,8 @@ const Bar = ({
   onlyStar,
   type,
   hasLiked,
+  // eslint-disable-next-line react/prop-types
+  dataSource,
 }) => {
   const [activeKey, setactiveKey] = useState();
   const nav = useNavigate();
@@ -49,7 +51,7 @@ const Bar = ({
   };
   return (
     <div className={style.container}>
-      <TabBar activeKey={activeKey} onChange={onChangeTabItem}>
+      <TabBar activeKey={activeKey}>
         {getBars({
           likesCount,
           commentsCount,
@@ -57,6 +59,8 @@ const Bar = ({
           nav,
           id,
           liked,
+          dataSource,
+          onChangeTabItem,
         }).map((item) => (
           <TabBar.Item key={item.key} icon={item.icon} />
         ))}
@@ -73,6 +77,7 @@ Bar.propTypes = {
   type: PropTypes.oneOf([OBJECT_KEYS.COMMENT, OBJECT_KEYS.TWEET]),
   hasLiked: PropTypes.bool.isRequired,
 };
+
 Bar.defaultProps = {
   id: -1,
   onlyStar: false,

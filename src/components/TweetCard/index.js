@@ -1,9 +1,10 @@
 import Bar from '@components/Bar';
 import { OBJECT_KEYS } from '@components/Bar/constants';
 import ImageCard from '@components/ImageCard';
-import { useGoTo } from '@utils/hooks';
+import { getComments } from '@services/comments';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { generatePath, useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
 
 /**
@@ -12,7 +13,15 @@ import style from './index.module.scss';
 const TweetCard = ({
   dataSource,
 }) => {
-  const go = useGoTo();
+  const nav = useNavigate();
+
+  const handleTweetClick = async () => {
+    const tweetID = dataSource.id;
+    const res = await getComments(tweetID);
+    const link = generatePath('/tweet/:id', { id: tweetID });
+    nav(link, { state: { passedData: dataSource, comments: res } });
+  };
+
   return (
     <div className={style.container}>
       <div className={style.avatarContainer}>
@@ -30,7 +39,7 @@ const TweetCard = ({
           &nbsp;~&nbsp;
           {`${moment(dataSource.created_at).format('mm')}minute`}
         </div>
-        <div className={style.content} onClick={() => go('tweet', { id: dataSource.id })}>
+        <div className={style.content} onClick={handleTweetClick}>
           {dataSource.content}
         </div>
         <div className={style.photo}>
@@ -44,6 +53,7 @@ const TweetCard = ({
             id={dataSource.id}
             type={OBJECT_KEYS.TWEET}
             hasLiked={dataSource.has_liked}
+            dataSource={dataSource}
           />
         </div>
       </div>

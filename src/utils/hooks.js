@@ -54,7 +54,6 @@ export const useDownLoad = () => {
   useEffect(() => {
     if (loading) {
       setTimeout(() => {
-        console.log('finish');
         setLoading(false);
       }, 2000);
     }

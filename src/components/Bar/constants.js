@@ -20,24 +20,30 @@ export const getBars = ({
   onlyStar,
   liked,
   onChangeTabItem,
+  dataSource,
 }) => {
+  const handleCommentClick = () => {
+    nav(`/comments/${id}`, { state: { passedData: dataSource } });
+  };
   if (onlyStar) {
-    return [{
-      key: BAR_KEYS.STAR,
-      icon: (
-        <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
-          {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
-            : <img className={style.icon} src={starSvg} alt="" />}
-          {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
-        </div>),
+    return [
+      {
+        key: BAR_KEYS.STAR,
+        icon: (
+          <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
+            {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
+              : <img className={style.icon} src={starSvg} alt="" />}
+            {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
+          </div>),
 
-    }];
+      },
+    ];
   }
   return [
     {
       key: BAR_KEYS.MSG,
       icon: (
-        <div onClick={() => nav(`/comments/${id}`)}>
+        <div onClick={handleCommentClick}>
           <img className={style.icon} src={msgSvg} alt="" />
           {commentsCount > 0 && <span className={style.count}>{commentsCount}</span>}
         </div>),
