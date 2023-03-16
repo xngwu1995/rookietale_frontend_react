@@ -28,7 +28,6 @@ const Login = () => {
         cookies.set('userId', res.user.id);
         message.success('Successfully log in');
         go('/');
-        window.location.reload();
       }
     }
   };
