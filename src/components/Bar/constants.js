@@ -14,7 +14,7 @@ export const BAR_KEYS = {
 
 export const getBars = ({
   commentsCount,
-  likesCount,
+  currentLikes,
   nav,
   id,
   onlyStar,
@@ -33,7 +33,7 @@ export const getBars = ({
           <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
             {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
               : <img className={style.icon} src={starSvg} alt="" />}
-            {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
+            {currentLikes > 0 && <span className={style.count}>{currentLikes}</span>}
           </div>),
 
       },
@@ -58,7 +58,7 @@ export const getBars = ({
         <div onClick={() => onChangeTabItem(BAR_KEYS.STAR)}>
           {liked ? <img className={style.icon} src={likeRedSvg} alt="" />
             : <img className={style.icon} src={starSvg} alt="" />}
-          {likesCount > 0 && <span className={style.count}>{likesCount}</span>}
+          {currentLikes > 0 && <span className={style.count}>{currentLikes}</span>}
         </div>),
     },
     {

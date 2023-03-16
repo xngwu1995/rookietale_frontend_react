@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { TabBar } from 'antd-mobile';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { cancelLike, likes } from '@services/comments';
+import { cancelLike, Like } from '@services/comments';
 import { BAR_KEYS, getBars, OBJECT_KEYS } from './constants';
 import style from './index.module.scss';
 
@@ -23,6 +23,7 @@ const Bar = ({
   const [activeKey, setactiveKey] = useState();
   const nav = useNavigate();
   const [liked, setLiked] = useState(hasLiked);
+  const [currentLikes, setLikes] = useState(likesCount);
   const onChangeTabItem = (key) => {
     setactiveKey(key);
     if (key === BAR_KEYS.STAR) {
@@ -34,17 +35,19 @@ const Bar = ({
           if (res) {
             message.success('Successfully Cancelled');
             setLiked(false);
+            setLikes(currentLikes - 1);
           }
         });
         return;
       }
-      likes({
+      Like({
         content_type: type,
         object_id: id,
       }).then((res) => {
         if (res) {
           message.success('Success');
           setLiked(true);
+          setLikes(currentLikes + 1);
         }
       });
     }
@@ -53,7 +56,7 @@ const Bar = ({
     <div className={style.container}>
       <TabBar activeKey={activeKey}>
         {getBars({
-          likesCount,
+          currentLikes,
           commentsCount,
           onlyStar,
           nav,
