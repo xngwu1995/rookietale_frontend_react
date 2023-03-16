@@ -25,7 +25,6 @@ const Login = () => {
     if (values) {
       const res = await login(values);
       if (res.success) {
-        console.log('res', res);
         cookies.set('userId', res.user.id);
         message.success('Successfully log in');
         go('/');

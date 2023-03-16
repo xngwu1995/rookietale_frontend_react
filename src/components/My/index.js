@@ -15,7 +15,6 @@ const My = () => {
   const [store, setStore] = useAppContext();
   const navigate = useNavigate();
   const go = useGoTo();
-  console.log('myStore', store);
   useEffect(() => {
     if (!store.user.id) return;
     const init = async () => {
@@ -25,7 +24,6 @@ const My = () => {
     init();
     setStore({ closeHeaderHandler: () => go('/') });
   }, []);
-  console.log(data);
   const items = [
     {
       key: 'tweet',
