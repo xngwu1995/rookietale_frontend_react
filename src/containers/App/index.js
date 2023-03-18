@@ -3,7 +3,7 @@ import HeaderTwitter from '@components/Header';
 import { useAppContext } from '@utils/context';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { getUser } from '@services/login';
+import { getUser } from '@services/users';
 import { useGoTo } from '@utils/hooks';
 
 const App = () => {

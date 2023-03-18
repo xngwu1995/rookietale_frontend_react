@@ -25,12 +25,12 @@ export const menuItems = [
     icon: <img className={style.icon} src={tipSvg} alt="" />,
     label: 'NOTIFICATION',
   },
-  // {
-  //   key: 'message',
-  //   link: '/message',
-  //   icon: <img className={style.icon} src={messageSvg} alt="" />,
-  //   label: 'Message',
-  // },
+  {
+    key: 'friendship',
+    link: '/friendship',
+    icon: <img className={style.icon} src={messageSvg} alt="" />,
+    label: 'FRIENDSHIP',
+  },
   {
     key: 'profile',
     link: '/profile',
@@ -94,6 +94,10 @@ export const allLinks = [
   {
     key: 'tweet',
     link: '/tweet/:id',
+  },
+  {
+    key: 'friendship',
+    link: '/friendship',
   },
 ];
 

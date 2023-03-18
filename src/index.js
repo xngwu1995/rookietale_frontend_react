@@ -12,6 +12,7 @@ import CreateTweet from '@containers/CreateTweet';
 import Tweet from '@containers/Tweet';
 import My from '@components/My';
 import EditUser from '@containers/EditUser';
+import FollowPage from '@containers/FollowPage';
 
 ReactDOM.render(
   <CxtProvider>
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path="/health" element={<Comment />} />
           <Route path="/tweet/:id" element={<Tweet />} />
           <Route path="/edituser" element={<EditUser />} />
+          <Route path="/friendship" element={<FollowPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

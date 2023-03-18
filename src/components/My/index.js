@@ -4,26 +4,38 @@ import { useAppContext } from '@utils/context';
 import TweetCard from '@components/TweetCard';
 import { useGoTo } from '@utils/hooks';
 import { getTweets } from '@services/tweet';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
 
 /**
 * Personal Info
 */
 const My = () => {
+  const location = useLocation();
+  const [isMy, setIsMy] = useState(true);
   const [data, setData] = useState([]);
   const [store, setStore] = useAppContext();
+  const [currenUser, setCurrenUser] = useState('');
   const navigate = useNavigate();
   const go = useGoTo();
+
   useEffect(() => {
+    setStore({ closeHeaderHandler: () => go('/') });
+    if (location.state) {
+      setIsMy(location.state?.isMy);
+      setData(location.state?.passedData.tweets);
+      setCurrenUser(location.state?.currentUser);
+      return;
+    }
     if (!store.user.id) return;
     const init = async () => {
       const res = await getTweets(store.user?.id);
       setData(res.tweets);
+      setCurrenUser(store.user);
     };
     init();
-    setStore({ closeHeaderHandler: () => go('/') });
   }, []);
+
   const items = [
     {
       key: 'tweet',
@@ -53,19 +65,21 @@ const My = () => {
   return (
     <div className={style.container}>
       <div className={style.header} />
-      <img className={style.avatar} src={store.user?.avatar_url} alt="" />
+      <img className={style.avatar} src={currenUser.avatar_url} alt="" />
+      {isMy && (
       <Button
         className={style.edit}
         onClick={() => navigate('/edituser')}
       >
         Edit Profile
       </Button>
+      )}
       <div className={style.nickname}>
-        {store.user?.nickname || 'unknown'}
+        {currenUser.nickname || 'unknown'}
       </div>
       <div className={style.username}>
         @
-        {store.user?.username}
+        {currenUser.username}
       </div>
       <div className={style.follower}>
         <span className={style.number1}>
