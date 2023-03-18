@@ -1,7 +1,10 @@
+import Avatar from '@components/Avatar';
 import Bar from '@components/Bar';
 import { OBJECT_KEYS } from '@components/Bar/constants';
 import ImageCard from '@components/ImageCard';
 import { getComments } from '@services/comments';
+import { getUser } from '@services/users';
+import { getTweets } from '@services/tweet';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -22,11 +25,20 @@ const TweetCard = ({
     nav(link, { state: { passedData: dataSource, comments: res } });
   };
 
+  const handleAvatarClick = async () => {
+    const userID = dataSource.user.id;
+    const res = await getTweets(userID);
+    const user = await getUser(userID);
+    nav('/profile', { state: { passedData: res, isMy: false, currentUser: user } });
+  };
+
   return (
     <div className={style.container}>
-      <div className={style.avatarContainer}>
-        <img src={dataSource.user.avatar_url} alt="" className={style.avatar} />
-      </div>
+      <Avatar
+        key="avatarUrl"
+        avatarUrl={dataSource.user?.avatar_url}
+        onClick={handleAvatarClick}
+      />
       <div className={style.contentContainer}>
         <div className={style.header}>
           <span className={style.nickname}>

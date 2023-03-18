@@ -30,7 +30,8 @@ const CreateTweet = () => {
       if (res) {
         message.success('Successfully Post!');
         setIsModalOpen(false);
-        go();
+        go('/');
+        window.location.reload();
       }
     });
   };
