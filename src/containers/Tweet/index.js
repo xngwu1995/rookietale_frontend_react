@@ -1,7 +1,7 @@
 import ImageCard from '@components/ImageCard';
 import { useEffect } from 'react';
 import Bar from '@components/Bar';
-import moment from 'moment';
+import { timeDiff } from '@utils/index';
 import CommentCard from '@components/CommentCard';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppContext } from '@utils/context';
@@ -46,7 +46,7 @@ const Tweet = () => {
         </div>
         <div className={style.time}>
           {
-            moment(tweetDetails.created_at).format('h:m A  ~ YYYY/MM/DD')
+            timeDiff(tweetDetails.created_at)
           }
         </div>
         <div className={style.bar}>

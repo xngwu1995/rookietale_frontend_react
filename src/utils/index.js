@@ -14,11 +14,11 @@ export const fileByBase64 = (file) => new Promise((r) => {
 export const timeDiff = (time) => {
   const hours = moment().diff(time, 'hours');
   if (hours > 23) {
-    return moment(time).format('MM月DD日');
+    return moment(time).format('MM/DD/YYYY');
   }
   if (hours > 0) {
-    return `${hours}小时`;
+    return `${hours} hours`;
   }
   const minutes = moment().diff(time, 'minutes');
-  return `${minutes || 1}分钟`;
+  return `${minutes || 1} minutes`;
 };

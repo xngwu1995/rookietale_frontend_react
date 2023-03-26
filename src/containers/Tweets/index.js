@@ -149,6 +149,7 @@ const Tweets = () => {
           theme="light"
           width={300}
           style={{
+            marginTop: 20,
             marginLeft: 200,
             padding: '50px 0',
             overflow: 'auto',
@@ -161,6 +162,7 @@ const Tweets = () => {
         <Layout
           className="site-layout"
           style={{
+            marginTop: 15,
             marginLeft: 200,
             paddingLeft: 300,
             paddingRight: 300,
@@ -201,6 +203,7 @@ const Tweets = () => {
             theme="light"
             width={400}
             style={{
+              marginTop: 20,
               marginRight: 200,
               padding: '20px 0',
               overflow: 'auto',

@@ -38,6 +38,11 @@ export const menuItems = [
     label: 'PROFILE',
   },
   {
+    key: 'academicworld',
+    icon: <img className={style.icon} src={twitterLogSvg} alt="" />,
+    label: 'ACADEMICWORLD',
+  },
+  {
     key: 'health',
     link: '/health',
     icon: <img className={style.icon} src={twitterLogSvg} alt="" />,
@@ -98,6 +103,10 @@ export const allLinks = [
   {
     key: 'friendship',
     link: '/friendship',
+  },
+  {
+    key: 'academicworld',
+    link: '/academicworld',
   },
 ];
 
