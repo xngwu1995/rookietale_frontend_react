@@ -5,7 +5,7 @@ import ImageCard from '@components/ImageCard';
 import { getComments } from '@services/comments';
 import { getUser } from '@services/users';
 import { getTweets } from '@services/tweet';
-import moment from 'moment';
+import { timeDiff } from '@utils/index';
 import PropTypes from 'prop-types';
 import { generatePath, useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
@@ -49,7 +49,7 @@ const TweetCard = ({
             {dataSource.user.username}
           </span>
           &nbsp;~&nbsp;
-          {`${moment(dataSource.created_at).format('mm')}minute`}
+          {timeDiff(dataSource.created_at)}
         </div>
         <div className={style.content} onClick={handleTweetClick}>
           {dataSource.content}

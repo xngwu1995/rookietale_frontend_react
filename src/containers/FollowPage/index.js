@@ -133,7 +133,7 @@ const FollowPage = () => {
 
   return (
     <div className={style.followPage}>
-      <Tabs defaultActiveKey="1">
+      <Tabs defaultActiveKey="1" style={{ marginTop: 20 }}>
         <TabPane tab="Followers" key="1">
           {renderFollowersList()}
         </TabPane>

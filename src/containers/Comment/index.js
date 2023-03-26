@@ -2,9 +2,9 @@
 import { createComment } from '@services/comments';
 import { useAppContext } from '@utils/context';
 import { useGoTo } from '@utils/hooks';
+import { timeDiff } from '@utils/index';
 import { Button, message, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
-import moment from 'moment';
 import { useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ const Comment = () => {
       content: value,
       tweet_id: params.id,
     }).then((res) => {
-      if (res?.success) {
+      if (res?.created_at) {
         message.success('Successfully Reply!');
       }
     });
@@ -68,7 +68,7 @@ const Comment = () => {
               {tweetDetails.user.username}
             </span>
             &nbsp;~&nbsp;
-            {`${moment(tweetDetails.created_at).format('mm')}minute`}
+            {timeDiff(tweetDetails.created_at)}
           </div>
           <div className={style.content}>
             {tweetDetails.content}
