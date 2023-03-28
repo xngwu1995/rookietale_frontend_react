@@ -2,3 +2,57 @@
     font-size: 20px;
     font-weight: bold;
 }
+.container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.leftSider {
+  width: 300px;
+  position: fixed; // Add this property
+  left: 0; // Add this property
+  top: 20px; // Add this property
+  height: calc(100% - 20px); // Add this property
+  overflow-y: hidden; // Add this property
+  flex: 0 0 300px;
+  padding: 20px;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mainContent {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 800px;
+  padding: 30px;
+  margin-left: 300px;
+  margin-right: 300px;
+  border: 1px solid #e6e6e6;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 800px;
+}
+
+.rightSider {
+  width: 300px;
+  position: fixed; // Add this property
+  right: 0; // Add this property
+  top: 20px; // Add this property
+  height: calc(100% - 20px); // Add this property
+  overflow-y: auto; // Add this property
+  flex: 0 0 350px;
+  padding: 20px;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+  

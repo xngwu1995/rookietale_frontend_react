@@ -1,5 +1,31 @@
 @import '../../common.module.scss';
 
+
+.wrap {
+  composes: wrap from '../../common.module.scss';
+
+}
+.login {
+  composes: login from '../../common.module.scss';
+
+}
+
+.left {
+  composes: left from '../../common.module.scss';
+
+}
+
+.left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.right {
+  composes: right from '../../common.module.scss';
+
+}
+
 .input {
   composes: input from '../../common.module.scss';
 }
@@ -27,15 +53,16 @@
   font-weight: 700;
 }
 .footer {
+  margin-bottom: 10px;
   text-align: center;
 }
 .footerButtonDisabled {
-  margin: 0 auto;
+  margin: 0 auto 30px;
   border-radius: 50px;
   background-color: $tGray;
   color: #fff;
   font-size: 16px;
-  width: 30%;
+  width: 40%;
   height: 40px;
 }
 .footerButton {
@@ -67,4 +94,8 @@
 .icon{
   margin-left: 45px;
   height: 40px;
+}
+
+.spanLabel {
+  align-items: center;
 }

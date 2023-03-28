@@ -1,42 +1,67 @@
 @import '../../common.module.scss';
 
-.nav {
-  justify-content: space-between;
-  height: 100%;
-  width: 70%;
-  overflow: auto;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 80px;
-  bottom: 0;
-  right: 20px;
+
+.navContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; // Add this property
+  padding-left: 0;
 }
-.container {
-  margin: 0, 60px;
-  height: 100%;
-  width: 20%;
+
+.navList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
-.label {
-  border-radius: 5px;
-  height: 70px;
-  padding: 20px 10px;
-  width: 100%;
+
+.navListItem {
+  cursor: pointer;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #47525e;
+  transition: all 0.3s;
+  border-radius: 4px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  text-align: left;
+  border-radius: 4px;
 }
-.navTitle {
-  font-size: 26px;
+
+.navListItem:hover {
+  background-color: #e6f7ff;
+  color: #464e55;
+  transform: scale(1.05);
 }
-.postTweet {
-  font-size: 26px;
+
+.active {
+  color: #030303;
 }
-.userProfile {
-  position: 'relative';
-  bottom: 0px;
+
+.post {
+  margin: 10 auto 10;
+  color: #1e10b3;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s;
+  text-align: left;
+  border-radius: 4px;
 }
-.postTweet {
-  text-align: center;
+
+.post:hover {
+  color: #0576b9;
+  background-color: #e6f7ff;
 }
-.footer {
+
+.logoutWrapper {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -48,4 +73,18 @@
   border-top: 1px solid $tBorderColor;
   line-height: 50px;
   padding-left: 15px;
+}
+
+.logout {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.3s;
+  text-align: left;
+  border-radius: 4px;
 }

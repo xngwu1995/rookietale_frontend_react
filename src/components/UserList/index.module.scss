@@ -1,0 +1,28 @@
+.userListItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .userListInfo {
+    margin-left: 16px;
+  }
+  
+  .userListInfo .userListNickname {
+    font-weight: bold;
+  }
+  
+  .followButton {
+    margin-left: auto;
+    padding: 6px 12px;
+    background-color: transparent;
+    color: #1890ff;
+    border: 1px solid #1890ff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  
