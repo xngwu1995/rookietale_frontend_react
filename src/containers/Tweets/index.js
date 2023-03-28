@@ -4,15 +4,13 @@ import {
 } from 'react-virtualized';
 import Nav from '@components/Nav';
 import TweetCard from '@components/TweetCard';
-import { Layout, message } from 'antd';
+import { message } from 'antd';
 import { useAppContext } from '@utils/context';
 import { getFeeds, getTweets } from '@services/tweet';
 import Avatar from '@components/Avatar';
 import { followUser, getRandomUser, unFollowUser } from '@services/users';
 import { useNavigate } from 'react-router-dom';
 import style from './index.module.scss';
-
-const { Content, Sider } = Layout;
 
 const cache = new CellMeasurerCache({
   fixedWidth: true,
@@ -143,82 +141,44 @@ const Tweets = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh' }}>
-      <Layout>
-        <Sider
-          theme="light"
-          width={300}
-          style={{
-            marginTop: 20,
-            marginLeft: 200,
-            padding: '50px 0',
-            overflow: 'auto',
-            height: '100%',
-            position: 'fixed',
-          }}
-        >
-          <Nav />
-        </Sider>
-        <Layout
-          className="site-layout"
-          style={{
-            marginTop: 15,
-            marginLeft: 200,
-            paddingLeft: 300,
-            paddingRight: 300,
-            width: '100%',
-          }}
-        >
-          <Content
-            style={{
-              padding: '50px 24px',
-              overflow: 'auto',
-              maxWidth: 800,
-            }}
-          >
-            <WindowScroller>
-              {({
-                height, isScrolling, registerChild, onChildScroll, scrollTop,
-              }) => (
-                <div ref={registerChild}>
-                  <List
-                    isScrolling={isScrolling}
-                    onScroll={onChildScroll}
-                    scrollTop={scrollTop}
-                    isScrollingOptOut
-                    autoHeight
-                    height={height}
-                    deferredMeasurementCache={cache}
-                    rowHeight={cache.rowHeight}
-                    overscanRowCount={2}
-                    rowCount={data.length}
-                    rowRenderer={rowRenderer}
-                    width={800}
-                  />
-                </div>
-              )}
-            </WindowScroller>
-          </Content>
-          <Sider
-            theme="light"
-            width={400}
-            style={{
-              marginTop: 20,
-              marginRight: 200,
-              padding: '20px 0',
-              overflow: 'auto',
-              height: '100%',
-              position: 'fixed',
-              right: 0,
-            }}
-          >
-            <div style={{ padding: 24, textAlign: 'left' }}>
-              <p className={style.Header}>Who to follow</p>
-              {renderUserList()}
+    <div className={style.container}>
+      <aside className={style.leftSider}>
+        <Nav />
+      </aside>
+      <main className={style.mainContent}>
+        <WindowScroller>
+          {({
+            height,
+            isScrolling,
+            registerChild,
+            onChildScroll,
+            scrollTop,
+          }) => (
+            <div ref={registerChild}>
+              <List
+                isScrolling={isScrolling}
+                onScroll={onChildScroll}
+                scrollTop={scrollTop}
+                isScrollingOptOut
+                autoHeight
+                height={height}
+                deferredMeasurementCache={cache}
+                rowHeight={cache.rowHeight}
+                overscanRowCount={2}
+                rowCount={data.length}
+                rowRenderer={rowRenderer}
+                width={800}
+              />
             </div>
-          </Sider>
-        </Layout>
-      </Layout>
+          )}
+        </WindowScroller>
+      </main>
+      <aside className={style.rightSider}>
+        <div style={{ padding: 24, textAlign: 'left' }}>
+          <p className={style.Header}>Who to follow</p>
+          {renderUserList()}
+        </div>
+      </aside>
     </div>
   );
 };

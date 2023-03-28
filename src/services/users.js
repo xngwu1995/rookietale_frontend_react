@@ -11,7 +11,7 @@ export const followUser = (userId) => post(`/api/friendships/${userId}/follow/`)
 export const unFollowUser = (userId) => post(`/api/friendships/${userId}/unfollow/`);
 
 // Get fans
-export const getFollowers = (userId) => get(`/api/friendships/${userId}/followers/`);
+export const getFollowers = (userId, page, pageSize) => get(`/api/friendships/${userId}/followers/?page=${page}&page_size=${pageSize}`);
 
 // Get my followings
-export const getFollowings = (userId) => get(`/api/friendships/${userId}/followings/`);
+export const getFollowings = (userId, page, pageSize) => get(`/api/friendships/${userId}/followings/?page=${page}&page_size=${pageSize}`);

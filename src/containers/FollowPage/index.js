@@ -10,7 +10,8 @@ import {
 } from '@services/users';
 import { getTweets } from '@services/tweet';
 import { useNavigate } from 'react-router-dom';
-import Avatar from '@components/Avatar';
+import CustomPagination from '@components/PaginationButton';
+import UserList from '@components/UserList';
 import style from './index.module.scss';
 
 const { TabPane } = Tabs;
@@ -21,19 +22,31 @@ const FollowPage = () => {
   const [followingsID, setFollowingsID] = useState([]);
   const [loading, setLoading] = useState(false);
   const [store, setStore] = useAppContext();
+
+  const [followersPage, setFollowersPage] = useState(1);
+  const [followingsPage, setFollowingsPage] = useState(1);
+  const [followersPageSize, setFollowersPageSize] = useState(20);
+  const [followingsPageSize, setFollowingsPageSize] = useState(20);
+  const [followersTotal, setFollowersTotal] = useState(0);
+  const [followingsTotal, setFollowingsTotal] = useState(0);
+
   const nav = useNavigate();
   const go = useGoTo();
+
+  const init = async () => {
+    const res = await getFollowers(store.user?.id, followersPage, followersPageSize);
+    setFollowersTotal(res.total_pages);
+    setFollowers(res.followers);
+
+    const data = await getFollowings(store.user?.id, followingsPage, followingsPageSize);
+    setFollowingsTotal(data.total_pages);
+    setFollowings(data.followings);
+    setFollowingsID(data.followings.map((following) => following.user.id));
+  };
 
   useEffect(() => {
     if (!store.user.id) return;
     setStore({ closeHeaderHandler: () => go('/') });
-    const init = async () => {
-      const res = await getFollowers(store.user?.id);
-      setFollowers(res.followers);
-      const data = await getFollowings(store.user?.id);
-      setFollowings(data.followings);
-      setFollowingsID(data.followings.map((following) => following.user.id));
-    };
     init();
   }, []);
 
@@ -60,75 +73,64 @@ const FollowPage = () => {
     }
   };
 
+  const handleFollowersPageChange = (page, pageSize) => {
+    setFollowersPage(page);
+    setFollowersPageSize(pageSize);
+    init();
+  };
+
+  const handleFollowingsPageChange = (page, pageSize) => {
+    setFollowingsPage(page);
+    setFollowingsPageSize(pageSize);
+    init();
+  };
+
   const renderFollowersList = () => (
-    <ul>
-      {followers && followers.map((user) => {
-        const currenFollowers = user.user;
-        const handleAvatarClick = async () => {
-          const res = await getTweets(currenFollowers.id);
-          nav('/profile', { state: { passedData: res, isMy: false, currentUser: currenFollowers } });
-        };
-        return (
-          <li key={currenFollowers.id} style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
-            <Avatar avatarUrl={currenFollowers.avatar_url} size={40} onClick={handleAvatarClick} />
-            <div style={{ marginLeft: 16 }}>
-              <div style={{ fontWeight: 'bold' }}>{currenFollowers.nickname}</div>
-              <div>
-                @
-                {currenFollowers.username}
-              </div>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <UserList
+        users={followers}
+        userIds={followingsID}
+        onAvatarClick={async (currentUser) => {
+          const res = await getTweets(currentUser.id);
+          nav('/profile', {
+            state: { passedData: res, isMy: false, currentUser },
+          });
+        }}
+        showFollowButton={false}
+      />
+      <CustomPagination
+        current={followersPage}
+        total={followersTotal}
+        pageSize={followersPageSize}
+        onChange={handleFollowersPageChange}
+        onShowSizeChange={handleFollowersPageChange}
+      />
+    </>
   );
 
   const renderFollowingsList = () => (
-    <ul>
-      {followings && followings.map((user) => {
-        const currenFollowings = user.user;
-        const userId = currenFollowings.id;
-        const isFollowing = followingsID.includes(userId);
-
-        const handleAvatarClick = async () => {
-          const res = await getTweets(userId);
-          nav('/profile', { state: { passedData: res, isMy: false, currentUser: currenFollowings } });
-        };
-
-        return (
-          <li key={currenFollowings.id} style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
-            <Avatar avatarUrl={currenFollowings.avatar_url} size={40} onClick={handleAvatarClick} />
-            <div style={{ marginLeft: 16 }}>
-              <div style={{ fontWeight: 'bold' }}>{currenFollowings.nickname}</div>
-              <div>
-                @
-                {currenFollowings.username}
-              </div>
-            </div>
-            <button
-              type="button"
-              style={{
-                marginLeft: 'auto',
-                padding: '6px 12px',
-                backgroundColor: 'transparent',
-                color: '#1890ff',
-                border: '1px solid #1890ff',
-                borderRadius: 20,
-                cursor: 'pointer',
-                transition: 'all 0.3s',
-                fontSize: 14,
-                fontWeight: 'bold',
-                letterSpacing: '0.5px',
-              }}
-              onClick={() => !loading && toggleFollowing(userId)}
-            >
-              {isFollowing ? 'Unfollow' : 'Follow'}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <UserList
+        users={followings}
+        userIds={followingsID}
+        onAvatarClick={async (currentUser) => {
+          const res = await getTweets(currentUser.id);
+          nav('/profile', {
+            state: { passedData: res, isMy: false, currentUser },
+          });
+        }}
+        onToggleFollowing={toggleFollowing}
+        loading={loading}
+        showFollowButton
+      />
+      <CustomPagination
+        current={followingsPage}
+        total={followingsTotal}
+        pageSize={followingsPageSize}
+        onChange={handleFollowingsPageChange}
+        onShowSizeChange={handleFollowingsPageChange}
+      />
+    </>
   );
 
   return (

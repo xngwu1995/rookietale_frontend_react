@@ -4,38 +4,45 @@
   background-color: #fff;
 }
 .contentContainer {
-  width: 500px;
+  max-width: 638px;
   min-height: 400px;
   margin-top: 40px;
   margin-left: 30%;
   margin-right: 30%;
   padding: 20px;
-  display: inline-block;
   .header {
     height: 60px;
     font-size: 14px;
-    .nickname {
-      font-weight: bold;
-      margin-top: 5px;
+    display: flex; // Add display: flex;
+    align-items: center; // Add align-items: center;
+  
+    .avatar {
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
     }
-    .username {
-      color: $tFontColor;
-      margin-top: 5px;
-    }
+  
     .right {
-      float: right;
+      height: 60px;
+      margin: 5px 15px 15px 15px;
+      display: flex;
       width: calc(100% - 60px);
-    }
+      align-items: left;
+      justify-content: left;
+      .nickname {
+        font-weight: bold;
+      }
+      .username {
+        color: $tFontColor;
+        margin-left: 5px;
+      }
+    }    
   }
   .content {
     font-size: 22px;
   }
 }
-.avatar {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-}
+
 .text {
   width: calc(100% - 140px);
   float: right;
