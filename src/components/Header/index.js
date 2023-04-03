@@ -1,7 +1,7 @@
 import { CloseOutlined } from '@ant-design/icons';
 import { useAppContext } from '@utils/context';
 // import { useCurMenu } from '@utils/hooks';
-import logo from '../../assets/twitter-log.svg';
+import logo from '../../assets/logo.svg';
 import style from './index.module.css';
 
 const HeaderTwitter = () => {
@@ -15,7 +15,7 @@ const HeaderTwitter = () => {
           onClick={store.closeHeaderHandler}
         />
       )}
-      <img src={logo} alt="twitter-log" className={style.twitterLog} />
+      <img src={logo} alt="RookieTale" className={style.logo} />
     </div>
   );
 };

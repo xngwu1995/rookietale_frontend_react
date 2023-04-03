@@ -73,24 +73,7 @@ const SearchBar = ({
       const { res, pub } = await fetchInput(keywords);
       setSearchResults({ professorResults: res, publicationResults: pub });
     } else {
-      // const sampleProfessors = [
-      //   {
-      //     id: 1,
-      //     name: 'Professor A',
-      //     university: 'University A',
-      //     data: [
-      //       { group: 'Group 1', value: 120 },
-      //       { group: 'Group 2', value: 100 },
-      //       { group: 'Group 3', value: 140 },
-      //       { group: 'Group 4', value: 95 },
-      //       { group: 'Group 5', value: 110 },
-      //       { group: 'Group 6', value: 130 },
-      //     ],
-      //   },
-      //   // Add more professors
-      // ];
       const { res } = await fetchInput(keywords);
-      console.log('res.professors_group_scores', res.professors_group_scores[0]);
       setSearchResults({ professorsRank: res.professors_group_scores });
     }
   };
@@ -102,7 +85,6 @@ const SearchBar = ({
   const filteredKeywords = allKeywords.filter(
     (keyword) => keyword.toLowerCase().includes(inputValue.toLowerCase()),
   );
-  console.log('searchResults', searchResults);
 
   return (
     <div className={style.container}>

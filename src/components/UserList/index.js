@@ -52,7 +52,7 @@ UserList.propTypes = {
       user: PropTypes.shape({
         id: PropTypes.number.isRequired,
         avatar_url: PropTypes.string,
-        nickname: PropTypes.string.isRequired,
+        nickname: PropTypes.string,
         username: PropTypes.string.isRequired,
       }),
     }),

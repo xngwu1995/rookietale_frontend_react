@@ -8,13 +8,10 @@ import { useGoTo } from '@utils/hooks';
 import {
   followUser, getFollowers, getFollowings, unFollowUser,
 } from '@services/users';
-import { getTweets } from '@services/tweet';
 import { useNavigate } from 'react-router-dom';
 import CustomPagination from '@components/PaginationButton';
 import UserList from '@components/UserList';
 import style from './index.module.scss';
-
-const { TabPane } = Tabs;
 
 const FollowPage = () => {
   const [followers, setFollowers] = useState([]);
@@ -91,9 +88,8 @@ const FollowPage = () => {
         users={followers}
         userIds={followingsID}
         onAvatarClick={async (currentUser) => {
-          const res = await getTweets(currentUser.id);
           nav('/profile', {
-            state: { passedData: res, isMy: false, currentUser },
+            state: { isMy: false, currentUser },
           });
         }}
         showFollowButton={false}
@@ -114,9 +110,8 @@ const FollowPage = () => {
         users={followings}
         userIds={followingsID}
         onAvatarClick={async (currentUser) => {
-          const res = await getTweets(currentUser.id);
           nav('/profile', {
-            state: { passedData: res, isMy: false, currentUser },
+            state: { isMy: false, currentUser },
           });
         }}
         onToggleFollowing={toggleFollowing}
@@ -133,16 +128,22 @@ const FollowPage = () => {
     </>
   );
 
+  const tabItems = [
+    {
+      key: 'followers',
+      label: 'Followers',
+      children: renderFollowersList(),
+    },
+    {
+      key: 'following',
+      label: 'Following',
+      children: renderFollowingsList(),
+    },
+  ];
+
   return (
     <div className={style.followPage}>
-      <Tabs defaultActiveKey="1" style={{ marginTop: 20 }}>
-        <TabPane tab="Followers" key="1">
-          {renderFollowersList()}
-        </TabPane>
-        <TabPane tab="Following" key="2">
-          {renderFollowingsList()}
-        </TabPane>
-      </Tabs>
+      <Tabs defaultActiveKey="followers" items={tabItems} style={{ marginTop: 20 }} />
     </div>
   );
 };

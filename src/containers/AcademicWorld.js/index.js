@@ -12,7 +12,7 @@ const AcademicWorld = () => {
   const go = useGoTo();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = 4;
+  const totalPages = 3;
 
   const fetchData = async () => {
     try {

@@ -14,7 +14,7 @@ const CommentCard = ({
 }) => (
   <div className={style.container}>
     <img className={style.avatar} src={data.user.avatar_url} alt="" />
-    <div className={style.right}>
+    <div className={style.rightPart}>
       <div>
         <span className={style.nickname}>
           {data.user.nickname}
