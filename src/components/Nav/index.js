@@ -1,12 +1,14 @@
 import { useGoTo } from '@utils/hooks';
 import { message } from 'antd';
 import { useState } from 'react';
-import { menuItems, createTweetItem } from '@utils/constants';
+import { menuItems } from '@utils/constants';
 import Cookies from 'js-cookie';
+import { useAppContext } from '@utils/context';
 import style from './index.module.scss';
 
 const Nav = () => {
   const [current, setCurrent] = useState('tweets');
+  const [, setStore] = useAppContext();
   const go = useGoTo();
 
   const handleMenuItemClick = (key) => {
@@ -16,6 +18,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     Cookies.set('userId', '');
+    setStore('clear all');
     message.success('Successfully Log Out');
     window.location.reload();
   };
@@ -37,7 +40,7 @@ const Nav = () => {
           </li>
         ))}
       </ul>
-      <button type="button" className={style.post} onClick={() => handleMenuItemClick(createTweetItem.key)}>
+      <button type="button" className={style.post} onClick={() => handleMenuItemClick('post')}>
         Post Tweet
       </button>
       <div className={style.logoutWrapper}>

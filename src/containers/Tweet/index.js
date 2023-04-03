@@ -1,11 +1,13 @@
 import ImageCard from '@components/ImageCard';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Bar from '@components/Bar';
 import { timeDiff } from '@utils/index';
 import CommentCard from '@components/CommentCard';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { useGoTo } from '@utils/hooks';
 import { useAppContext } from '@utils/context';
 import { OBJECT_KEYS } from '@components/Bar/constants';
+import { getTweetDetails } from '@services/tweet';
 import style from './index.module.scss';
 
 /**
@@ -13,13 +15,21 @@ import style from './index.module.scss';
 */
 const Tweet = () => {
   const [, setStore] = useAppContext();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const tweetDetails = location.state?.passedData;
-  const commentDetails = location.state?.comments;
+  const [tweetDetails, setTweetDetails] = useState('');
+  const [commentDetails, setCommentDetails] = useState({});
+  const go = useGoTo();
+  const params = useParams();
+  const tweetID = params.id;
+
+  const init = async () => {
+    const tweets = await getTweetDetails(tweetID);
+    setTweetDetails(tweets);
+    setCommentDetails(tweets.comments);
+  };
 
   useEffect(() => {
-    setStore({ closeHeaderHandler: () => navigate('/') });
+    setStore({ closeHeaderHandler: () => go('/') });
+    init();
   }, []);
 
   return (
@@ -27,7 +37,7 @@ const Tweet = () => {
       <div className={style.contentContainer}>
         <div className={style.header}>
           <img src={tweetDetails.user?.avatar_url} alt="" className={style.avatar} />
-          <div className={style.right}>
+          <div className={style.rightPart}>
             <div className={style.nickname}>
               {tweetDetails.user?.nickname}
             </div>
@@ -41,7 +51,7 @@ const Tweet = () => {
           {tweetDetails.content}
         </div>
         <div className={style.photo}>
-          {tweetDetails.photo_urls.length > 0
+          {tweetDetails.photo_urls?.length > 0
             && <ImageCard imgs={tweetDetails.photo_urls} />}
         </div>
         <div className={style.time}>
@@ -51,6 +61,7 @@ const Tweet = () => {
         </div>
         <div className={style.bar}>
           <Bar
+            key={tweetDetails.id}
             commentsCount={tweetDetails.comments_count}
             likesCount={tweetDetails.likes_count}
             id={tweetDetails.id}
@@ -60,7 +71,7 @@ const Tweet = () => {
           />
         </div>
       </div>
-      {commentDetails && commentDetails.comments.map(
+      {commentDetails.length > 0 && commentDetails.map(
         (item) => (<CommentCard key={item.id} data={item} />),
       )}
     </div>

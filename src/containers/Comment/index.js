@@ -32,7 +32,10 @@ const Comment = () => {
       }
     });
     setIsModalOpen(false);
-    go();
+    go('tweets');
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
   const handleCancel = () => {
     setIsModalOpen(false);

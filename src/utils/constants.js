@@ -1,9 +1,6 @@
 import { matchPath } from 'react-router-dom';
 import homeSvg from '@assets/home.svg';
 import messageSvg from '@assets/message.svg';
-import tipSvg from '@assets/tip.svg';
-import searchSvg from '@assets/search.svg';
-import twitterLogSvg from '@assets/twitter-logo.svg';
 import style from '../common.module.scss';
 
 export const menuItems = [
@@ -12,18 +9,6 @@ export const menuItems = [
     link: '/',
     icon: <img className={style.icon} src={homeSvg} alt="" />,
     label: 'HOME',
-  },
-  {
-    key: 'search',
-    link: '/search',
-    icon: <img className={style.icon} src={searchSvg} alt="" />,
-    label: 'SEARCH',
-  },
-  {
-    key: 'tips',
-    link: '/tips',
-    icon: <img className={style.icon} src={tipSvg} alt="" />,
-    label: 'NOTIFICATION',
   },
   {
     key: 'friendship',
@@ -39,14 +24,8 @@ export const menuItems = [
   },
   {
     key: 'academicworld',
-    icon: <img className={style.icon} src={twitterLogSvg} alt="" />,
+    icon: <img className={style.icon} src={messageSvg} alt="" />,
     label: 'ACADEMICWORLD',
-  },
-  {
-    key: 'health',
-    link: '/health',
-    icon: <img className={style.icon} src={twitterLogSvg} alt="" />,
-    label: 'HEALTH',
   },
 ];
 export const createTweetItem = [
@@ -75,18 +54,6 @@ export const allLinks = [
   {
     key: 'tweets',
     link: '/',
-  },
-  {
-    key: 'search',
-    link: '/search',
-  },
-  {
-    key: 'tips',
-    link: '/tips',
-  },
-  {
-    key: 'health',
-    link: '/health',
   },
   {
     key: 'post',

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
-import SignupPic from '@assets/SignupPicture.jpeg';
+import SignupPic from '@assets/Signup.jpg';
 import { useAppContext } from '@utils/context';
 import { registerUser } from '@services/register';
 import Show from '@components/Show';

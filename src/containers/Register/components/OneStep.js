@@ -22,6 +22,7 @@ const OneStep = ({
     email: '',
     birthday: '',
     tel: '',
+    inviation: '',
   });
   const [accountType, setAccountType] = useState(ACCOUNT_TYPE.EMAIL);
   const [footerButtonDisabled, setFooterButtonDisabled] = useState(true);
@@ -85,10 +86,12 @@ const OneStep = ({
             {accountType === ACCOUNT_TYPE.TEL ? 'Use email' : 'Use phone'}
           </div>
           <div className={style.birthTitle}>Date of birth</div>
-          <div>This will not be shown publicly. Confirm your own age, </div>
-          <div>even if this account is for a business, a pet, or something else.</div>
           <Form.Item name="birthday" rules={[{ required: true, message: 'Birthday can not be empty' }]}>
             <DatePicker className={style.datePicker} placeholder="Year/Month/Day" format={dateFormat} />
+          </Form.Item>
+          <div className={style.invTitle}>Inviation Code: Author first name</div>
+          <Form.Item name="inviation" rules={[{ required: true, message: 'Inviation code can not be empty' }]}>
+            <Input placeholder="Author first name" className={style.input} />
           </Form.Item>
         </Form>
       </div>

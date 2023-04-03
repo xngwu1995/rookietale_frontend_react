@@ -3,8 +3,9 @@ import { Button, Tabs } from 'antd';
 import { useAppContext } from '@utils/context';
 import TweetCard from '@components/TweetCard';
 import { useGoTo } from '@utils/hooks';
-import { getTweets } from '@services/tweet';
+import { getMoreTweets, getTweets } from '@services/tweet';
 import { useLocation, useNavigate } from 'react-router-dom';
+import TabContentWithInfiniteScroll from '@components/LoadMore';
 import style from './index.module.scss';
 
 /**
@@ -12,60 +13,106 @@ import style from './index.module.scss';
 */
 const My = () => {
   const location = useLocation();
-  const [isMy, setIsMy] = useState(true);
   const [data, setData] = useState([]);
   const [store, setStore] = useAppContext();
-  const [currenUser, setCurrenUser] = useState('');
+  const [isMy, setIsMy] = useState(true);
+  const [currentUser, setCurrentUser] = useState(store.user);
+  const [hasMore, setHasMore] = useState(false);
+  const [ltTime, setLtTime] = useState('');
+  const [activeKey, setActiveKey] = useState('tweet');
   const navigate = useNavigate();
   const go = useGoTo();
 
+  const init = async (key) => {
+    const res = await getTweets(currentUser.id, key);
+    const tweets = res.results;
+    setData(tweets);
+    setLtTime(tweets[tweets.length - 1]?.created_at);
+    setHasMore(res.has_next_page);
+  };
+
+  const loadMore = async (key, time) => {
+    const res = await getMoreTweets(currentUser?.id, key, time);
+    const tweets = res.results;
+    setLtTime(tweets[tweets.length - 1]?.created_at);
+    setData((d) => [...d, ...tweets]);
+    setHasMore(res.has_next_page);
+  };
+
   useEffect(() => {
     setStore({ closeHeaderHandler: () => go('/') });
-    if (location.state) {
-      setIsMy(location.state?.isMy);
-      setData(location.state?.passedData.tweets);
-      setCurrenUser(location.state?.currentUser);
-      return;
-    }
-    if (!store.user.id) return;
-    const init = async () => {
-      const res = await getTweets(store.user?.id);
-      setData(res.tweets);
-      setCurrenUser(store.user);
-    };
-    init();
-  }, []);
+    setIsMy(location.state.isMy);
+    setCurrentUser(location.state.user);
+    init(activeKey);
+  }, [currentUser, activeKey]);
 
   const items = [
     {
       key: 'tweet',
       label: 'Tweets',
-      children: data.map((tweet) => <TweetCard dataSource={tweet} />),
+      children: (
+        <div>
+          {data.map((tweet) => (
+            <TweetCard key={tweet.id} dataSource={tweet} />
+          ))}
+          <TabContentWithInfiniteScroll
+            hasMore={hasMore}
+            onLoadMore={() => loadMore(activeKey, ltTime)}
+          />
+        </div>
+      ),
     },
     {
       key: 'media',
       label: 'Medias',
-      children: data.filter((tweet) => tweet.photo_urls.length > 0)
-        .map((tweet) => <TweetCard dataSource={tweet} />),
+      children: (
+        <div>
+          {data.map((tweet) => (
+            <TweetCard key={tweet.id} dataSource={tweet} />
+          ))}
+          <TabContentWithInfiniteScroll
+            hasMore={hasMore}
+            onLoadMore={() => loadMore(activeKey, ltTime)}
+          />
+        </div>
+      ),
     },
     {
       key: 'replies',
       label: 'Replies',
-      children: data.filter((tweet) => tweet.comments_count > 0)
-        .map((tweet) => <TweetCard dataSource={tweet} />),
+      children: (
+        <div>
+          {data.map((tweet) => (
+            <TweetCard key={tweet.id} dataSource={tweet} />
+          ))}
+          <TabContentWithInfiniteScroll
+            hasMore={hasMore}
+            onLoadMore={() => loadMore(activeKey, ltTime)}
+          />
+        </div>
+      ),
     },
     {
       key: 'likes',
       label: 'Likes',
-      children: data.filter((tweet) => tweet.likes_count > 0)
-        .map((tweet) => <TweetCard dataSource={tweet} />),
+      children: (
+        <div>
+          {data.map((tweet) => (
+            <TweetCard key={tweet.id} dataSource={tweet} />
+          ))}
+          <TabContentWithInfiniteScroll
+            hasMore={hasMore}
+            onLoadMore={() => loadMore(activeKey, ltTime)}
+          />
+        </div>
+      ),
     },
   ];
 
   return (
     <div className={style.container}>
       <div className={style.header} />
-      <img className={style.avatar} src={currenUser.avatar_url} alt="" />
+      <img className={style.avatar} src={currentUser.avatar_url} alt="" />
       {isMy && (
       <Button
         className={style.edit}
@@ -75,11 +122,11 @@ const My = () => {
       </Button>
       )}
       <div className={style.nickname}>
-        {currenUser.nickname || 'unknown'}
+        {currentUser.nickname || 'unknown'}
       </div>
       <div className={style.username}>
         @
-        {currenUser.username}
+        {currentUser.username}
       </div>
       <div className={style.follower}>
         <span className={style.number1}>
@@ -91,7 +138,16 @@ const My = () => {
         </span>
         <span>Following</span>
       </div>
-      <Tabs defaultActiveKey="1" items={items} className={style.tabs} centered size="large" />
+      <Tabs
+        activeKey={activeKey}
+        onChange={(key) => {
+          setActiveKey(key);
+        }}
+        items={items}
+        className={style.tabs}
+        centered
+        size="large"
+      />
     </div>
   );
 };

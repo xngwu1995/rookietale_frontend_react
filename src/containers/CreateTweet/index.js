@@ -41,12 +41,17 @@ const CreateTweet = () => {
   };
 
   const onChangeFile = (v) => {
-    if (v && Object.keys(v).length < 5) {
+    if (v && (Object.keys(imgs).length + Object.keys(v).length) < 5) {
       const newV = {};
+      const newFiles = [...files];
+
       Object.keys(v).forEach((key) => {
         newV[key] = v[key].content;
+        newFiles.push(v[key].file);
       });
-      setFiles(Object.values(v).map((item) => item.file));
+
+      setFiles(newFiles);
+
       setImgs((oldV) => ({
         ...oldV,
         ...newV,
@@ -55,6 +60,7 @@ const CreateTweet = () => {
     }
     message.error('Four Pictures Only.');
   };
+
   const handleDelImg = (index) => {
     const key = Object.keys(imgs).find((item, idx) => idx === index);
     setImgs((item) => {
@@ -62,7 +68,13 @@ const CreateTweet = () => {
       delete newItem[key];
       return newItem;
     });
+
+    setFiles((oldFiles) => {
+      const newFiles = oldFiles.filter((_, i) => i !== index);
+      return newFiles;
+    });
   };
+
   return (
     <Modal
       open={isModalOpen}
@@ -78,7 +90,7 @@ const CreateTweet = () => {
     >
       <div className={style.container}>
         <div className={style.avatarContainer}>
-          <img src={store.user?.avatar_url} alt="" className={style.avatar} />
+          <img src={store.user.avatar_url} alt="" className={style.avatar} />
         </div>
         <div className={style.content}>
           <TextArea

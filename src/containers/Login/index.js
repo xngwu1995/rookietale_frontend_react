@@ -8,7 +8,7 @@ import { useGoTo } from '@utils/hooks';
 import cookies from 'js-cookie';
 import { useAppContext } from '@utils/context';
 import { login } from '@services/login';
-import LoginPic from '@assets/LoginPicture.jpeg';
+import LoginPic from '@assets/Login.jpg';
 import style from './index.module.scss';
 
 const Login = () => {

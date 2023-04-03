@@ -2,12 +2,12 @@
 
 .container {
   height: 300px;
-  width: 600px;
+  width: 430px;
   padding: 10px 5px 0 0;
 }
 .img {
   position: absolute;
-  object-fit: fill;
+  object-fit: cover;
   width: 50%;
   background-color: aqua;
 }

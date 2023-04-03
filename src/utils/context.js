@@ -1,5 +1,5 @@
 import {
-  createContext, useContext, useState, useMemo,
+  createContext, useContext, useState, useEffect, useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -12,13 +12,21 @@ export const AppContext = createContext();
 export const CxtProvider = ({
   children,
 }) => {
-  const [store, setStore] = useState(defaultStore);
+  const [store, setStore] = useState(() => {
+    const storedStore = localStorage.getItem('store');
+    return storedStore ? JSON.parse(storedStore) : defaultStore;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('store', JSON.stringify(store));
+  }, [store]);
+
   const update = (v) => {
-    setStore((st) => ({
-      ...st,
-      ...v,
-    }));
+    const newStore = v === 'clear all' ? defaultStore : { ...store, ...v };
+    setStore(newStore);
+    localStorage.setItem('store', JSON.stringify(newStore));
   };
+
   const value = useMemo(() => ({
     store, update,
   }), [store]);

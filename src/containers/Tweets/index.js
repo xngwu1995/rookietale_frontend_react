@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createRef } from 'react';
 import {
   CellMeasurer, CellMeasurerCache, List, WindowScroller,
 } from 'react-virtualized';
@@ -6,10 +6,12 @@ import Nav from '@components/Nav';
 import TweetCard from '@components/TweetCard';
 import { message } from 'antd';
 import { useAppContext } from '@utils/context';
-import { getFeeds, getTweets } from '@services/tweet';
+import { getFeeds, getMoreFeeds } from '@services/tweet';
+import TabContentWithInfiniteScroll from '@components/LoadMore';
 import Avatar from '@components/Avatar';
 import { followUser, getRandomUser, unFollowUser } from '@services/users';
 import { useNavigate } from 'react-router-dom';
+import { LeftOutlined } from '@ant-design/icons';
 import style from './index.module.scss';
 
 const cache = new CellMeasurerCache({
@@ -24,6 +26,12 @@ const Tweets = () => {
   const [data, setData] = useState([]);
   const [following, setFollowing] = useState([]);
   const [suggestUsers, setSuggestUsers] = useState([]);
+  const [hasMore, setHasMore] = useState(false);
+  const [ltTime, setLtTime] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
+  const [previousHasMore, setPreviousHasMore] = useState(false);
+  const listRef = createRef();
   const nav = useNavigate();
 
   useEffect(() => {
@@ -33,11 +41,33 @@ const Tweets = () => {
     const init = async () => {
       const res = await getFeeds();
       const users = await getRandomUser();
-      setData(res.newsfeeds);
+      const tweets = res.results;
+      setData(tweets);
+      setFilteredData(tweets);
+      setLtTime(tweets[tweets.length - 1]?.created_at);
+      setHasMore(res.has_next_page);
+      setPreviousHasMore(res.has_next_page);
       setSuggestUsers(users);
     };
     init();
   }, []);
+
+  useEffect(() => {
+    if (listRef.current) {
+      listRef.current.recomputeRowHeights();
+      listRef.current.forceUpdate();
+    }
+  }, [filteredData]);
+
+  const loadMore = async (time) => {
+    const res = await getMoreFeeds(time);
+    const tweets = res.results;
+    setLtTime(tweets[tweets.length - 1]?.created_at);
+    setData((d) => [...d, ...tweets]);
+    setFilteredData((d) => [...d, ...tweets]);
+    setHasMore(res.has_next_page);
+    setPreviousHasMore(res.has_next_page);
+  };
 
   const rowRenderer = ({
     index,
@@ -54,7 +84,7 @@ const Tweets = () => {
     >
       {({ registerChild }) => (
         <div style={sy} key={key} ref={registerChild}>
-          <TweetCard dataSource={data[index].tweet} />
+          <TweetCard key={filteredData[index].tweet.id} dataSource={filteredData[index].tweet} />
         </div>
       )}
     </CellMeasurer>
@@ -96,8 +126,7 @@ const Tweets = () => {
     <ul>
       {suggestUsers.map((user) => {
         const handleAvatarClick = async () => {
-          const res = await getTweets(user.id);
-          nav('/profile', { state: { passedData: res, isMy: false, currentUser: user } });
+          nav('/profile', { state: { isMy: false, user } });
         };
         const isFollowing = following.includes(user.id);
 
@@ -140,12 +169,60 @@ const Tweets = () => {
     </ul>
   );
 
+  const handleSearchInputChange = (e) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value === '') {
+      setFilteredData(data);
+    }
+  };
+
+  const handleSearchSubmit = () => {
+    if (searchQuery !== '') {
+      const filtered = filteredData.filter(({
+        tweet,
+      }) => tweet.content.toLowerCase().includes(searchQuery.toLowerCase()));
+      setFilteredData(filtered);
+      setHasMore(false);
+    } else {
+      setFilteredData(data);
+      setHasMore(previousHasMore);
+    }
+  };
+
+  const resetFilter = () => {
+    setFilteredData(data);
+    setHasMore(previousHasMore);
+    setSearchQuery('');
+  };
+
   return (
     <div className={style.container}>
       <aside className={style.leftSider}>
         <Nav />
       </aside>
       <main className={style.mainContent}>
+        <form onSubmit={handleSearchSubmit} className={style.searchContainer}>
+          {searchQuery
+            && (
+            <LeftOutlined
+              className={style.closeIcon}
+              onClick={resetFilter}
+            />
+            )}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchInputChange}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                handleSearchSubmit();
+              }
+            }}
+            placeholder="Search tweets"
+            className={style.searchInput}
+          />
+        </form>
         <WindowScroller>
           {({
             height,
@@ -156,6 +233,7 @@ const Tweets = () => {
           }) => (
             <div ref={registerChild}>
               <List
+                ref={listRef}
                 isScrolling={isScrolling}
                 onScroll={onChildScroll}
                 scrollTop={scrollTop}
@@ -165,13 +243,17 @@ const Tweets = () => {
                 deferredMeasurementCache={cache}
                 rowHeight={cache.rowHeight}
                 overscanRowCount={2}
-                rowCount={data.length}
+                rowCount={filteredData.length}
                 rowRenderer={rowRenderer}
-                width={800}
+                width={600}
               />
             </div>
           )}
         </WindowScroller>
+        <TabContentWithInfiniteScroll
+          hasMore={hasMore}
+          onLoadMore={() => loadMore(ltTime)}
+        />
       </main>
       <aside className={style.rightSider}>
         <div style={{ padding: 24, textAlign: 'left' }}>
