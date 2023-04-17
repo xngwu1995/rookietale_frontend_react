@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useAppContext } from '@utils/context';
 import { useGoTo } from '@utils/hooks';
 import SearchKeywords from '@components/SearchKeywords';
+import TopFaculty from '@components/TopFaculty';
 import { getProfessors, getPublications, postProfessorsRank } from '@services/academicworld';
 import style from './index.module.scss';
 
@@ -12,7 +13,7 @@ const AcademicWorld = () => {
   const go = useGoTo();
 
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = 3;
+  const totalPages = 5;
 
   const fetchData = async () => {
     try {
@@ -110,6 +111,7 @@ const AcademicWorld = () => {
       {renderUniversityGrid()}
       {currentPage === 1 && <SearchKeywords fetchInput={fetchKeywords} isKeywords />}
       {currentPage === 2 && <SearchKeywords fetchInput={fetchProfessorsRank} isKeywords={false} />}
+      {currentPage === 3 && <TopFaculty />}
       {renderArrows()}
     </div>
   );
