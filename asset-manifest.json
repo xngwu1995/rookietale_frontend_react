@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/repositoryname/static/css/main.c7159cd5.css",
-    "main.js": "/repositoryname/static/js/main.432d1e1a.js",
-    "static/media/Login.jpg": "/repositoryname/static/media/Login.b0f8a9256e6498ab5de9.jpg",
-    "static/media/logo.svg": "/repositoryname/static/media/logo.6726fb478583a95380d552d951e43061.svg",
-    "static/media/Signup.jpg": "/repositoryname/static/media/Signup.d3b9fe6b0d410651df02.jpg",
-    "static/media/msg.svg": "/repositoryname/static/media/msg.a00ef15f8f65b1a2c3d2663ec33f89a9.svg",
-    "static/media/cycle.svg": "/repositoryname/static/media/cycle.95984ca0a27bbf0075814e90638f1ff2.svg",
-    "static/media/up.svg": "/repositoryname/static/media/up.c33c0cd507f353186264a169a57fd07b.svg",
-    "static/media/likeRed.svg": "/repositoryname/static/media/likeRed.b36442e2a1ce484cd7b9dd30c99c39c9.svg",
-    "static/media/star.svg": "/repositoryname/static/media/star.47b6118c8d6f4d982a563c0da3a4725d.svg",
-    "static/media/home.svg": "/repositoryname/static/media/home.ba289ca9a6f14e8cd4bf54663b8870d1.svg",
-    "static/media/createTweet.svg": "/repositoryname/static/media/createTweet.4d84a742810872e813cb3b82e7e6b676.svg",
-    "static/media/message.svg": "/repositoryname/static/media/message.afcd30d5c4d01d234cc25ff6e287f6bb.svg",
-    "index.html": "/repositoryname/index.html",
-    "main.c7159cd5.css.map": "/repositoryname/static/css/main.c7159cd5.css.map",
-    "main.432d1e1a.js.map": "/repositoryname/static/js/main.432d1e1a.js.map"
+    "main.css": "/react_twitter/static/css/main.c7159cd5.css",
+    "main.js": "/react_twitter/static/js/main.f35bf14e.js",
+    "static/media/Login.jpg": "/react_twitter/static/media/Login.b0f8a9256e6498ab5de9.jpg",
+    "static/media/logo.svg": "/react_twitter/static/media/logo.6726fb478583a95380d552d951e43061.svg",
+    "static/media/Signup.jpg": "/react_twitter/static/media/Signup.d3b9fe6b0d410651df02.jpg",
+    "static/media/msg.svg": "/react_twitter/static/media/msg.a00ef15f8f65b1a2c3d2663ec33f89a9.svg",
+    "static/media/cycle.svg": "/react_twitter/static/media/cycle.95984ca0a27bbf0075814e90638f1ff2.svg",
+    "static/media/up.svg": "/react_twitter/static/media/up.c33c0cd507f353186264a169a57fd07b.svg",
+    "static/media/likeRed.svg": "/react_twitter/static/media/likeRed.b36442e2a1ce484cd7b9dd30c99c39c9.svg",
+    "static/media/star.svg": "/react_twitter/static/media/star.47b6118c8d6f4d982a563c0da3a4725d.svg",
+    "static/media/home.svg": "/react_twitter/static/media/home.ba289ca9a6f14e8cd4bf54663b8870d1.svg",
+    "static/media/createTweet.svg": "/react_twitter/static/media/createTweet.4d84a742810872e813cb3b82e7e6b676.svg",
+    "static/media/message.svg": "/react_twitter/static/media/message.afcd30d5c4d01d234cc25ff6e287f6bb.svg",
+    "index.html": "/react_twitter/index.html",
+    "main.c7159cd5.css.map": "/react_twitter/static/css/main.c7159cd5.css.map",
+    "main.f35bf14e.js.map": "/react_twitter/static/js/main.f35bf14e.js.map"
   },
   "entrypoints": [
     "static/css/main.c7159cd5.css",
-    "static/js/main.432d1e1a.js"
+    "static/js/main.f35bf14e.js"
   ]
 }
