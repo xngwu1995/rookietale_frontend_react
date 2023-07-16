@@ -4,6 +4,7 @@ import { useAppContext } from '@utils/context';
 import { useGoTo } from '@utils/hooks';
 import SearchKeywords from '@components/SearchKeywords';
 import TopFaculty from '@components/TopFaculty';
+import RecommendFaculty from '@components/RecommendProfessors';
 import { getProfessors, getPublications, postProfessorsRank } from '@services/academicworld';
 import style from './index.module.scss';
 
@@ -112,6 +113,7 @@ const AcademicWorld = () => {
       {currentPage === 1 && <SearchKeywords fetchInput={fetchKeywords} isKeywords />}
       {currentPage === 2 && <SearchKeywords fetchInput={fetchProfessorsRank} isKeywords={false} />}
       {currentPage === 3 && <TopFaculty />}
+      {currentPage === 4 && <RecommendFaculty />}
       {renderArrows()}
     </div>
   );
