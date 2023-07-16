@@ -4,7 +4,7 @@ const { CracoAliasPlugin } = require('react-app-alias');
 module.exports = {
   devServer: {
     proxy: {
-      '/api': 'http://0.0.0.0:8000',
+      '/api': 'https://bf13-209-122-131-205.ngrok.io',
     },
   },
   style: {
