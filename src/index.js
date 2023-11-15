@@ -17,7 +17,7 @@ import AcademicWorld from '@containers/AcademicWorld.js';
 
 ReactDOM.render(
   <CxtProvider>
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Tweets />} />

@@ -2,7 +2,6 @@
   "name": "react_twitter",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://xngwu1995.github.io/react_twitter",
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@testing-library/jest-dom": "^5.16.5",
@@ -29,9 +28,11 @@
     "react-scripts": "5.0.1",
     "react-svg": "^16.1.5",
     "react-virtualized": "^9.22.3",
+    "reactjs-popup": "^2.0.5",
     "recharts": "^2.5.0",
     "sass": "^1.58.3",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "craco start",
