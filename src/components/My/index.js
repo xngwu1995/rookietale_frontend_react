@@ -112,7 +112,7 @@ const My = () => {
   return (
     <div className={style.container}>
       <div className={style.header} />
-      <img className={style.avatar} src={currentUser.avatar_url} alt="" />
+      <img className={style.avatar} src={currentUser.avatar} alt="" />
       {isMy && (
       <Button
         className={style.edit}

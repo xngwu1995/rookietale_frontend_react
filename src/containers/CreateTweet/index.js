@@ -39,6 +39,7 @@ const CreateTweet = () => {
     setIsModalOpen(false);
     go();
   };
+  console.log('store', store);
 
   const onChangeFile = (v) => {
     if (v && (Object.keys(imgs).length + Object.keys(v).length) < 5) {
@@ -90,7 +91,7 @@ const CreateTweet = () => {
     >
       <div className={style.container}>
         <div className={style.avatarContainer}>
-          <img src={store.user.avatar_url} alt="" className={style.avatar} />
+          <img src={store.user.avatar} alt="" className={style.avatar} />
         </div>
         <div className={style.content}>
           <TextArea

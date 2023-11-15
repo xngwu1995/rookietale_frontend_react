@@ -58,7 +58,6 @@ const Tweets = () => {
       listRef.current.forceUpdate();
     }
   }, [filteredData]);
-
   const loadMore = async (time) => {
     const res = await getMoreFeeds(time);
     const tweets = res.results;
@@ -132,7 +131,7 @@ const Tweets = () => {
 
         return (
           <li key={user.id} style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
-            <Avatar avatarUrl={user.avatar_url} size={40} onClick={handleAvatarClick} />
+            <Avatar avatarUrl={user.avatar} size={40} onClick={handleAvatarClick} />
             <div style={{ marginLeft: 16 }}>
               <div style={{ fontWeight: 'bold' }}>{user.nickname}</div>
               <div>

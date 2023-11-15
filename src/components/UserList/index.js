@@ -20,7 +20,7 @@ const UserList = ({
         return (
           <li key={currentUser.id} className={styles.userListItem}>
             <Avatar
-              avatarUrl={currentUser.avatar_url}
+              avatarUrl={currentUser.avatar}
               size={40}
               onClick={onAvatarClick}
             />
@@ -51,7 +51,7 @@ UserList.propTypes = {
     PropTypes.shape({
       user: PropTypes.shape({
         id: PropTypes.number.isRequired,
-        avatar_url: PropTypes.string,
+        avatar: PropTypes.string,
         nickname: PropTypes.string,
         username: PropTypes.string.isRequired,
       }),

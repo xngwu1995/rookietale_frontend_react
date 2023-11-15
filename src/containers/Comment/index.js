@@ -59,7 +59,7 @@ const Comment = () => {
     >
       <div className={style.container}>
         <div className={style.avatarContainer}>
-          <img src={tweetDetails.user.avatar_url} alt="personalImg" className={style.avatar} />
+          <img src={tweetDetails.user.avatar} alt="personalImg" className={style.avatar} />
         </div>
         <div className={style.contentContainer}>
           <div className={style.header}>
@@ -79,7 +79,7 @@ const Comment = () => {
         </div>
         <div className={style.replyContainer}>
           <div className={style.avatarContainer}>
-            <img src={store.user?.avatar_url} alt="" className={style.avatar} />
+            <img src={store.user?.avatar} alt="" className={style.avatar} />
           </div>
           <div className={style.contentContainer}>
             <div className={style.recommit}>

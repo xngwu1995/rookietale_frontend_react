@@ -13,7 +13,7 @@ const CommentCard = ({
   data,
 }) => (
   <div className={style.container}>
-    <img className={style.avatar} src={data.user.avatar_url} alt="" />
+    <img className={style.avatar} src={data.user.avatar} alt="" />
     <div className={style.rightPart}>
       <div>
         <span className={style.nickname}>
@@ -45,7 +45,7 @@ CommentCard.propTypes = {
     user: PropTypes.shape({
       username: PropTypes.string,
       nickname: PropTypes.string,
-      avatar_url: PropTypes.string,
+      avatar: PropTypes.string,
     }),
     id: PropTypes.number,
     content: PropTypes.string, // 该评论的文本内容
