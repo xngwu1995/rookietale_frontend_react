@@ -36,7 +36,7 @@ const Tweet = () => {
     <div className={style.container}>
       <div className={style.contentContainer}>
         <div className={style.header}>
-          <img src={tweetDetails.user?.avatar_url} alt="" className={style.avatar} />
+          <img src={tweetDetails.user?.avatar} alt="" className={style.avatar} />
           <div className={style.rightPart}>
             <div className={style.nickname}>
               {tweetDetails.user?.nickname}

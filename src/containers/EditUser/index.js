@@ -81,7 +81,7 @@ const EditUser = () => {
             <CameraOutline />
           </div>
           <input type="file" className={style.upFile} onChange={onFileChange} accept="image/png.image/jpg" />
-          <img className={style.avatar} src={avatar || store.user.avatar_url} alt="" />
+          <img className={style.avatar} src={avatar || store.user.avatar} alt="" />
         </div>
         <div className={style.content}>
           <Form

@@ -36,7 +36,7 @@ const TweetCard = ({
     <div className={style.container}>
       <Avatar
         key="avatarUrl"
-        avatarUrl={dataSource.user?.avatar_url}
+        avatarUrl={dataSource.user?.avatar}
         onClick={handleAvatarClick}
       />
       <div className={style.contentContainer}>
@@ -79,7 +79,7 @@ TweetCard.propTypes = {
     id: PropTypes.number.isRequired,
     user: PropTypes.shape({
       id: PropTypes.number.isRequired,
-      avatar_url: PropTypes.string,
+      avatar: PropTypes.string,
       nickname: PropTypes.string,
       username: PropTypes.string,
     }).isRequired,
