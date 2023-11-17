@@ -27,6 +27,11 @@ export const menuItems = [
     icon: <img className={style.icon} src={messageSvg} alt="" />,
     label: 'ACADEMICWORLD',
   },
+  {
+    key: 'chatgpt',
+    icon: <img className={style.icon} src={messageSvg} alt="" />,
+    label: 'CHATGPT',
+  },
 ];
 export const createTweetItem = [
   {
@@ -74,6 +79,10 @@ export const allLinks = [
   {
     key: 'academicworld',
     link: '/academicworld',
+  },
+  {
+    key: 'chatgpt',
+    link: '/chatgpt',
   },
 ];
 
