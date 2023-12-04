@@ -13,7 +13,8 @@ import Tweet from '@containers/Tweet';
 import My from '@components/My';
 import EditUser from '@containers/EditUser';
 import FollowPage from '@containers/FollowPage';
-import AcademicWorld from '@containers/AcademicWorld.js';
+import AcademicWorld from '@containers/AcademicWorld';
+import Chatgpt from '@containers/Chatgpt';
 
 ReactDOM.render(
   <CxtProvider>
@@ -34,6 +35,7 @@ ReactDOM.render(
           <Route path="/edituser" element={<EditUser />} />
           <Route path="/friendship" element={<FollowPage />} />
           <Route path="/academicworld" element={<AcademicWorld />} />
+          <Route path="/chatgpt" element={<Chatgpt />} />
 
         </Route>
       </Routes>

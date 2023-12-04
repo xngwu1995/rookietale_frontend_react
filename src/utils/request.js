@@ -8,7 +8,7 @@ const domain = '';
 
 export const axiosInstance = axios.create({
   baseURL: '',
-  timeout: 5000,
+  timeout: 500000,
   headers: {
     'Content-Type': 'multipart/form-data',
     'X-CSRFToken': cookies.get('csrftoken'),
