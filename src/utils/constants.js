@@ -23,11 +23,6 @@ export const menuItems = [
     label: 'PROFILE',
   },
   {
-    key: 'academicworld',
-    icon: <img className={style.icon} src={messageSvg} alt="" />,
-    label: 'ACADEMICWORLD',
-  },
-  {
     key: 'chatgpt',
     icon: <img className={style.icon} src={messageSvg} alt="" />,
     label: 'CHATGPT',
