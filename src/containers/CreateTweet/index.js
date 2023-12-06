@@ -39,7 +39,6 @@ const CreateTweet = () => {
     setIsModalOpen(false);
     go();
   };
-  console.log('store', store);
 
   const onChangeFile = (v) => {
     if (v && (Object.keys(imgs).length + Object.keys(v).length) < 5) {

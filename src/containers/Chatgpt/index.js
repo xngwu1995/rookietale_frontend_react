@@ -12,6 +12,7 @@ const Chatgpt = () => {
   const [response, setResponse] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -35,7 +36,9 @@ const Chatgpt = () => {
       const apiResponse = await askChatGPT(inputData);
       setResponse(apiResponse); // Use setResponse to update the response state
     } catch (error) {
-      console.error('Error:', error);
+      // Handle the error appropriately
+      // For example, you can set an error message in the state to display to the user
+      setErrorMessage('Failed to get a response from the API. Please try again.');
     } finally {
       setIsSubmitted(false); // Reset isSubmitted to allow for re-submission
     }
