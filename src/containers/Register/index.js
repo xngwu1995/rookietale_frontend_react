@@ -50,9 +50,6 @@ const Register = () => {
     if (res.success) {
       message.success('Successfully Sign Up. Congratulations!');
       navigate('/login');
-      setTimeout(() => {
-        window.location.reload();
-      }, 200);
     }
   };
 
