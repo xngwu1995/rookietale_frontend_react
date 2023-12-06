@@ -57,6 +57,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "eslint-config-airbnb": "^19.0.4",
     "postcss-px-to-viewport-with-include": "^1.0.0",
     "react-cookie": "^4.1.1"
