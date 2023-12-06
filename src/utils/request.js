@@ -4,10 +4,10 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const domain = '';
+const domain = 'http://rookie-tale-social-media-dev.us-east-1.elasticbeanstalk.com';
 
 export const axiosInstance = axios.create({
-  baseURL: '',
+  baseURL: domain,
   timeout: 500000,
   headers: {
     'Content-Type': 'multipart/form-data',
@@ -22,10 +22,7 @@ axiosInstance.interceptors.request.use((config) => {
     // eslint-disable-next-line no-param-reassign
     config.headers.authorization = token;
   }
-  return ({
-    ...config,
-    url: domain + config.url,
-  });
+  return config;
 });
 
 // Intercept the response data, 1. handle data, 2. handle error
