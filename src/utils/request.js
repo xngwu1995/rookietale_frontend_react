@@ -7,7 +7,7 @@ const cookies = new Cookies();
 const domain = '';
 
 export const axiosInstance = axios.create({
-  baseURL: '',
+  baseURL: 'http://rookie-tale-social-media-dev.us-east-1.elasticbeanstalk.com',
   timeout: 500000,
   headers: {
     'Content-Type': 'multipart/form-data',
