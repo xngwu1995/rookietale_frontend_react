@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-const domain = 'http://rookie-social-tale-dev.us-east-1.elasticbeanstalk.com';
+const domain = 'https://rookie-social-tale-dev.us-east-1.elasticbeanstalk.com';
 
 export const axiosInstance = axios.create({
   baseURL: domain,
