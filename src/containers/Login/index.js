@@ -26,6 +26,7 @@ const Login = () => {
     if (values) {
       const res = await login(values);
       if (res.success) {
+        localStorage.setItem('access', res.access);
         cookies.set('userId', res.user.id);
         message.success('Successfully log in');
         go('/');
