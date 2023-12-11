@@ -27,8 +27,6 @@ const Login = () => {
       const res = await login(values);
       if (res.success) {
         cookies.set('userId', res.user.id);
-        const { token } = res;
-        localStorage.setItem('access', token);
         message.success('Successfully log in');
         go('/');
         window.location.reload();
