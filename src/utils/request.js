@@ -9,6 +9,7 @@ const domain = 'https://woaybb.com';
 export const axiosInstance = axios.create({
   baseURL: domain,
   timeout: 500000,
+  withCredentials: true,
   headers: {
     'Content-Type': 'multipart/form-data',
     'X-CSRFToken': cookies.get('csrftoken'),
