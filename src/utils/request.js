@@ -13,10 +13,10 @@ export const axiosInstance = axios.create({
 
 // added the domain url
 axiosInstance.interceptors.request.use((config) => {
-  const token = `JWT ${localStorage.getItem('access')}`;
+  const token = localStorage.getItem('access');
   if (token) {
     // eslint-disable-next-line no-param-reassign
-    config.headers.authorization = token;
+    config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
 });
