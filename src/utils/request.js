@@ -14,10 +14,15 @@ export const axiosInstance = axios.create({
 // added the domain url
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('access');
-  if (token) {
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = `Bearer ${token}`;
+
+  // Check if the URL is neither login nor signup
+  if (!config.url.endsWith('/api/accounts/login/') && !config.url.endsWith('/api/accounts/signup/')) {
+    if (token) {
+      // eslint-disable-next-line no-param-reassign
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
+
   return config;
 });
 
