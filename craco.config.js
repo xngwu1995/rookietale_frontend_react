@@ -3,9 +3,9 @@ const { CracoAliasPlugin } = require('react-app-alias');
 // webpack config
 module.exports = {
   // devServer: {
-    //   proxy: {
-      //     '/api': 'http://rookie-social-tale-dev.us-east-1.elasticbeanstalk.com',
-    //   },
+  //   proxy: {
+  //     '/api': 'http://rookie-social-tale-dev.us-east-1.elasticbeanstalk.com',
+  //   },
   // },
   style: {
     postcss: {
