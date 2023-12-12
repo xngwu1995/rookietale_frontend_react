@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAppContext } from '@utils/context';
+import { useGoTo } from '@utils/hooks';
 import { askChatGPT } from '@services/chatgpt';
 import style from './index.module.scss';
 
@@ -13,6 +15,12 @@ const Chatgpt = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [, setErrorMessage] = useState('');
+  const [, setStore] = useAppContext();
+  const go = useGoTo();
+
+  useEffect(() => {
+    setStore({ closeHeaderHandler: () => go('/') });
+  }, []);
 
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
