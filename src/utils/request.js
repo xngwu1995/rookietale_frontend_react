@@ -5,7 +5,7 @@ const domain = 'https://woaybb.com';
 
 export const axiosInstance = axios.create({
   baseURL: domain,
-  timeout: 500000,
+  timeout: 5000000,
   headers: {
     'Content-Type': 'multipart/form-data',
   },
