@@ -9,6 +9,7 @@ const Chatgpt = () => {
     requirements: '',
     content: '',
     wordLimit: '',
+    outlines: [], // Array to hold outlines as tags
     languageSelect: 'chinese',
   });
   const [response, setResponse] = useState('');
@@ -26,11 +27,41 @@ const Chatgpt = () => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
+  const handleOutlineChange = (event) => {
+    setInputData({ ...inputData, outline: event.target.value });
+  };
+
+  const handleAddOutline = (event) => {
+    event.preventDefault();
+    if (inputData.outline.trim()) {
+      setInputData({
+        ...inputData,
+        outlines: [...inputData.outlines, inputData.outline.trim()],
+        outline: '',
+      });
+    }
+  };
+
+  const handleRemoveOutline = (index) => {
+    const newOutlines = inputData.outlines.filter((_, i) => i !== index);
+    setInputData({ ...inputData, outlines: newOutlines });
+  };
+
+  const truncateOutline = (outline) => {
+    const maxWords = 3;
+    const words = outline.split(' ');
+    if (words.length > maxWords) {
+      return `${words.slice(0, maxWords).join(' ')}...`;
+    }
+    return outline;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if any field is empty
     if (!inputData.requirements
-      || !inputData.wordLimit || !inputData.content || !inputData.languageSelect) {
+      || !inputData.wordLimit || !inputData.content
+      || !inputData.languageSelect) {
       setShowWarning(true);
       return; // Prevent form submission
     }
@@ -79,6 +110,28 @@ const Chatgpt = () => {
               min="1" // Optional: Ensures only positive numbers
             />
           </label>
+        </div>
+        <div className={style.inputGroup}>
+          <label htmlFor="outline">
+            大纲 (outline)
+            <input
+              type="text"
+              id="outline"
+              name="outline"
+              value={inputData.outline}
+              onChange={handleOutlineChange}
+            />
+            <button type="button" onClick={handleAddOutline}>Add</button>
+          </label>
+        </div>
+        <div className={style.outlineTags}>
+          {inputData.outlines.map((outline, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <div key={index} className={style.tag}>
+              {truncateOutline(outline)}
+              <button type="button" onClick={() => handleRemoveOutline(index)}>×</button>
+            </div>
+          ))}
         </div>
         <div className={style.inputGroup}>
           <label htmlFor="content">
