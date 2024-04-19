@@ -1,123 +1,25 @@
-.homeContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  margin-top: 40px;
-  margin-left: 10%;
-  margin-right: 10%;
+.GPTPage {
+  width: 100%;  // Use 100% width to be more responsive
+  max-width: 1960px;  // Increasing max width for better utilization of screen space
+  margin: 20px auto;  // Center the page appropriately
   padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);  // Optional: adds a subtle shadow for depth
 }
 
-.homeContainer form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 800px;
-  background: #fff;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-bottom: 20px;
+.ant-tabs-nav-wrap {
+  padding: 0 20px;  // Add padding to the tab nav wrapper for better alignment
 }
 
-.inputGroup {
-  margin-bottom: 15px;
+.ant-tabs-tab {
+  font-size: 16px;  // Larger font size for better readability
+  margin-right: 24px;  // Increase space between tabs
 }
 
-.inputGroup label {
-  display: block;
-  margin-bottom: 5px;
+.ant-tabs-tab.ant-tabs-tab-active {
   font-weight: bold;
-  font-size: 0.9em;
-  margin-left: 10%;
-  margin-right: 10%;
+  color: #1890ff;  // Highlight color for active tab
 }
 
-.inputGroup input, .inputGroup textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-
-.inputGroup textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-
-.submitButton {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.submitButton:hover {
-  background-color: #0056b3;
-}
-
-.response {
-  width: 100%;
-  max-width: 500px;
-  background: #e2e2e2;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-size: 0.9em;
-}
-
-.warningMessage {
-  color: #d9534f; /* Red color for warning messages */
-  font-size: 0.9em;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.addTagButton {
-  padding: 8px 12px;
-  margin-top: 10px; // Adjust as needed
-  background-color: #28a745; // Different color to distinguish from submit
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #218838;
-  }
-}
-
-.outlineTags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px; // Spacing between tags
-}
-
-.tag {
-  display: flex;
-  align-items: center;
-  background-color: #e9ecef;
-  border-radius: 20px;
-  padding: 5px 10px;
-  font-size: 14px;
-
-  button {
-    background: none;
-    border: none;
-    margin-left: 10px;
-    color: #343a40;
-    cursor: pointer;
-    font-size: 16px;
-
-    &:hover {
-      color: #dc3545;
-    }
-  }
+.ant-tabs-ink-bar {
+  background-color: #1890ff;  // Active tab underline color
 }
