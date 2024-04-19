@@ -1,0 +1,84 @@
+.homeContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+    margin-top: 40px;
+    margin-left: 10%;
+    margin-right: 10%;
+    padding: 20px;
+  }
+  
+  .homeContainer form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .inputGroup {
+    margin-bottom: 15px;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  
+  .inputGroup input, .inputGroup textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  
+  .inputGroup textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  .submitButton {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submitButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .response {
+    width: 100%;
+    max-width: 500px;
+    background: #e2e2e2;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+  }
+  
+  .warningMessage {
+    color: #d9534f; /* Red color for warning messages */
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+.Header{
+    font-size: 20px;
+    font-weight: bold;
+}
