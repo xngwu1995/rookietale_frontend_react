@@ -1,7 +1,7 @@
 import axios from "axios";
 import { message } from "antd";
 
-const domain = "";
+const domain = "https://woaybb.com";
 
 export const axiosInstance = axios.create({
   baseURL: domain,
