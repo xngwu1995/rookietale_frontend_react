@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { message } from 'antd';
-import { TabBar } from 'antd-mobile';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import { cancelLike, Like } from '@services/comments';
-import { BAR_KEYS, getBars, OBJECT_KEYS } from './constants';
-import style from './index.module.scss';
+import { useState } from "react";
+import { message } from "antd";
+import { TabBar } from "antd-mobile";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
+import { cancelLike, Like } from "@services/comments";
+import { BAR_KEYS, getBars, OBJECT_KEYS } from "./constants";
+import style from "./index.module.scss";
 
 /**
-*
-*/
+ *
+ */
 const Bar = ({
   likesCount,
   commentsCount,
@@ -17,23 +17,22 @@ const Bar = ({
   onlyStar,
   type,
   hasLiked,
-  // eslint-disable-next-line react/prop-types
   dataSource,
 }) => {
   const [activeKey, setactiveKey] = useState();
   const nav = useNavigate();
   const [liked, setLiked] = useState(hasLiked);
   const [currentLikes, setLikes] = useState(likesCount);
-  const onChangeTabItem = (key) => {
+  const onChangeTabItem = key => {
     setactiveKey(key);
     if (key === BAR_KEYS.STAR) {
       if (liked) {
         cancelLike({
           content_type: type,
           object_id: id,
-        }).then((res) => {
+        }).then(res => {
           if (res) {
-            message.success('Successfully Cancelled');
+            message.success("Successfully Cancelled");
             setLiked(false);
             setLikes(currentLikes - 1);
           }
@@ -43,9 +42,9 @@ const Bar = ({
       Like({
         content_type: type,
         object_id: id,
-      }).then((res) => {
+      }).then(res => {
         if (res) {
-          message.success('Success');
+          message.success("Success");
           setLiked(true);
           setLikes(currentLikes + 1);
         }
@@ -64,7 +63,7 @@ const Bar = ({
           liked,
           dataSource,
           onChangeTabItem,
-        }).map((item) => (
+        }).map(item => (
           <TabBar.Item key={item.key} icon={item.icon} />
         ))}
       </TabBar>
@@ -86,6 +85,6 @@ Bar.defaultProps = {
   onlyStar: false,
   commentsCount: 0,
   likesCount: 0,
-  type: '',
+  type: "",
 };
 export default Bar;

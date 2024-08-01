@@ -1,0 +1,25 @@
+/* Header Styles */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  height: 50px;
+  text-align: center;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.logo {
+  height: 50px;
+}

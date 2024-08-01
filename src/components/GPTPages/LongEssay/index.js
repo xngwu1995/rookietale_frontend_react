@@ -1,39 +1,41 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
-import { useAppContext } from '@utils/context';
-import { useGoTo } from '@utils/hooks';
-import { askChatGPT } from '@services/chatgpt';
-import style from './index.module.scss';
+import React, { useEffect, useState } from "react";
+import { useAppContext } from "@utils/context";
+import { useGoTo } from "@utils/hooks";
+import { askChatGPT } from "@services/chatgpt";
+import style from "./index.module.scss";
 
 const GPTLongEssayPage = () => {
   const [inputData, setInputData] = useState({
-    requirements: '',
-    content: '',
-    wordLimit: '',
-    languageSelect: 'chinese',
+    requirements: "",
+    content: "",
+    wordLimit: "",
+    languageSelect: "chinese",
     islong: true,
   });
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [, setErrorMessage] = useState('');
+  const [, setErrorMessage] = useState("");
   const [, setStore] = useAppContext();
   const go = useGoTo();
 
   useEffect(() => {
-    setStore({ closeHeaderHandler: () => go('/') });
+    setStore({ closeHeaderHandler: () => go("/") });
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if any field is empty
-    if (!inputData.requirements
-      || !inputData.wordLimit || !inputData.content
-      || !inputData.languageSelect) {
+    if (
+      !inputData.requirements ||
+      !inputData.wordLimit ||
+      !inputData.content ||
+      !inputData.languageSelect
+    ) {
       setShowWarning(true);
       return; // Prevent form submission
     }
@@ -49,7 +51,9 @@ const GPTLongEssayPage = () => {
     } catch (error) {
       // Handle the error appropriately
       // For example, you can set an error message in the state to display to the user
-      setErrorMessage('Failed to get a response from the API. Please try again.');
+      setErrorMessage(
+        "Failed to get a response from the API. Please try again."
+      );
     } finally {
       setIsSubmitted(false); // Reset isSubmitted to allow for re-submission
     }
@@ -57,7 +61,9 @@ const GPTLongEssayPage = () => {
 
   return (
     <div className={style.homeContainer}>
-      <p className={style.Header}>超长文章,字数大于1500，等待时间也有点长哦！请耐心等待。</p>
+      <p className={style.Header}>
+        超长文章,字数大于1500，等待时间也有点长哦！请耐心等待。
+      </p>
       <form onSubmit={handleSubmit}>
         <div className={style.inputGroup}>
           <label htmlFor="requirements">
@@ -110,13 +116,16 @@ const GPTLongEssayPage = () => {
           </label>
         </div>
         {showWarning && (
-        <div className={style.warningMessage}>
-          请填写所有内容
-          (Please fill in all fields.)
-        </div>
+          <div className={style.warningMessage}>
+            请填写所有内容 (Please fill in all fields.)
+          </div>
         )}
-        <button type="submit" className={style.submitButton} disabled={isSubmitted}>
-          {isSubmitted ? '加载...' : '提交'}
+        <button
+          type="submit"
+          className={style.submitButton}
+          disabled={isSubmitted}
+        >
+          {isSubmitted ? "加载..." : "提交"}
         </button>
       </form>
       {response && (

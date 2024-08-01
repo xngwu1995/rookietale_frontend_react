@@ -2,11 +2,11 @@ const { CracoAliasPlugin } = require('react-app-alias');
 
 // webpack config
 module.exports = {
-  // devServer: {
-  //   proxy: {
-  //     '/api': 'http://rookie-social-tale-dev.us-east-1.elasticbeanstalk.com',
-  //   },
-  // },
+  devServer: {
+    proxy: {
+      '/api': 'http://0.0.0.0:8000',
+    },
+  },
   style: {
     postcss: {
       mode: 'extends',

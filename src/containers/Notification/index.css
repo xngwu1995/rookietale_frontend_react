@@ -1,0 +1,34 @@
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 1000;
+}
+
+.notification-content {
+  text-align: center;
+}
+
+.notification-content h2 {
+  margin: 0 0 20px;
+}
+
+.notification-content button {
+  background-color: #721c24;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.notification-content button:hover {
+  background-color: #5a1217;
+}

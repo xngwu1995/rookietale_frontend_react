@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "@utils/context";
 import { useGoTo } from "@utils/hooks";
-import { askChatGPT } from "@services/chatgpt";
+import Select from "react-select";
+import { getAllStocks } from "@services/stock";
+import { getStockSignal } from "@services/chatgpt";
 import style from "./index.module.scss";
 
-const GPTNormalPage = () => {
+const StockGPTPage = () => {
   const [inputData, setInputData] = useState({
-    requirements: "",
-    content: "",
-    wordLimit: "",
-    languageSelect: "chinese",
-    islong: false,
+    stocks: [],
+    languageSelect: "english",
   });
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
-  const [, setErrorMessage] = useState("");
-  const [, setStore] = useAppContext();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [store, setStore] = useAppContext();
+  const [stocks, setStocks] = useState([]);
   const go = useGoTo();
 
   useEffect(() => {
@@ -27,15 +27,31 @@ const GPTNormalPage = () => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
 
+  const fetchAllStocks = async () => {
+    const resp = await getAllStocks();
+    const data = await resp.stocks;
+    setStocks(data);
+  };
+
+  useEffect(() => {
+    if (!store.user) go("login");
+  }, [store.user, go]);
+
+  useEffect(function () {
+    fetchAllStocks();
+  }, []);
+
+  const handleStockSelectChange = selectedOptions => {
+    const selectedStocks = selectedOptions
+      ? selectedOptions.map(option => option.value)
+      : [];
+    setInputData({ ...inputData, stocks: selectedStocks });
+  };
+
   const handleSubmit = async e => {
     e.preventDefault(); // Prevent default form submission behavior
     // Check if any field is empty
-    if (
-      !inputData.requirements ||
-      !inputData.wordLimit ||
-      !inputData.content ||
-      !inputData.languageSelect
-    ) {
+    if (!inputData.languageSelect || inputData.stocks.length === 0) {
       setShowWarning(true);
       return; // Prevent form submission
     }
@@ -46,8 +62,11 @@ const GPTNormalPage = () => {
 
     try {
       // Call askChatGPT with inputData
-      const apiResponse = await askChatGPT(inputData);
-      setResponse(apiResponse); // Use setResponse to update the response state
+      const resp = await getStockSignal({
+        stocksymbols: inputData.stocks,
+      });
+      const data = await resp.signals;
+      setResponse(data); // Use setResponse to update the response state
     } catch (error) {
       // Handle the error appropriately
       // For example, you can set an error message in the state to display to the user
@@ -62,42 +81,25 @@ const GPTNormalPage = () => {
   return (
     <div className={style.homeContainer}>
       <form onSubmit={handleSubmit}>
-        <div className={style.inputGroup}>
-          <label htmlFor="requirements">
-            需求 (Requirements)
-            <input
-              type="text"
-              id="requirements"
-              name="requirements"
-              value={inputData.requirements}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className={style.inputGroup}>
-          <label htmlFor="words">
-            字数要求 (Word Limits)
-            <input
-              type="number"
-              id="wordLimit"
-              name="wordLimit"
-              value={inputData.wordLimit}
-              onChange={handleChange}
-              min="1"
-            />
-          </label>
-        </div>
-        <div className={style.inputGroup}>
-          <label htmlFor="content">
-            内容 (content)
-            <textarea
-              id="content"
-              name="content"
-              value={inputData.content}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
+        <Select
+          id="stocks"
+          name="stocks"
+          value={inputData.stocks.map(stock => ({
+            value: stock,
+            label: stock,
+          }))}
+          onChange={handleStockSelectChange}
+          options={stocks.map(stock => ({
+            value: stock.ticker,
+            label: stock.ticker,
+          }))}
+          placeholder="(请选择一支或多支股票)Select or type a stock"
+          isMulti
+          isClearable
+          isSearchable
+          className="react-select-container"
+          classNamePrefix="react-select"
+        />
         <div className={style.inputGroup}>
           <label htmlFor="languageSelect">
             选择语言 (Select Language)
@@ -122,17 +124,22 @@ const GPTNormalPage = () => {
           className={style.submitButton}
           disabled={isSubmitted}
         >
-          {isSubmitted ? "加载..." : "提交"}
+          {isSubmitted ? "加载(Loading)..." : "提交(Submit)"}
         </button>
       </form>
       {response && (
-        <div className={style.response}>
-          <h2>Response</h2>
-          <p>{response.response_text}</p>
+        <div className={style.responses}>
+          {response.map((item, index) => (
+            <div key={index} className={style.responseItem}>
+              <h2>Stock Symbol: {item.stock_symbol}</h2>
+              <p>{item.gpt_result}</p>
+            </div>
+          ))}
         </div>
       )}
+      {errorMessage && <div className={style.errorMessage}>{errorMessage}</div>}
     </div>
   );
 };
 
-export default GPTNormalPage;
+export default StockGPTPage;

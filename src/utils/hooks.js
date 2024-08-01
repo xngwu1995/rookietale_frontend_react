@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { generatePath, useLocation, useNavigate } from 'react-router-dom';
-import { getMenuByKey, getMenuByLink } from './constants';
-import { useAppContext } from './context';
+import { useEffect, useState, useCallback } from "react";
+import { generatePath, useLocation, useNavigate } from "react-router-dom";
+import { getMenuByKey, getMenuByLink } from "./constants";
+import { useAppContext } from "./context";
 
 export const useCurMenu = () => {
   const lo = useLocation();
@@ -13,19 +13,25 @@ export const useGoTo = () => {
   const navigate = useNavigate();
   const [store] = useAppContext();
 
-  return (key, params) => {
-    if (!key) {
-      return navigate(-1);
-    }
-    const it = getMenuByKey(key);
-    if (!it) return navigate('/');
-    const state = { state: { isMy: true, user: store.user } };
-    const link = generatePath(it.link, params);
-    if (link === '/profile') {
-      return navigate(link, state);
-    }
-    return navigate(link);
-  };
+  const go = useCallback(
+    (key, params) => {
+      // Wrap in useCallback
+      if (!key) {
+        return navigate(-1);
+      }
+      const it = getMenuByKey(key);
+      if (!it) return navigate("/");
+      const state = { state: { isMy: true, user: store.user } };
+      const link = generatePath(it.link, params);
+      if (link === "/profile") {
+        return navigate(link, state);
+      }
+      return navigate(link);
+    },
+    [navigate, store.user]
+  ); // Dependencies for memoization
+
+  return go; // Return the memoized function
 };
 
 const OFFSET = 50;
@@ -57,8 +63,7 @@ export const useDownLoad = () => {
     };
   }, []);
 
-  useEffect(() => {
-  }, [loading]);
+  useEffect(() => {}, [loading]);
 
   return loading;
 };
