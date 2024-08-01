@@ -1,16 +1,12 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { CloseOutlined } from '@ant-design/icons';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-import style from './index.module.scss';
+import { CloseOutlined } from "@ant-design/icons";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import style from "./index.module.scss";
 
 /**
-*
-*/
-const ImagePreview = ({
-  imgs,
-  handleDelImg,
-}) => {
+ *
+ */
+const ImagePreview = ({ imgs, handleDelImg }) => {
   if (!imgs || imgs.length === 0) return null;
   const getWrapper = () => {
     switch (imgs.length) {
@@ -30,8 +26,14 @@ const ImagePreview = ({
     <div className={style.container}>
       <div className={classNames(style.wrapper, getWrapper())}>
         {imgs.map((img, index) => (
-          <div key={classNames(img, index)} className={classNames(style.img, `img${index}`)}>
-            <CloseOutlined className={style.close} onClick={() => handleDelImg(index)} />
+          <div
+            key={classNames(img, index)}
+            className={classNames(style.img, `img${index}`)}
+          >
+            <CloseOutlined
+              className={style.close}
+              onClick={() => handleDelImg(index)}
+            />
             <img className={style.itemImg} src={img} alt="" />
           </div>
         ))}

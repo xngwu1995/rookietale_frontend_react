@@ -1,12 +1,11 @@
-import { CloseOutlined } from '@ant-design/icons';
-import { useAppContext } from '@utils/context';
+import { CloseOutlined } from "@ant-design/icons";
+import { useAppContext } from "@utils/context";
 // import { useCurMenu } from '@utils/hooks';
-import logo from '../../assets/logo.svg';
-import style from './index.module.css';
+import logo from "../../assets/logo.svg";
+import style from "./index.module.scss";
 
 const HeaderTwitter = () => {
   const [store] = useAppContext();
-  // const menu = useCurMenu();
   return (
     <div className={style.header}>
       {store.closeHeaderHandler && (

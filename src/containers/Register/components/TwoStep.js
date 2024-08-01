@@ -1,14 +1,10 @@
-/* eslint-disable import/no-extraneous-dependencies */
-import { Input } from 'antd';
-import PropTypes from 'prop-types';
-import { useState } from 'react';
-import Footer from './Footer';
-import style from '../index.module.scss';
+import { Input } from "antd";
+import PropTypes from "prop-types";
+import { useState } from "react";
+import Footer from "./Footer";
+import style from "../index.module.scss";
 
-const TwoStep = ({
-  confirmRegisterHandler,
-  userInfo,
-}) => {
+const TwoStep = ({ confirmRegisterHandler, userInfo }) => {
   const [password, setPassword] = useState();
   const [disabled, setDisabled] = useState(true);
   const [showwarning, setShowwarning] = useState(false);
@@ -16,11 +12,11 @@ const TwoStep = ({
   const onConfirmRegister = () => {
     confirmRegisterHandler(password);
   };
-  const onChangePwd = (e) => {
+  const onChangePwd = e => {
     setPassword(e.target.value);
   };
 
-  const onChangeConfirmPwd = (e) => {
+  const onChangeConfirmPwd = e => {
     if (e.target.value === password) {
       setDisabled(false);
       setShowwarning(false);
@@ -39,16 +35,16 @@ const TwoStep = ({
             <span>{userInfo.username}</span>
           </div>
           {userInfo.email && (
-          <div className={style.showLabel}>
-            Email:
-            <span>{userInfo.email}</span>
-          </div>
+            <div className={style.showLabel}>
+              Email:
+              <span>{userInfo.email}</span>
+            </div>
           )}
           {userInfo.tel && (
-          <div className={style.showLabel}>
-            Phone:
-            <span>{userInfo.tel}</span>
-          </div>
+            <div className={style.showLabel}>
+              Phone:
+              <span>{userInfo.tel}</span>
+            </div>
           )}
           <div className={style.showLabel}>
             Birthday:
@@ -58,10 +54,20 @@ const TwoStep = ({
         <div className={style.label}>Please Enter Your Password</div>
         <Input className={style.input} type="password" onChange={onChangePwd} />
         <div className={style.label}>Please Confirm</div>
-        <Input className={style.input} type="password" onChange={onChangeConfirmPwd} />
-        {showwarning && <div className={style.showTip}>The password should be same</div>}
+        <Input
+          className={style.input}
+          type="password"
+          onChange={onChangeConfirmPwd}
+        />
+        {showwarning && (
+          <div className={style.showTip}>The password should be same</div>
+        )}
       </div>
-      <Footer disabled={disabled} label="Confirm Register" onClickNextStep={onConfirmRegister} />
+      <Footer
+        disabled={disabled}
+        label="Confirm Register"
+        onClickNextStep={onConfirmRegister}
+      />
     </div>
   );
 };

@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
-import SignupPic from '@assets/Signup.jpg';
-import { useAppContext } from '@utils/context';
-import { registerUser } from '@services/register';
-import Show from '@components/Show';
-import OneStep from './components/OneStep';
-// eslint-disable-next-line import/no-named-as-default
-import TwoStep from './components/TwoStep';
-import style from './index.module.scss';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { message } from "antd";
+import SignupPic from "@assets/Signup.jpg";
+import { useAppContext } from "@utils/context";
+import { registerUser } from "@services/register";
+import Show from "@components/Show";
+import OneStep from "./components/OneStep";
+import TwoStep from "./components/TwoStep";
+import style from "./index.module.scss";
 
 const STEP = {
   ONE: 0,
@@ -27,7 +26,7 @@ const Register = () => {
   useEffect(() => {
     if (step === STEP.ONE) {
       setStore({
-        closeHeaderHandler: () => navigate('/login'),
+        closeHeaderHandler: () => navigate("/login"),
       });
     }
     if (step === STEP.TWO) {
@@ -37,19 +36,19 @@ const Register = () => {
     }
   }, [step]);
 
-  const gotoNextStepHandler = (data) => {
+  const gotoNextStepHandler = data => {
     setUserInfo(data);
     setStep(STEP.TWO);
   };
 
-  const confirmRegisterHandler = async (password) => {
+  const confirmRegisterHandler = async password => {
     const res = await registerUser({
       password,
       ...userInfo,
     });
     if (res.success) {
-      message.success('Successfully Sign Up. Congratulations!');
-      navigate('/login');
+      message.success("Successfully Sign Up. Congratulations!");
+      navigate("/login");
     }
   };
 
