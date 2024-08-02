@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGoTo } from "@utils/hooks";
+import { message } from "antd";
 import { useAppContext } from "@utils/context";
 import "./index.css";
 import Layout from "@components/Layout";
@@ -10,6 +11,7 @@ import {
   getAllTradeRecord,
   updateTradeRecord,
 } from "@services/stock";
+import { createTweet } from "@services/tweet";
 
 const mockStrategyList = ["VCP", "WXG"].map(strategy => ({
   value: strategy,
@@ -194,6 +196,7 @@ function Record({ record, onRecordUpdate }) {
   const [sellPrice, setSellPrice] = useState(record.sellPrice || 0);
   const [sellDate, setSellDate] = useState(record.sellDate || "");
   const [active, setActive] = useState(record.active);
+  const go = useGoTo();
 
   const handleStatusChange = () => {
     const updatedRecord = {
@@ -207,6 +210,20 @@ function Record({ record, onRecordUpdate }) {
     setActive(!active);
   };
 
+  async function handleShareRecord(record) {
+    const formData = new FormData();
+    const action = active ? "bought" : "sold";
+    const price = active ? `${record.cost}` : `${record.sellPrice}`;
+    const content = `I ${action} ${Number(record.quantity).toFixed(2)} shares ${
+      record.stock.ticker
+    } at price ${Number(price).toFixed(2)}`;
+    formData.append("content", content);
+    const res = await createTweet(formData);
+    if (res) {
+      message.success("Successfully Post!");
+      go("/");
+    }
+  }
   const handleSellReasonChange = e => setSellReason(e.target.value);
   const handleSellPriceChange = e => setSellPrice(e.target.value);
   const handleSellDateChange = e => setSellDate(e.target.value);
@@ -268,6 +285,9 @@ function Record({ record, onRecordUpdate }) {
           onClick={handleStatusChange}
         >
           {active ? "Mark as Sold" : "Reactive"}
+        </button>
+        <button className="button" onClick={() => handleShareRecord(record)}>
+          Share
         </button>
       </td>
     </tr>

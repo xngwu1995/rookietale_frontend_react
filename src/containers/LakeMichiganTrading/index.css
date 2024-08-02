@@ -87,24 +87,36 @@ th {
 }
 
 .sell-button {
-  padding: 8px;
+  width: 100%;
   background-color: red;
-  color: #fff;
+  font-family: inherit;
   border: none;
-  border-radius: 3px;
+  padding: 1rem 2rem;
+  font-weight: 300;
+  font-size: 1.1rem;
   cursor: pointer;
 }
 
-.sell-button:hover {
-  background-color: red;
+.button {
+  width: 100%;
+  background-color: #ffebb3;
+  color: #5a3e2b;
+  font-family: inherit;
+  border: none;
+  padding: 1rem 2rem;
+  font-weight: 300;
+  font-size: 1.1rem;
+  cursor: pointer;
 }
 
 .reactive-button {
-  padding: 8px;
+  width: 100%;
   background-color: #28a745;
-  color: #fff;
+  font-family: inherit;
   border: none;
-  border-radius: 3px;
+  padding: 1rem 2rem;
+  font-weight: 300;
+  font-size: 1.1rem;
   cursor: pointer;
 }
 
