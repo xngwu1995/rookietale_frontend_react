@@ -90,12 +90,12 @@ const StrategyList = ({ strategies }) => {
       <table className="strategy-table">
         <thead>
           <tr>
-            <th>Ticker</th>
+            <th>Ticker(股票代码)</th>
             <th>Company</th>
             <th>Sector</th>
             <th>Strategy</th>
-            <th>Country</th>
-            <th>Date</th>
+            <th>Country(国家)</th>
+            <th>Date(推荐日期)</th>
           </tr>
         </thead>
         <tbody>

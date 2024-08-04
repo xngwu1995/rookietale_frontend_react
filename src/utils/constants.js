@@ -25,17 +25,17 @@ export const menuItems = [
   {
     key: "chatgpt",
     icon: <img className={style.icon} src={messageSvg} alt="" />,
-    label: "CHATGPT",
+    label: "CHATGPT(AI分析)",
   },
   {
     key: "trading",
     icon: <img className={style.icon} src={messageSvg} alt="" />,
-    label: "LMT",
+    label: "LMT(交易记录)",
   },
   {
     key: "stock",
     icon: <img className={style.icon} src={messageSvg} alt="" />,
-    label: "Stock",
+    label: "Stock(交易策略)",
   },
 ];
 export const createTweetItem = [
@@ -80,10 +80,6 @@ export const allLinks = [
   {
     key: "friendship",
     link: "/friendship",
-  },
-  {
-    key: "academicworld",
-    link: "/academicworld",
   },
   {
     key: "chatgpt",

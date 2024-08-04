@@ -13,13 +13,23 @@ import {
 } from "@services/stock";
 import { createTweet } from "@services/tweet";
 
-const mockStrategyList = ["VCP", "WXG"].map(strategy => ({
-  value: strategy,
-  label: strategy,
+const mockStrategyList = [
+  { value: "VCP", label: "VCP(交易策略推荐)" },
+  { value: "WXG", label: "WXG(第六感)" },
+].map(strategy => ({
+  value: strategy.value,
+  label: strategy.label,
 }));
-const mockReasonList = ["None", "CHATGPT", "GEMINI", "RSU"].map(reason => ({
-  value: reason,
-  label: reason,
+
+const mockReasonList = [
+  { value: "None", label: "None(我乐意)" },
+  { value: "Indicators", label: "Indicators(指标分析)" },
+  { value: "CHATGPT", label: "CHATGPT(AI分析)" },
+  { value: "GEMINI", label: "GEMINI" },
+  { value: "RSU", label: "RSU" },
+].map(strategy => ({
+  value: strategy.value,
+  label: strategy.label,
 }));
 
 function Form({ onAddRecord, stocks }) {
@@ -68,7 +78,7 @@ function Form({ onAddRecord, stocks }) {
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
-      <label htmlFor="ticker">Ticker</label>
+      <span>Ticker(股票代码)</span>
       <Select
         id="stock_id"
         name="stock_id"
@@ -84,7 +94,7 @@ function Form({ onAddRecord, stocks }) {
         className="react-select-container"
         classNamePrefix="react-select"
       />
-      <label htmlFor="cost">Cost</label>
+      <span>Cost(成本)</span>
       <input
         id="cost"
         name="cost"
@@ -93,7 +103,7 @@ function Form({ onAddRecord, stocks }) {
         onChange={handleChange}
         required
       />
-      <label htmlFor="quantity">Quantity</label>
+      <span>Quantity(数量)</span>
       <input
         id="quantity"
         name="quantity"
@@ -102,7 +112,7 @@ function Form({ onAddRecord, stocks }) {
         onChange={handleChange}
         required
       />
-      <label htmlFor="strategy">Strategy</label>
+      <span>Strategy(策略)</span>
       <Select
         id="strategy"
         name="strategy"
@@ -113,7 +123,7 @@ function Form({ onAddRecord, stocks }) {
         isMulti
         isClearable
       />
-      <label htmlFor="reason">Reason</label>
+      <span>Reason(原因)</span>
       <Select
         id="reason"
         name="reason"
@@ -124,7 +134,7 @@ function Form({ onAddRecord, stocks }) {
         isMulti
         isClearable
       />
-      <label htmlFor="date">Date</label>
+      <span>Date(买入日期)</span>
       <input
         type="date"
         name="created_date"
@@ -170,10 +180,14 @@ function Records({ records, updateRecord }) {
             <th>Strategy</th>
             <th>Buy Reason</th>
             <th>Status</th>
-            <th>Sell Reason</th>
-            <th>Sell Price</th>
-            <th>Sell Date</th>
-            {filter === "active" ? <th>Closed Price</th> : <th>Revenue</th>}
+            <th>Sell Reason(卖出原因)</th>
+            <th>Sell Price(卖出价格)</th>
+            <th>Sell Date(卖出日期)</th>
+            {filter === "active" ? (
+              <th>Closed Price(建议卖出价)</th>
+            ) : (
+              <th>Revenue(获利)</th>
+            )}
             <th>Action</th>
           </tr>
         </thead>
@@ -284,10 +298,10 @@ function Record({ record, onRecordUpdate }) {
           className={active ? "sell-button" : "reactive-button"}
           onClick={handleStatusChange}
         >
-          {active ? "Mark as Sold" : "Reactive"}
+          {active ? "Mark as Sold(卖出)" : "Reactive"}
         </button>
         <button className="button" onClick={() => handleShareRecord(record)}>
-          Share
+          Share(分享)
         </button>
       </td>
     </tr>

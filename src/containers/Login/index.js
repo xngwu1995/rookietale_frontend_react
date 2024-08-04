@@ -23,11 +23,10 @@ const Login = () => {
     if (values) {
       const res = await login(values);
       if (res.success) {
-        localStorage.setItem("access", res.access);
-        cookies.set("userId", res.user.id);
+        cookies.set("access", res.access, { expires: 1 });
+        cookies.set("userId", res.user.id, { expires: 1 });
         message.success("Successfully log in");
-        go("/");
-        window.location.reload();
+        go("tweets");
       }
     }
   };
