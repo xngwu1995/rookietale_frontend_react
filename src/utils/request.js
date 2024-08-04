@@ -1,5 +1,6 @@
 import axios from "axios";
 import { message } from "antd";
+import cookies from "js-cookie";
 
 const domain = "https://woaybb.com";
 
@@ -13,7 +14,7 @@ export const axiosInstance = axios.create({
 
 // added the domain url
 axiosInstance.interceptors.request.use(config => {
-  const token = localStorage.getItem("access");
+  const token = cookies.get("access");
 
   // Check if the URL is neither login nor signup
   if (

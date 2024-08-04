@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tabs } from "antd";
 import GPTNormalPage from "@components/GPTPages/Normal";
 import GPTLongEssayPage from "@components/GPTPages/LongEssay";
 import StockGPTPage from "@components/GPTPages/StocksGPT";
 import style from "./index.module.scss";
+import { useAppContext } from "@utils/context";
+import { useGoTo } from "@utils/hooks";
 
 const GPTPage = () => {
+  const [store, setStore] = useAppContext();
+  const go = useGoTo();
+
   const tabItems = [
     {
       key: "finance",
@@ -23,6 +28,13 @@ const GPTPage = () => {
       children: <GPTLongEssayPage />,
     },
   ];
+
+  useEffect(function () {
+    const updateStore = () => {
+      setStore({ closeHeaderHandler: () => go("/") });
+    };
+    updateStore();
+  }, []);
 
   return (
     <div className={style.GPTPage}>

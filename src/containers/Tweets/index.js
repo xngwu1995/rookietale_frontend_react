@@ -39,10 +39,14 @@ const Tweets = () => {
   const listRef = createRef();
   const nav = useNavigate();
 
+  useEffect(function () {
+    const updateStore = () => {
+      setStore({ closeHeaderHandler: null });
+    };
+    updateStore();
+  }, []);
+
   useEffect(() => {
-    setStore({
-      closeHeaderHandler: null,
-    });
     const init = async () => {
       if (!store.user) {
         go("login");

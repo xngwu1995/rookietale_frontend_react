@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "@utils/context";
 import { useGoTo } from "@utils/hooks";
 import Select from "react-select";
+import Cookies from "js-cookie";
 import { getAllStocks } from "@services/stock";
 import { getStockSignal } from "@services/chatgpt";
 import style from "./index.module.scss";
@@ -9,19 +10,14 @@ import style from "./index.module.scss";
 const StockGPTPage = () => {
   const [inputData, setInputData] = useState({
     stocks: [],
-    languageSelect: "english",
+    languageSelect: "chinese",
   });
   const [response, setResponse] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [store, setStore] = useAppContext();
   const [stocks, setStocks] = useState([]);
   const go = useGoTo();
-
-  useEffect(() => {
-    setStore({ closeHeaderHandler: () => go("/") });
-  }, []);
 
   const handleChange = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -34,8 +30,8 @@ const StockGPTPage = () => {
   };
 
   useEffect(() => {
-    if (!store.user) go("login");
-  }, [store.user, go]);
+    if (!Cookies.get("access")) go("login");
+  }, []);
 
   useEffect(function () {
     fetchAllStocks();
@@ -62,9 +58,7 @@ const StockGPTPage = () => {
 
     try {
       // Call askChatGPT with inputData
-      const resp = await getStockSignal({
-        stocksymbols: inputData.stocks,
-      });
+      const resp = await getStockSignal(inputData);
       const data = await resp.signals;
       setResponse(data); // Use setResponse to update the response state
     } catch (error) {

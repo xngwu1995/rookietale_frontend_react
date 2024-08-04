@@ -2,7 +2,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import HeaderTwitter from "@components/Header";
 import { useAppContext } from "@utils/context";
 import { useEffect } from "react";
-import Cookies from "js-cookie";
+import cookies from "js-cookie";
 import { getUser } from "@services/users";
 import { useGoTo } from "@utils/hooks";
 
@@ -17,8 +17,9 @@ const App = () => {
         go("register");
         return;
       }
-      const userId = Cookies.get("userId");
-      if (!userId) {
+      const userId = cookies.get("userId");
+      const access = cookies.get("access");
+      if (!userId || !access) {
         go("login");
         return;
       }
@@ -35,7 +36,6 @@ const App = () => {
         }
         return;
       }
-      go("login");
     };
     init();
   }, [location.pathname]);

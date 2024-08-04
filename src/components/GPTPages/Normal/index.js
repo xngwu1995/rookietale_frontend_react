@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "@utils/context";
 import { useGoTo } from "@utils/hooks";
 import { askChatGPT } from "@services/chatgpt";
 import style from "./index.module.scss";
+import Cookies from "js-cookie";
 
 const GPTNormalPage = () => {
   const [inputData, setInputData] = useState({
@@ -16,11 +16,10 @@ const GPTNormalPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [, setErrorMessage] = useState("");
-  const [, setStore] = useAppContext();
   const go = useGoTo();
 
   useEffect(() => {
-    setStore({ closeHeaderHandler: () => go("/") });
+    if (!Cookies.get("access")) go("login");
   }, []);
 
   const handleChange = e => {
