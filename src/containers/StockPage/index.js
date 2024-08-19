@@ -154,6 +154,7 @@ const StrategyList = ({ strategies }) => {
             <th>Strategy</th>
             <th>Country(国家)</th>
             <th>Date(推荐日期)</th>
+            <th>AI_Analysis(AI分析)</th>
           </tr>
         </thead>
         <tbody>
@@ -165,6 +166,13 @@ const StrategyList = ({ strategies }) => {
               <td>{strategy.strategy}</td>
               <td>{strategy.stock.country}</td>
               <td>{new Date(strategy.created_at).toLocaleDateString()}</td>
+              <td>
+                <DescriptionPopup
+                  description={"AI Analysis Details"}
+                  title={`AI Analysis for ${strategy.stock.ticker}`}
+                  text={strategy.ai_analysis}
+                />
+              </td>
             </tr>
           ))}
         </tbody>
