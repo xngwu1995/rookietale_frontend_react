@@ -46,7 +46,7 @@ const Nav = () => {
         className={style.post}
         onClick={() => handleMenuItemClick("post")}
       >
-        Post Tweet
+        Post Revenue
       </button>
       <div className={style.logoutWrapper}>
         <button type="button" className={style.logout} onClick={handleLogout}>

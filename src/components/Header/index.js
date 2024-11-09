@@ -1,6 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { useAppContext } from "@utils/context";
-// import { useCurMenu } from '@utils/hooks';
 import logo from "../../assets/logo.svg";
 import style from "./index.module.scss";
 
@@ -15,6 +14,7 @@ const HeaderTwitter = () => {
         />
       )}
       <img src={logo} alt="RookieTale" className={style.logo} />
+      <text>Talk is cheap, show me your revenue!</text>
     </div>
   );
 };
