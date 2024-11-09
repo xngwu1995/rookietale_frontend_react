@@ -51,15 +51,17 @@ const Tweets = () => {
       if (!store.user) {
         go("login");
       }
-      const res = await getFeeds();
-      const users = await getRandomUser();
-      const tweets = res.results || [];
-      setData(tweets);
-      setFilteredData(tweets);
-      setLtTime(tweets[tweets.length - 1]?.created_at || "");
-      setHasMore(res.has_next_page);
-      setPreviousHasMore(res.has_next_page);
-      setSuggestUsers(users);
+      if (store.user) {
+        const res = await getFeeds();
+        const users = await getRandomUser();
+        const tweets = res.results || [];
+        setData(tweets);
+        setFilteredData(tweets);
+        setLtTime(tweets[tweets.length - 1]?.created_at || "");
+        setHasMore(res.has_next_page);
+        setPreviousHasMore(res.has_next_page);
+        setSuggestUsers(users);
+      }
     };
     init();
   }, []);
