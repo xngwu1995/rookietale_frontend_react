@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Table, Input, DatePicker, Button, Space } from "antd";
+import moment from "moment";
 import { useGoTo } from "@utils/hooks";
 import { useAppContext } from "@utils/context";
 import { getStrategyStocks } from "@services/stock";
@@ -63,44 +65,14 @@ Screener Details:
 	- Volume contraction: the volume usually decreases as the chart moves to the right.
 `;
 
+const { Search } = Input;
+
 const StrategyList = ({ strategies }) => {
-  const [filters, setFilters] = useState({
-    date: "",
-  });
+  const [filters, setFilters] = useState({ date: "" });
   const [searchTerm, setSearchTerm] = useState("");
-  // function updateStrategies(filters) {
-  //   let filtered = [...strategies];
 
-  //   if (filters.date) {
-  //     filtered = filtered.filter(strategy => {
-  //       const strategyDate = new Date(strategy.created_at)
-  //         .toISOString()
-  //         .split("T")[0];
-  //       return strategyDate === filters.date;
-  //     });
-  //   }
-
-  // const handleSearch = searchTerm => {
-  //   setItem(items =>
-  //     items.filter(
-  //       strategy =>
-  //         strategy.stock.ticker
-  //           .toLowerCase()
-  //           .includes(searchTerm.toLowerCase()) ||
-  //         strategy.strategy.toLowerCase().includes(searchTerm.toLowerCase())
-  //     )
-  //   );
-  // };
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const searchTerm = e.target.value();
-    if (!searchTerm) return;
-    handleSearch(searchTerm);
-  };
-
-  const handleDateChange = event => {
-    setFilters({ ...filters, date: event.target.value });
+  const handleDateChange = (date, dateString) => {
+    setFilters({ ...filters, date: dateString });
   };
 
   const clearFilters = () => {
@@ -108,75 +80,82 @@ const StrategyList = ({ strategies }) => {
     setSearchTerm("");
   };
 
+  const filteredStrategies = strategies.filter(strategy => {
+    const strategyDate = moment(strategy.created_at).format("YYYY-MM-DD");
+    const matchesDate = filters.date ? strategyDate === filters.date : true;
+    const matchesSearchTerm =
+      searchTerm === "" ||
+      strategy.stock.ticker.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      strategy.strategy.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesDate && matchesSearchTerm;
+  });
+
+  const columns = [
+    {
+      title: "Ticker",
+      dataIndex: ["stock", "ticker"],
+      key: "ticker",
+    },
+    {
+      title: "Company",
+      dataIndex: ["stock", "company"],
+      key: "company",
+    },
+    {
+      title: "Sector",
+      dataIndex: ["stock", "sector"],
+      key: "sector",
+    },
+    {
+      title: "Strategy",
+      dataIndex: "strategy",
+      key: "strategy",
+    },
+    {
+      title: "Country",
+      dataIndex: ["stock", "country"],
+      key: "country",
+    },
+    {
+      title: "Date",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: text => moment(text).format("YYYY-MM-DD"),
+    },
+    {
+      title: "AI_Analysis",
+      dataIndex: "ai_analysis",
+      key: "ai_analysis",
+      render: (text, record) => (
+        <DescriptionPopup
+          description={"AI Analysis Details"}
+          title={`AI Analysis for ${record.stock.ticker}`}
+          text={text}
+        />
+      ),
+    },
+  ];
+
   return (
     <div>
-      <form className="add-form" onSubmit={handleSubmit}>
-        <h3>Stock Strategy Search</h3>
-        <input
-          type="text"
+      <Space direction="vertical" style={{ marginBottom: 16 }}>
+        <Search
+          placeholder="Search by ticker or strategy"
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          placeholder="SEARCH BY"
+          onSearch={setSearchTerm}
+          style={{ width: 300 }}
         />
-        <button type="submit">Search</button>
-        <button type="button" onClick={clearFilters}>
-          Clear Search
-        </button>
-      </form>
-      <div className="filters-container">
-        <div className="column-filters">
-          <input
-            type="date"
-            name="date"
-            value={filters.date}
-            onChange={handleDateChange}
-            placeholder="Filter by Date"
-          />
-        </div>
-        <div className="clear-filters-container">
-          <button
-            onClick={() =>
-              setFilters({
-                date: "",
-              })
-            }
-          >
-            Clear Filters
-          </button>
-        </div>
-      </div>
-      <table className="strategy-table">
-        <thead>
-          <tr>
-            <th>Ticker(股票代码)</th>
-            <th>Company</th>
-            <th>Sector</th>
-            <th>Strategy</th>
-            <th>Country(国家)</th>
-            <th>Date(推荐日期)</th>
-            <th>AI_Analysis(AI分析)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {strategies.map(strategy => (
-            <tr key={strategy.id}>
-              <td>{strategy.stock.ticker}</td>
-              <td>{strategy.stock.company}</td>
-              <td>{strategy.stock.sector}</td>
-              <td>{strategy.strategy}</td>
-              <td>{strategy.stock.country}</td>
-              <td>{new Date(strategy.created_at).toLocaleDateString()}</td>
-              <td>
-                <DescriptionPopup
-                  description={"AI Analysis Details"}
-                  title={`AI Analysis for ${strategy.stock.ticker}`}
-                  text={strategy.ai_analysis}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <DatePicker onChange={handleDateChange} />
+        <Button onClick={clearFilters}>Clear Filters</Button>
+      </Space>
+      <Table
+        columns={columns}
+        dataSource={filteredStrategies}
+        rowKey={record => record.id}
+        pagination={{ pageSize: 5 }}
+      />
     </div>
   );
 };

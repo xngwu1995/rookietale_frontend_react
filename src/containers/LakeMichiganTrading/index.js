@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useGoTo } from "@utils/hooks";
-import { message } from "antd";
+import {
+  Modal,
+  Button,
+  message,
+  Form as AntForm,
+  Input,
+  Table,
+  Tag,
+  Space,
+  Select as AntSelect,
+} from "antd";
 import { useAppContext } from "@utils/context";
 import "./index.css";
 import Layout from "@components/Layout";
@@ -33,6 +43,7 @@ const mockReasonList = [
 }));
 
 function Form({ onAddRecord, stocks }) {
+  const [form] = AntForm.useForm();
   const [formData, setFormData] = useState({
     stock_id: null,
     cost: "",
@@ -53,8 +64,7 @@ function Form({ onAddRecord, stocks }) {
     }));
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const strategies = formData.strategy
       .map(option => option.value)
       .join(" + ");
@@ -66,6 +76,11 @@ function Form({ onAddRecord, stocks }) {
       reason: reasons,
       active: true,
     });
+
+    // Reset the form fields
+    form.resetFields();
+
+    // Clear local formData state as well
     setFormData({
       stock_id: null,
       cost: "",
@@ -77,234 +92,329 @@ function Form({ onAddRecord, stocks }) {
   };
 
   return (
-    <form className="add-form" onSubmit={handleSubmit}>
-      <span>Ticker(股票代码)</span>
-      <Select
-        id="stock_id"
+    <AntForm layout="vertical" onFinish={handleSubmit}>
+      <AntForm.Item
+        label="Ticker(股票代码)"
         name="stock_id"
-        value={formData.stock_id}
-        onChange={handleSelectChange}
-        options={stocks.map(stock => ({
-          value: stock.id,
-          label: stock.ticker,
-        }))}
-        placeholder="Select or type a stock"
-        isClearable
-        isSearchable
-        className="react-select-container"
-        classNamePrefix="react-select"
-      />
-      <span>Cost(成本)</span>
-      <input
-        id="cost"
+        rules={[{ required: true, message: "Please select a stock!" }]}
+      >
+        <Select
+          id="stock_id"
+          name="stock_id"
+          value={formData.stock_id}
+          onChange={handleSelectChange}
+          options={stocks.map(stock => ({
+            value: stock.id,
+            label: stock.ticker,
+          }))}
+          placeholder="Select or type a stock"
+          isClearable
+          isSearchable
+          className="react-select-container"
+          classNamePrefix="react-select"
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Cost(成本)"
         name="cost"
-        type="number"
-        value={formData.cost}
-        onChange={handleChange}
-        required
-      />
-      <span>Quantity(数量)</span>
-      <input
-        id="quantity"
+        rules={[{ required: true, message: "Please enter the cost!" }]}
+      >
+        <Input
+          id="cost"
+          name="cost"
+          type="number"
+          value={formData.cost}
+          onChange={handleChange}
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Quantity(数量)"
         name="quantity"
-        type="number"
-        value={formData.quantity}
-        onChange={handleChange}
-        required
-      />
-      <span>Strategy(策略)</span>
-      <Select
-        id="strategy"
+        rules={[{ required: true, message: "Please enter the quantity!" }]}
+      >
+        <Input
+          id="quantity"
+          name="quantity"
+          type="number"
+          value={formData.quantity}
+          onChange={handleChange}
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Strategy(策略)"
         name="strategy"
-        value={formData.strategy}
-        onChange={handleSelectChange}
-        options={mockStrategyList}
-        placeholder="Select strategies"
-        isMulti
-        isClearable
-      />
-      <span>Reason(原因)</span>
-      <Select
-        id="reason"
+        rules={[{ required: true, message: "Please enter the strategy!" }]}
+      >
+        <Select
+          id="strategy"
+          name="strategy"
+          value={formData.strategy}
+          onChange={handleSelectChange}
+          options={mockStrategyList}
+          placeholder="Select strategies"
+          isMulti
+          isClearable
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Reason(原因)"
         name="reason"
-        value={formData.reason}
-        onChange={handleSelectChange}
-        options={mockReasonList}
-        placeholder="Select reasons"
-        isMulti
-        isClearable
-      />
-      <span>Date(买入日期)</span>
-      <input
-        type="date"
+        rules={[{ required: true, message: "Please enter the reason!" }]}
+      >
+        <Select
+          id="reason"
+          name="reason"
+          value={formData.reason}
+          onChange={handleSelectChange}
+          options={mockReasonList}
+          placeholder="Select reasons"
+          isMulti
+          isClearable
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Date(买入日期)"
         name="created_date"
-        value={formData.created_date}
-        onChange={handleChange}
-        className="dateinput"
-      />
-      <button>Add Record</button>
-    </form>
+        rules={[{ required: true, message: "Please enter the created_date!" }]}
+      >
+        <Input
+          type="date"
+          name="created_date"
+          value={formData.created_date}
+          onChange={handleChange}
+          className="dateinput"
+          required
+        />
+      </AntForm.Item>
+      <AntForm.Item>
+        <Button type="primary" htmlType="submit">
+          Add Record
+        </Button>
+      </AntForm.Item>
+    </AntForm>
   );
 }
 
+const SellForm = ({ form, sellData, setSellData, onSubmit }) => {
+  const handleSellChange = e => {
+    setSellData(prevData => ({
+      ...prevData,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  return (
+    <AntForm form={form} layout="vertical" onFinish={onSubmit}>
+      <AntForm.Item
+        label="Sell Reason(卖出原因)"
+        name="sellReason"
+        rules={[{ required: true, message: "Please enter the sell reason!" }]}
+      >
+        <Input
+          name="sellReason"
+          value={sellData.sellReason}
+          onChange={handleSellChange}
+          placeholder="Enter sell reason"
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Sell Price(卖出价格)"
+        name="sellPrice"
+        rules={[{ required: true, message: "Please enter the sell price!" }]}
+      >
+        <Input
+          name="sellPrice"
+          type="number"
+          value={sellData.sellPrice}
+          onChange={handleSellChange}
+          placeholder="Enter sell price"
+        />
+      </AntForm.Item>
+      <AntForm.Item
+        label="Sell Date(卖出日期)"
+        name="sellDate"
+        rules={[{ required: true, message: "Please select a sell date!" }]}
+      >
+        <Input
+          name="sellDate"
+          type="date"
+          value={sellData.sellDate}
+          onChange={handleSellChange}
+        />
+      </AntForm.Item>
+    </AntForm>
+  );
+};
+
 function Records({ records, updateRecord }) {
   const [filter, setFilter] = useState("active");
+  const [isSellModalVisible, setIsSellModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [form] = AntForm.useForm();
+  const [sellData, setSellData] = useState({
+    sellReason: "",
+    sellPrice: "",
+    sellDate: "",
+  });
 
-  let filteredRecords;
+  const handleStatusChange = record => {
+    setSelectedRecord(record);
+    setIsSellModalVisible(true);
+  };
 
-  if (filter === "active")
-    filteredRecords = records.slice().filter(record => record.active);
-  if (filter === "sold")
-    filteredRecords = records.slice().filter(record => !record.active);
+  const handleSellModalCancel = () => {
+    clearFormData();
+    setIsSellModalVisible(false);
+    setSelectedRecord(null);
+  };
+
+  const clearFormData = () => {
+    form.resetFields();
+    setSellData({
+      sellReason: "",
+      sellPrice: "",
+      sellDate: "",
+    });
+  };
+
+  const handleSellSubmit = () => {
+    if (selectedRecord) {
+      const updatedRecord = {
+        ...selectedRecord,
+        active: false,
+        sellReason: sellData.sellReason,
+        sellPrice: parseFloat(sellData.sellPrice),
+        sellDate: sellData.sellDate,
+      };
+      updateRecord(updatedRecord);
+      clearFormData();
+      setIsSellModalVisible(false);
+      setSelectedRecord(null);
+    }
+  };
+
+  const handleShareRecord = async record => {
+    const formData = new FormData();
+    const action = record.active ? "bought" : "sold";
+    const price = record.active ? `${record.cost}` : `${record.sellPrice}`;
+    const content = `I ${action} ${Number(record.quantity).toFixed(
+      2
+    )} shares of ${record.stock.ticker} at price $${Number(price).toFixed(2)}`;
+    formData.append("content", content);
+    const res = await createTweet(formData);
+    if (res) {
+      message.success("Successfully posted!");
+    }
+  };
+
+  const filteredRecords = records.filter(record =>
+    filter === "active" ? record.active : !record.active
+  );
+
+  const columns = [
+    {
+      title: "Ticker",
+      dataIndex: ["stock", "ticker"],
+      key: "ticker",
+      render: text => <Tag color="blue">{text}</Tag>,
+    },
+    {
+      title: "Cost",
+      dataIndex: "cost",
+      key: "cost",
+      render: text => (typeof text === "number" ? `$${text.toFixed(2)}` : text),
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+    },
+    {
+      title: "Strategy",
+      dataIndex: "strategy",
+      key: "strategy",
+      render: text => <Tag color="green">{text}</Tag>,
+    },
+    {
+      title: "Reason",
+      dataIndex: "reason",
+      key: "reason",
+      render: text => <Tag color="purple">{text}</Tag>,
+    },
+    {
+      title: "Status",
+      dataIndex: "active",
+      key: "active",
+      render: active => (
+        <Tag color={active ? "cyan" : "red"}>{active ? "Active" : "Sold"}</Tag>
+      ),
+    },
+    {
+      title: filter === "active" ? "Closed Price(建议卖出价)" : "Revenue(获利)",
+      dataIndex: filter === "active" ? "closed" : "revenue",
+      key: filter === "active" ? "closed" : "revenue",
+      render: value =>
+        value && typeof value === "number" ? `$${value.toFixed(2)}` : value,
+    },
+    {
+      title: "Actions",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button type="link" onClick={() => handleStatusChange(record)}>
+            {record.active ? "Mark as Sold(卖出)" : "Reactive"}
+          </Button>
+          <Button type="link" onClick={() => handleShareRecord(record)}>
+            Share(分享)
+          </Button>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="records-container">
       <h2>Trading Records</h2>
-      <div className="filter-container">
-        <label htmlFor="filter">Filter by Status: </label>
-        <select
+      <div className="filter-container" style={{ marginBottom: "20px" }}>
+        <label htmlFor="filter" style={{ marginRight: "10px" }}>
+          Filter by Status:
+        </label>
+        <AntSelect
           id="filter"
           value={filter}
-          onChange={e => setFilter(e.target.value)}
+          onChange={value => setFilter(value)}
+          style={{ width: 120 }}
         >
-          <option value="active">Active</option>
-          <option value="sold">Sold</option>
-        </select>
+          <AntSelect.Option value="active">Active</AntSelect.Option>
+          <AntSelect.Option value="sold">Sold</AntSelect.Option>
+        </AntSelect>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Ticker</th>
-            <th>Cost</th>
-            <th>Quantity</th>
-            <th>Strategy</th>
-            <th>Buy Reason</th>
-            <th>Status</th>
-            <th>Sell Reason(卖出原因)</th>
-            <th>Sell Price(卖出价格)</th>
-            <th>Sell Date(卖出日期)</th>
-            {filter === "active" ? (
-              <th>Closed Price(建议卖出价)</th>
-            ) : (
-              <th>Revenue(获利)</th>
-            )}
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredRecords.map(record => (
-            <Record
-              key={record.id}
-              record={record}
-              onRecordUpdate={updateRecord}
-            />
-          ))}
-        </tbody>
-      </table>
+      <Table
+        columns={columns}
+        dataSource={filteredRecords}
+        rowKey="id"
+        pagination={{ pageSize: 5 }}
+      />
+
+      <Modal
+        title="Mark as Sold"
+        open={isSellModalVisible}
+        onCancel={handleSellModalCancel}
+        onOk={() => form.submit()} // Trigger form submit using the form instance
+      >
+        <SellForm
+          form={form}
+          sellData={sellData}
+          setSellData={setSellData}
+          onSubmit={handleSellSubmit}
+        />
+      </Modal>
     </div>
-  );
-}
-
-function Record({ record, onRecordUpdate }) {
-  const [sellReason, setSellReason] = useState(record.sellReason || "");
-  const [sellPrice, setSellPrice] = useState(record.sellPrice || 0);
-  const [sellDate, setSellDate] = useState(record.sellDate || "");
-  const [active, setActive] = useState(record.active);
-  const go = useGoTo();
-
-  const handleStatusChange = () => {
-    const updatedRecord = {
-      ...record,
-      active: !active,
-      sellReason: active ? sellReason : "",
-      sellPrice: active ? sellPrice : 0,
-      sellDate: active ? sellDate : "",
-    };
-    onRecordUpdate(updatedRecord);
-    setActive(!active);
-  };
-
-  async function handleShareRecord(record) {
-    const formData = new FormData();
-    const action = active ? "bought" : "sold";
-    const price = active ? `${record.cost}` : `${record.sellPrice}`;
-    const content = `I ${action} ${Number(record.quantity).toFixed(2)} shares ${
-      record.stock.ticker
-    } at price ${Number(price).toFixed(2)}`;
-    formData.append("content", content);
-    const res = await createTweet(formData);
-    if (res) {
-      message.success("Successfully Post!");
-      go("/");
-    }
-  }
-  const handleSellReasonChange = e => setSellReason(e.target.value);
-  const handleSellPriceChange = e => setSellPrice(e.target.value);
-  const handleSellDateChange = e => setSellDate(e.target.value);
-
-  return (
-    <tr>
-      <td>{record.stock.ticker}</td>
-      <td>{record.cost}</td>
-      <td>{record.quantity}</td>
-      <td>{record.strategy}</td>
-      <td>{record.reason}</td>
-      <td className={`record-status ${active ? "active" : "sold"}`}>
-        {active ? "active" : "sold"}
-      </td>
-      <td>
-        {!active ? (
-          sellReason
-        ) : (
-          <input
-            className="sell-reason-input"
-            value={sellReason}
-            onChange={handleSellReasonChange}
-            placeholder="Sell Reason"
-          />
-        )}
-      </td>
-      <td>
-        {!active ? (
-          sellPrice
-        ) : (
-          <input
-            id="sellprice"
-            name="sellprice"
-            type="number"
-            value={sellPrice}
-            onChange={handleSellPriceChange}
-            required
-          />
-        )}
-      </td>
-      <td>
-        {!active ? (
-          sellDate
-        ) : (
-          <input
-            type="date"
-            name="selldate"
-            value={sellDate}
-            onChange={handleSellDateChange}
-            className="dateinput"
-            required
-          />
-        )}
-      </td>
-      {active ? <td>{record.closed}</td> : <td>{record.revenue}</td>}
-      <td>
-        <button
-          className={active ? "sell-button" : "reactive-button"}
-          onClick={handleStatusChange}
-        >
-          {active ? "Mark as Sold(卖出)" : "Reactive"}
-        </button>
-        <button className="button" onClick={() => handleShareRecord(record)}>
-          Share(分享)
-        </button>
-      </td>
-    </tr>
   );
 }
 
@@ -313,10 +423,20 @@ function TradingPage() {
   const go = useGoTo();
   const [records, setRecords] = useState([]);
   const [stocks, setStocks] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const handleAddRecord = async newRecord => {
     const data = await createTradeRecord(newRecord);
     setRecords([...records, data.trade_record]);
+    setIsModalVisible(false);
   };
 
   const updateRecord = async updatedRecord => {
@@ -360,7 +480,17 @@ function TradingPage() {
   return (
     <Layout>
       <div className="trading-page">
-        <Form onAddRecord={handleAddRecord} stocks={stocks} />
+        <Button type="primary" onClick={showModal}>
+          Add New Record
+        </Button>
+        <Modal
+          title="Add New Stock Record"
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <Form onAddRecord={handleAddRecord} stocks={stocks} />
+        </Modal>
         <Records records={records} updateRecord={updateRecord} />
       </div>
     </Layout>
