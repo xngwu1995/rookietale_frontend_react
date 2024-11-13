@@ -1,30 +1,17 @@
-import { useEffect, useState, createRef } from "react";
-import {
-  CellMeasurer,
-  CellMeasurerCache,
-  List,
-  WindowScroller,
-} from "react-virtualized";
+import { useEffect, useState } from "react";
 import Nav from "@components/Nav";
 import TweetCard from "@components/TweetCard";
-import { message } from "antd";
+import { message, Button, Input, Card, List, Avatar } from "antd";
 import { useAppContext } from "@utils/context";
 import { getFeeds, getMoreFeeds } from "@services/tweet";
 import TabContentWithInfiniteScroll from "@components/LoadMore";
-import Avatar from "@components/Avatar";
 import { followUser, getRandomUser, unFollowUser } from "@services/users";
 import { useNavigate } from "react-router-dom";
-import { LeftOutlined } from "@ant-design/icons";
 import { useGoTo } from "@utils/hooks";
 import style from "./index.module.scss";
 
-const cache = new CellMeasurerCache({
-  fixedWidth: true,
-  minHeight: 110,
-});
-/**
- *
- */
+const { Search } = Input;
+
 const Tweets = () => {
   const [store, setStore] = useAppContext();
   const [data, setData] = useState([]);
@@ -36,14 +23,10 @@ const Tweets = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [previousHasMore, setPreviousHasMore] = useState(false);
   const go = useGoTo();
-  const listRef = createRef();
   const nav = useNavigate();
 
-  useEffect(function () {
-    const updateStore = () => {
-      setStore({ closeHeaderHandler: null });
-    };
-    updateStore();
+  useEffect(() => {
+    setStore({ closeHeaderHandler: null });
   }, []);
 
   useEffect(() => {
@@ -66,13 +49,6 @@ const Tweets = () => {
     init();
   }, []);
 
-  useEffect(() => {
-    if (listRef.current) {
-      listRef.current.recomputeRowHeights();
-      listRef.current.forceUpdate();
-    }
-  }, [filteredData]);
-
   const loadMore = async time => {
     const res = await getMoreFeeds(time);
     const tweets = res.results || [];
@@ -82,27 +58,6 @@ const Tweets = () => {
     setHasMore(res.has_next_page);
     setPreviousHasMore(res.has_next_page);
   };
-
-  const rowRenderer = ({ index, key, style: sy, parent }) => (
-    <CellMeasurer
-      cache={cache}
-      columnIndex={0}
-      key={key}
-      rowIndex={index}
-      parent={parent}
-    >
-      {({ registerChild }) => (
-        <div style={sy} key={key} ref={registerChild}>
-          {filteredData[index] && (
-            <TweetCard
-              key={filteredData[index].tweet.id}
-              dataSource={filteredData[index].tweet}
-            />
-          )}
-        </div>
-      )}
-    </CellMeasurer>
-  );
 
   const toggleFollowing = async userId => {
     if (following.includes(userId)) {
@@ -126,80 +81,35 @@ const Tweets = () => {
     }
   };
 
-  const handleMouseOver = (e, isFollowing) => {
-    if (!isFollowing) {
-      e.target.style.backgroundColor = "rgba(24, 144, 255, 0.1)";
-    }
-  };
-
-  const handleMouseOut = (e, isFollowing) => {
-    if (!isFollowing) {
-      e.target.style.backgroundColor = "transparent";
-    }
-  };
-
   const renderUserList = () => (
-    <ul>
-      {suggestUsers.map(user => {
-        const handleAvatarClick = async () => {
-          nav("/profile", { state: { isMy: false, user } });
-        };
-        const isFollowing = following.includes(user.id);
-
-        return (
-          <li
-            key={user.id}
-            style={{ display: "flex", alignItems: "center", marginBottom: 16 }}
-          >
-            <Avatar
-              avatarUrl={user.avatar}
-              size={40}
-              onClick={handleAvatarClick}
-            />
-            <div style={{ marginLeft: 16 }}>
-              <div style={{ fontWeight: "bold" }}>{user.nickname}</div>
-              <div>@{user.username}</div>
-            </div>
-            <button
-              type="button"
-              style={{
-                marginLeft: "auto",
-                padding: "6px 12px",
-                backgroundColor: isFollowing ? "#1890ff" : "transparent",
-                color: isFollowing ? "#ffffff" : "#1890ff",
-                border: "1px solid #1890ff",
-                borderRadius: 20,
-                cursor: "pointer",
-                transition: "all 0.3s",
-                fontSize: 14,
-                fontWeight: "bold",
-                letterSpacing: "0.5px",
-              }}
-              onMouseOver={e => handleMouseOver(e, isFollowing)}
-              onMouseOut={e => handleMouseOut(e, isFollowing)}
-              onFocus={e => handleMouseOver(e, isFollowing)}
-              onBlur={e => handleMouseOut(e, isFollowing)}
+    <List itemLayout="horizontal" dataSource={suggestUsers}>
+      {suggestUsers.map(user => (
+        <List.Item
+          key={user.id}
+          actions={[
+            <Button
+              type={following.includes(user.id) ? "primary" : "default"}
               onClick={() => toggleFollowing(user.id)}
             >
-              {isFollowing ? "Following" : "Follow"}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
+              {following.includes(user.id) ? "Following" : "Follow"}
+            </Button>,
+          ]}
+        >
+          <List.Item.Meta
+            avatar={<Avatar src={user.avatar} size={40} />}
+            title={user.nickname}
+            description={`@${user.username}`}
+          />
+        </List.Item>
+      ))}
+    </List>
   );
 
-  const handleSearchInputChange = e => {
-    setSearchQuery(e.target.value);
-    if (e.target.value === "") {
-      setFilteredData(data);
-    }
-  };
-
-  const handleSearchSubmit = () => {
-    if (searchQuery !== "") {
-      const filtered = filteredData.filter(({ tweet }) =>
-        tweet.content.toLowerCase().includes(searchQuery.toLowerCase())
+  const handleSearch = value => {
+    setSearchQuery(value);
+    if (value) {
+      const filtered = data.filter(({ tweet }) =>
+        tweet.content.toLowerCase().includes(value.toLowerCase())
       );
       setFilteredData(filtered);
       setHasMore(false);
@@ -209,73 +119,38 @@ const Tweets = () => {
     }
   };
 
-  const resetFilter = () => {
-    setFilteredData(data);
-    setHasMore(previousHasMore);
-    setSearchQuery("");
-  };
-
   return (
     <div className={style.container}>
       <aside className={style.leftSider}>
         <Nav />
       </aside>
       <main className={style.mainContent}>
-        <form onSubmit={handleSearchSubmit} className={style.searchContainer}>
-          {searchQuery && (
-            <LeftOutlined className={style.closeIcon} onClick={resetFilter} />
-          )}
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={handleSearchInputChange}
-            onKeyDown={e => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                handleSearchSubmit();
-              }
-            }}
+        <div className={style.searchContainer}>
+          <Search
             placeholder="Search tweets"
-            className={style.searchInput}
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            onSearch={handleSearch}
+            enterButton
+            allowClear
           />
-        </form>
-        <WindowScroller>
-          {({
-            height,
-            isScrolling,
-            registerChild,
-            onChildScroll,
-            scrollTop,
-          }) => (
-            <div ref={registerChild}>
-              <List
-                ref={listRef}
-                isScrolling={isScrolling}
-                onScroll={onChildScroll}
-                scrollTop={scrollTop}
-                isScrollingOptOut
-                autoHeight
-                height={height}
-                deferredMeasurementCache={cache}
-                rowHeight={cache.rowHeight}
-                overscanRowCount={2}
-                rowCount={filteredData.length}
-                rowRenderer={rowRenderer}
-                width={600}
-              />
-            </div>
-          )}
-        </WindowScroller>
+        </div>
+        <List itemLayout="horizontal" dataSource={filteredData}>
+          {filteredData.map(item => (
+            <List.Item key={item.tweet.id}>
+              <TweetCard dataSource={item.tweet} />
+            </List.Item>
+          ))}
+        </List>
         <TabContentWithInfiniteScroll
           hasMore={hasMore}
           onLoadMore={() => loadMore(ltTime)}
         />
       </main>
       <aside className={style.rightSider}>
-        <div style={{ padding: 24, textAlign: "left" }}>
-          <p className={style.Header}>Who to follow</p>
+        <Card title="Who to follow" style={{ padding: 24 }}>
           {renderUserList()}
-        </div>
+        </Card>
       </aside>
     </div>
   );

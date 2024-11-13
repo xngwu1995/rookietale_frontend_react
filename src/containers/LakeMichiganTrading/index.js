@@ -22,6 +22,7 @@ import {
   updateTradeRecord,
 } from "@services/stock";
 import { createTweet } from "@services/tweet";
+import StockScreeningComponent from "@components/OptionsScreen";
 
 const mockStrategyList = [
   { value: "VCP", label: "VCP(交易策略推荐)" },
@@ -492,6 +493,7 @@ function TradingPage() {
           <Form onAddRecord={handleAddRecord} stocks={stocks} />
         </Modal>
         <Records records={records} updateRecord={updateRecord} />
+        <StockScreeningComponent />
       </div>
     </Layout>
   );
