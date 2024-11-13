@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useAppContext } from "@utils/context";
 import { useGoTo } from "@utils/hooks";
 import Select from "react-select";
 import Cookies from "js-cookie";

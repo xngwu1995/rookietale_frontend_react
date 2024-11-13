@@ -14,7 +14,7 @@ const HeaderTwitter = () => {
         />
       )}
       <img src={logo} alt="RookieTale" className={style.logo} />
-      <text>Talk is cheap, show me your revenue!</text>
+      <span>Talk is cheap, show me your revenue!</span>
     </div>
   );
 };

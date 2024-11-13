@@ -11,5 +11,7 @@ export const getAllTradeRecord = () =>
 
 export const getAllStocks = () => get("/api/stocks/get-stocks/");
 
+export const getAllOptions = () => get("/api/stocks/get-screened-options/");
+
 export const updateTradeRecord = (id, params) =>
   put(`/api/stocks/record/${id}/update-trade-record/`, params);
