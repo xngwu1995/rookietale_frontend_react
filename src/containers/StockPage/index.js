@@ -7,6 +7,7 @@ import { getStrategyStocks } from "@services/stock";
 import Layout from "@components/Layout";
 import "./index.css";
 import DescriptionPopup from "@components/PopUpWindow";
+import StockScreeningComponent from "@components/OptionsScreen";
 
 const title = "VCP";
 const description = "什么是VCP(What's VCP?)";
@@ -191,6 +192,7 @@ function StockPage() {
       <div className="app">
         <DescriptionPopup description={description} title={title} text={text} />
         <StrategyList strategies={strategies} />
+        <StockScreeningComponent />
       </div>
     </Layout>
   );
