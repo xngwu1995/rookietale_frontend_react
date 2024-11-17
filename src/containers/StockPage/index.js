@@ -190,7 +190,13 @@ function StockPage() {
   return (
     <Layout>
       <div className="app">
-        <DescriptionPopup description={description} title={title} text={text} />
+        <Space>
+          <DescriptionPopup
+            description={description}
+            title={title}
+            text={text}
+          />
+        </Space>
         <StrategyList strategies={strategies} />
         <StockScreeningComponent />
       </div>

@@ -15,6 +15,7 @@ import FollowPage from "@containers/FollowPage";
 import Chatgpt from "@containers/Chatgpt";
 import TradingPage from "@containers/LakeMichiganTrading";
 import StockPage from "@containers/StockPage";
+import VCPOptionPage from "@containers/TradingDecision";
 
 ReactDOM.render(
   <CxtProvider>
@@ -37,6 +38,7 @@ ReactDOM.render(
           <Route path="/chatgpt" element={<Chatgpt />} />
           <Route path="/trading" element={<TradingPage />} />
           <Route path="/stock" element={<StockPage />} />
+          <Route path="/decision" element={<VCPOptionPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
