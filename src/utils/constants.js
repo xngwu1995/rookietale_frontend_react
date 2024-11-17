@@ -37,6 +37,11 @@ export const menuItems = [
     icon: <img className={style.icon} src={messageSvg} alt="" />,
     label: "Stock(交易策略)",
   },
+  {
+    key: "decision",
+    icon: <img className={style.icon} src={messageSvg} alt="" />,
+    label: "AllIn(今日推荐)",
+  },
 ];
 export const createTweetItem = [
   {
@@ -92,6 +97,10 @@ export const allLinks = [
   {
     key: "stock",
     link: "/stock",
+  },
+  {
+    key: "decision",
+    link: "/decision",
   },
 ];
 

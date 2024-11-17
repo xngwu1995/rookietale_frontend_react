@@ -75,7 +75,7 @@ const StockScreeningComponent = () => {
       },
     },
     {
-      title: "Weight",
+      title: "Weight(%)",
       dataIndex: "weight",
       key: "weight",
       render: weight => (

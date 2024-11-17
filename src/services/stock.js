@@ -13,5 +13,9 @@ export const getAllStocks = () => get("/api/stocks/get-stocks/");
 
 export const getAllOptions = () => get("/api/stocks/get-screened-options/");
 
+export const getOptionStocks = () => get("/api/stocks/get-todays-vcp-options/");
+
+export const getMoney = () => get("/api/stocks/get-money/");
+
 export const updateTradeRecord = (id, params) =>
   put(`/api/stocks/record/${id}/update-trade-record/`, params);
