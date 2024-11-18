@@ -124,18 +124,6 @@ const StrategyList = ({ strategies }) => {
       key: "created_at",
       render: text => moment(text).format("YYYY-MM-DD"),
     },
-    {
-      title: "AI_Analysis",
-      dataIndex: "ai_analysis",
-      key: "ai_analysis",
-      render: (text, record) => (
-        <DescriptionPopup
-          description={"AI Analysis Details"}
-          title={`AI Analysis for ${record.stock.ticker}`}
-          text={text}
-        />
-      ),
-    },
   ];
 
   return (
