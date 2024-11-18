@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Modal, Button, Input, Tag } from "antd";
 import { getAllOptions } from "@services/stock";
+import moment from "moment";
 
 const { Search } = Input;
 
@@ -56,6 +57,12 @@ const StockScreeningComponent = () => {
       title: "Total Score",
       dataIndex: "total_score",
       key: "total_score",
+    },
+    {
+      title: "Date",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: text => moment(text).format("YYYY-MM-DD"),
     },
     {
       title: "Decision",
