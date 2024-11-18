@@ -2,7 +2,7 @@ import axios from "axios";
 import { message } from "antd";
 import cookies from "js-cookie";
 
-const domain = "https://woaybb.com";
+const domain = "";
 
 export const axiosInstance = axios.create({
   baseURL: domain,
