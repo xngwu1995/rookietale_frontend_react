@@ -5,6 +5,7 @@ import { message, Button, Input, Card, List, Avatar } from "antd";
 import { useAppContext } from "@utils/context";
 import { getFeeds, getMoreFeeds } from "@services/tweet";
 import TabContentWithInfiniteScroll from "@components/LoadMore";
+import MoneyText from "@components/MoneyText";
 import { followUser, getRandomUser, unFollowUser } from "@services/users";
 import { useNavigate } from "react-router-dom";
 import { useGoTo } from "@utils/hooks";
@@ -125,6 +126,7 @@ const Tweets = () => {
         <Nav />
       </aside>
       <main className={style.mainContent}>
+        <MoneyText />
         <div className={style.searchContainer}>
           <Search
             placeholder="Search tweets"
