@@ -63,6 +63,7 @@ const StockScreeningComponent = () => {
       dataIndex: "created_at",
       key: "created_at",
       render: text => moment(text).format("YYYY-MM-DD"),
+      sorter: (a, b) => new Date(a.created_at) - new Date(b.created_at),
     },
     {
       title: "Decision",
