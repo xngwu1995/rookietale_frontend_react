@@ -354,13 +354,19 @@ function Records({ records, updateRecord }) {
         <Tag color={active ? "cyan" : "red"}>{active ? "Active" : "Sold"}</Tag>
       ),
     },
-    {
-      title: filter === "active" ? "Closed Price(建议卖出价)" : "Revenue(获利)",
-      dataIndex: filter === "active" ? "closed" : "revenue",
-      key: filter === "active" ? "closed" : "revenue",
-      render: value =>
-        value && typeof value === "number" ? `$${value.toFixed(2)}` : value,
-    },
+    ...(!filter || filter !== "active"
+      ? [
+          {
+            title: "Revenue(获利)",
+            dataIndex: "revenue",
+            key: "revenue",
+            render: value =>
+              value && typeof value === "number"
+                ? `$${value.toFixed(2)}`
+                : value,
+          },
+        ]
+      : []),
     {
       title: "Actions",
       key: "action",
