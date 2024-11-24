@@ -1,18 +1,14 @@
-@import '../../common.module.scss';
-
+@import "../../common.module.scss";
 
 .wrap {
-  composes: wrap from '../../common.module.scss';
-
+  composes: wrap from "../../common.module.scss";
 }
 .login {
-  composes: login from '../../common.module.scss';
-
+  composes: login from "../../common.module.scss";
 }
 
 .left {
-  composes: left from '../../common.module.scss';
-
+  composes: left from "../../common.module.scss";
 }
 
 .left img {
@@ -22,24 +18,23 @@
 }
 
 .right {
-  composes: right from '../../common.module.scss';
-
+  composes: right from "../../common.module.scss";
 }
 
 .input {
-  composes: input from '../../common.module.scss';
+  composes: input from "../../common.module.scss";
 }
 .datePicker {
-  composes: input from '../../common.module.scss';
+  composes: input from "../../common.module.scss";
 }
 .formTitle {
   font-size: 25px;
   font-weight: 700;
-  height: 68px;
-  line-height: 68px;
+  height: 58px;
+  line-height: 58px;
 }
 .form {
-  margin: 40px 40px;
+  margin: 30px 30px;
   text-align: center;
 }
 .changeTypeButton {
@@ -52,14 +47,8 @@
   color: #000;
   font-weight: 700;
 }
-.invTitle {
-  text-align: center;
-  font-size: 10px;
-  color: #000;
-  font-weight: 500;
-}
 .footer {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-align: center;
 }
 .footerButtonDisabled {
@@ -97,7 +86,7 @@
   font-size: 14px;
   margin-top: 5px;
 }
-.icon{
+.icon {
   margin-left: 45px;
   height: 40px;
 }
