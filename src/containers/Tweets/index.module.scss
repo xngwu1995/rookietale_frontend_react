@@ -1,8 +1,8 @@
-@import '../../common.module.scss';
+@import "../../common.module.scss";
 
-.Header{
-    font-size: 20px;
-    font-weight: bold;
+.Header {
+  font-size: 20px;
+  font-weight: bold;
 }
 .container {
   display: flex;
@@ -15,9 +15,11 @@
 }
 
 .leftSider {
-  width: 300px;
+  align-items: center;
+  width: 360px;
   position: fixed; // Add this property
-  left: 0; // Add this property
+  left: 40px; // Add this property
+  right: 40px;
   top: 20px; // Add this property
   height: calc(100% - 20px); // Add this property
   overflow-y: hidden; // Add this property
@@ -44,9 +46,9 @@
 }
 
 .rightSider {
-  width: 300px;
+  width: 360px;
   position: fixed; // Add this property
-  right: 0; // Add this property
+  right: 40px; // Add this property
   top: 20px; // Add this property
   height: calc(100% - 20px); // Add this property
   overflow-y: auto; // Add this property
@@ -73,10 +75,10 @@
     box-sizing: border-box;
     width: 350px;
   }
-  
+
   .closeIcon {
     position: absolute;
     left: calc(50% - 375px);
     font-size: 22px;
-    }
+  }
 }
