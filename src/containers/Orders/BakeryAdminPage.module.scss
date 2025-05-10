@@ -1,0 +1,110 @@
+/* ──────────────────────────────────────────────
+   Bakery Admin – page-level styles
+   Edit values to match your brand token system
+   ────────────────────────────────────────────── */
+
+$max-width: 1200px;
+$gap: 24px;
+
+/* ---------- layout container ---------- */
+.container {
+  max-width: $max-width;
+  margin: 0 auto;
+  padding: $gap;
+}
+
+/* ---------- page heading ---------- */
+.heading {
+  margin-bottom: $gap / 2;
+  font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- override Ant Design tables so long text wraps nicely ---------- */
+:global {
+  .ant-table-cell {
+    /* allow “Address” field or long WeChat IDs to wrap */
+    white-space: normal;
+    word-break: break-all;
+  }
+}
+
+/* ---------- KPI statistic cards ---------- */
+.stats-row {
+  display: flex;
+  gap: $gap;
+  flex-wrap: wrap;
+
+  .stat-card {
+    flex: 1 0 160px; // grow but keep minimum width
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 16px;
+
+    h4 {
+      font-size: 0.85rem;
+      margin-bottom: 4px;
+      font-weight: 500;
+      color: #666;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+  }
+}
+
+/* ---------- sales item cards ---------- */
+.sales-card-list {
+  display: grid;
+  gap: $gap;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+  .sales-card {
+    border: 1px solid #efefef;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 12px;
+
+      .name {
+        font-weight: 600;
+        line-height: 1.3;
+        margin-bottom: 4px;
+      }
+
+      .meta {
+        font-size: 0.85rem;
+        color: #666;
+
+        span + span::before {
+          content: "·";
+          margin: 0 4px;
+        }
+      }
+    }
+  }
+}
+
+/* ---------- drawer overrides ---------- */
+:global {
+  .ant-drawer-body {
+    padding-top: $gap / 1.5; // a touch more air above lists
+  }
+}
