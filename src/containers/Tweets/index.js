@@ -7,7 +7,6 @@ import { getFeeds, getMoreFeeds } from "@services/tweet";
 import TabContentWithInfiniteScroll from "@components/LoadMore";
 import MoneyText from "@components/MoneyText";
 import { followUser, getRandomUser, unFollowUser } from "@services/users";
-import { useNavigate } from "react-router-dom";
 import { useGoTo } from "@utils/hooks";
 import style from "./index.module.scss";
 
@@ -24,7 +23,6 @@ const Tweets = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [previousHasMore, setPreviousHasMore] = useState(false);
   const go = useGoTo();
-  const nav = useNavigate();
 
   useEffect(() => {
     setStore({ closeHeaderHandler: null });

@@ -42,6 +42,11 @@ export const menuItems = [
     icon: <img className={style.icon} src={messageSvg} alt="" />,
     label: "AllIn(今日推荐)",
   },
+  {
+    key: "orders",
+    icon: <img className={style.icon} src={messageSvg} alt="" />,
+    label: "Maidough",
+  },
 ];
 export const createTweetItem = [
   {
@@ -101,6 +106,10 @@ export const allLinks = [
   {
     key: "decision",
     link: "/decision",
+  },
+  {
+    key: "orders",
+    link: "/orders",
   },
 ];
 
