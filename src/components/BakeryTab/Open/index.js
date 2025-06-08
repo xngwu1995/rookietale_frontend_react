@@ -17,6 +17,7 @@ function aggregate(session) {
         totals.items[key] = {
           id: oi.item.id,
           name: oi.item.name,
+          category: oi.item.category,
           qty: 0,
           amount: 0,
         };
@@ -74,7 +75,7 @@ export default function OpenSessionTab() {
           <Col xs={12} md={8} lg={6} key={it.id}>
             <Card bordered>
               <Card.Meta
-                title={it.name}
+                title={[it.name, it.category].filter(Boolean).join(" & ")}
                 description={
                   <>
                     <div>Sold: {it.qty}</div>
