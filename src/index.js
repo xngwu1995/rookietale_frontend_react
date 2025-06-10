@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { CxtProvider } from "@utils/context";
 import Login from "@containers/Login";
@@ -18,7 +18,9 @@ import StockPage from "@containers/StockPage";
 import VCPOptionPage from "@containers/TradingDecision";
 import BakeryAdminPage from "@containers/Orders";
 
-ReactDOM.render(
+const rootElement = document.getElementById("root");
+const root = ReactDOM.createRoot(rootElement);
+root.render(
   <CxtProvider>
     <BrowserRouter>
       <Routes>
@@ -44,6 +46,5 @@ ReactDOM.render(
         </Route>
       </Routes>
     </BrowserRouter>
-  </CxtProvider>,
-  document.getElementById("root")
+  </CxtProvider>
 );
