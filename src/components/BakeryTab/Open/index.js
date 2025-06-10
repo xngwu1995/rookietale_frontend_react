@@ -1,8 +1,15 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { Card, Col, Row, Table, Statistic, Spin, message } from "antd";
+/* ------------------------------------------------------------------
+ *  OpenSessionTab.jsx  –  enhanced with Material React Table
+ * -----------------------------------------------------------------*/
+import React, { useEffect, useState, useMemo, useRef } from "react";
+import { Card, Col, Row, Statistic, Spin, message, Button } from "antd";
 import { fetchOpenSessionWithOrders } from "@services/bakery";
 
-/* ── aggregate helper (unchanged except no image) ───────────── */
+import { MaterialReactTable } from "material-react-table";
+import { mkConfig, generateCsv, download } from "export-to-csv";
+import { useReactToPrint } from "react-to-print";
+
+/* ---------- helpers ------------------------------------------------ */
 function aggregate(session) {
   const totals = { orders: 0, revenue: 0, items: {} };
   if (!session) return totals;
@@ -29,17 +36,17 @@ function aggregate(session) {
   return totals;
 }
 
-/* ── component ──────────────────────────────────────────────── */
+/* ---------- main component ---------------------------------------- */
 export default function OpenSessionTab() {
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  /* fetch session once on mount */
   useEffect(() => {
     (async () => {
       try {
-        const session = await fetchOpenSessionWithOrders();
-        console.log(session);
-        if (session.status === "OPEN") setSession(session);
+        const sess = await fetchOpenSessionWithOrders();
+        if (sess.status === "OPEN") setSession(sess);
       } catch {
         message.error("Failed to load current session");
       } finally {
@@ -48,8 +55,96 @@ export default function OpenSessionTab() {
     })();
   }, []);
 
+  /* KPI aggregate */
   const agg = useMemo(() => aggregate(session), [session]);
 
+  /* --------------- CSV / Print handlers --------------------------- */
+  const printRef = useRef(null);
+
+  const handleExportCsv = () => {
+    if (!session) return;
+
+    const csvConfig = mkConfig({
+      fieldSeparator: ",",
+      filename: `orders_${new Date().toISOString()}`,
+      decimalSeparator: ".",
+      useKeysAsHeaders: true,
+    });
+
+    const rows = session.orders.map(o => ({
+      id: o.id,
+      wechat: o.wechat_id,
+      address: o.address,
+      subtotal: o.subtotal,
+      total: o.grand_total,
+      status: o.status,
+      created_at: o.created_at,
+    }));
+
+    const csv = generateCsv(csvConfig)(rows);
+    download(csvConfig)(csv);
+  };
+
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `orders_${new Date().toISOString()}`,
+    removeAfterPrint: true,
+  });
+
+  /* --------------- MRT column definitions ------------------------ */
+  const orderColumns = useMemo(
+    () => [
+      { accessorKey: "id", header: "Order #", size: 80 },
+      { accessorKey: "wechat_id", header: "Wechat" },
+      { accessorKey: "address", header: "Address", size: 300 },
+      {
+        accessorKey: "subtotal",
+        header: "Subtotal",
+        Cell: ({ cell }) => `$${Number(cell.getValue()).toFixed(2)}`,
+      },
+      {
+        accessorKey: "grand_total",
+        header: "Total",
+        Cell: ({ cell }) => `$${Number(cell.getValue()).toFixed(2)}`,
+      },
+      { accessorKey: "status", header: "Status" },
+      {
+        accessorKey: "created_at",
+        header: "Created",
+        Cell: ({ cell }) =>
+          new Date(cell.getValue()).toLocaleString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+          }),
+      },
+    ],
+    []
+  );
+  const itemColumns = useMemo(
+    () => [
+      { accessorKey: "item.name", header: "Item" }, // 1️⃣  Item
+      { accessorKey: "item.category", header: "Category" }, // 2️⃣  Category (right after Item)
+      { accessorKey: "qty", header: "Qty", size: 60 },
+      {
+        accessorKey: "unit_price",
+        header: "Unit $",
+        Cell: ({ cell }) => `$${cell.getValue()}`,
+        size: 80,
+      },
+      {
+        accessorKey: "total_price",
+        header: "Total $",
+        Cell: ({ cell }) => `$${cell.getValue()}`,
+        size: 80,
+      },
+    ],
+    []
+  );
+
+  /* -------------------- render ----------------------------------- */
   if (loading) return <Spin style={{ display: "block", marginTop: 40 }} />;
   if (!session) return <p>No open session.</p>;
 
@@ -75,7 +170,7 @@ export default function OpenSessionTab() {
           <Col xs={12} md={8} lg={6} key={it.id}>
             <Card bordered>
               <Card.Meta
-                title={[it.name, it.category].filter(Boolean).join(" & ")}
+                title={[it.name, it.category].filter(Boolean).join(" / ")}
                 description={
                   <>
                     <div>Sold: {it.qty}</div>
@@ -88,37 +183,60 @@ export default function OpenSessionTab() {
         ))}
       </Row>
 
-      {/* Order table */}
+      {/* Orders – Material React Table */}
       <h3>Order Details</h3>
-      <Table
-        rowKey="id"
-        dataSource={session.orders}
-        expandable={{
-          expandedRowRender: order => (
-            <Table
-              rowKey={r => r.item.id}
-              dataSource={order.items}
-              pagination={false}
-              size="small"
-              columns={[
-                { title: "Item", dataIndex: ["item", "name"] },
-                { title: "Qty", dataIndex: "qty" },
-                { title: "Unit $", dataIndex: "unit_price" },
-                { title: "Total $", dataIndex: "total_price" },
-              ]}
-            />
-          ),
-        }}
-        columns={[
-          { title: "Order #", dataIndex: "id", width: 80 },
-          { title: "Wechat", dataIndex: "wechat_id" },
-          { title: "Address", dataIndex: "address", ellipsis: true },
-          { title: "Subtotal", dataIndex: "subtotal" },
-          { title: "Total", dataIndex: "grand_total" },
-          { title: "Status", dataIndex: "status" },
-          { title: "Created", dataIndex: "created_at" },
-        ]}
-      />
+      <div ref={printRef}>
+        <MaterialReactTable
+          columns={orderColumns}
+          data={session.orders}
+          enablePagination
+          enableColumnFilters
+          enableGlobalFilter
+          enableExpanding
+          initialState={{
+            pagination: { pageSize: 10 }, // ❌ no expanded:true to avoid bug
+          }}
+          muiTableProps={{
+            sx: { fontSize: "16px" },
+          }}
+          muiTableHeadCellProps={{
+            sx: { fontSize: "16px", fontWeight: "bold" },
+          }}
+          muiTableBodyCellProps={{
+            sx: { fontSize: "16px" },
+          }}
+          renderTopToolbarCustomActions={() => (
+            <>
+              <Button onClick={handlePrint}>Print / PDF</Button>
+            </>
+          )}
+          /* detail panel to show order items */
+          renderDetailPanel={({ row }) => (
+            <div>
+              <MaterialReactTable
+                columns={itemColumns}
+                data={row.original.items}
+                enableTopToolbar={false}
+                enableBottomToolbar={false}
+                enableColumnFilters={false}
+                enableGlobalFilter={false}
+                enablePagination={false}
+                enableSorting={false}
+                muiTableProps={{
+                  sx: { fontSize: "16px" },
+                }}
+                muiTableHeadCellProps={{
+                  sx: { fontSize: "16px", fontWeight: "bold" },
+                }}
+                muiTableBodyCellProps={{
+                  sx: { fontSize: "16px" },
+                }}
+                muiTableBodyRowProps={{ sx: { "& > td": { borderBottom: 0 } } }}
+              />
+            </div>
+          )}
+        />
+      </div>
     </>
   );
 }
